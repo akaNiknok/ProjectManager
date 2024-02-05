@@ -24,9 +24,9 @@ class User(models.Model):
         EMPLOYEE = "Em", _("Employee")
 
     user_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_lenth=255)
-    username = models.CharField(max_lenth=255)
-    password = models.CharField(max_lenth=255)  # TODO: password encryption
+    name = models.CharField(max_length=255)
+    username = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)  # TODO: password encryption
     # TODO: profile pics
     staff_type = models.CharField(max_length=2, choices=sType, default=sType.EMPLOYEE)
 
@@ -51,7 +51,7 @@ class Task(models.Model):
 
     task_id = models.AutoField(primary_key=True)
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
-    task_name = models.CharField(max_lenth=255)
+    task_name = models.CharField(max_length=255)
     task_notes = models.TextField()
     task_status = models.IntegerField(choices=Status, default=Status.INPROGRESS)
     task_priority = models.CharField(max_length=1, choices=Priority)
@@ -69,4 +69,4 @@ class Expense(models.Model):
     member_id = models.ForeignKey(Member, on_delete=models.CASCADE)
     expense_date = models.DateField()
     expense_description = models.TextField()
-    expense_amount = models.DecimalField()  # TODO: Change in data dictionary
+    expense_amount = models.DecimalField(max_digits=11, decimal_places=2)  # TODO: Change in data dictionary
