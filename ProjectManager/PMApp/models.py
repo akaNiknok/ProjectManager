@@ -15,6 +15,9 @@ class Project(models.Model):
     project_end = models.DateField()
     project_status = models.IntegerField(choices=Status, default=Status.ONGOING)
 
+    def __str__(self):
+        return "{}: {} ({})".format(self.project_id, self.project_name, self.project_status)
+
 
 class User(models.Model):
 
@@ -30,11 +33,17 @@ class User(models.Model):
     # TODO: profile pics
     staff_type = models.CharField(max_length=2, choices=sType, default=sType.EMPLOYEE)
 
+    def __str__(self):
+        return "{}: {} ({})".format(self.user_id, self.name, self.staff_type)
+
 
 class Member(models.Model):
     member_id = models.AutoField(primary_key=True)
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{} is a member of {}".format(self.user_id.name, self.project_id.project_name)
 
 
 class Task(models.Model):
@@ -56,11 +65,22 @@ class Task(models.Model):
     task_status = models.IntegerField(choices=Status, default=Status.INPROGRESS)
     task_priority = models.CharField(max_length=1, choices=Priority)
 
+    def __str__(self):
+        return "{}: {} ({} - {})".format(
+            self.task_id,
+            self.task_name,
+            self.task_status,
+            self.task_priority
+        )
+
 
 class IndividualTaskAssignment(models.Model):
     task_assignment_id = models.AutoField(primary_key=True)
     task_id = models.ForeignKey(Task, on_delete=models.CASCADE)
     member_id = models.ForeignKey(Member, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{} is tasked to {}".format(self.member_id.user_id.name, self.task_id.task_name)
 
 
 class Expense(models.Model):
@@ -70,3 +90,10 @@ class Expense(models.Model):
     expense_date = models.DateField()
     expense_description = models.TextField()
     expense_amount = models.DecimalField(max_digits=11, decimal_places=2)  # TODO: Change in data dictionary
+
+    def __str__(self):
+        return "{}: PHP {} to {}".format(
+            self.expense_id,
+            self.expense_amount,
+            self.project_id.project_name
+        )
