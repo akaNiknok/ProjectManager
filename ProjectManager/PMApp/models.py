@@ -13,7 +13,7 @@ class Project(models.Model):
     project_name = models.CharField(max_length=255)
     project_desc = models.TextField()
     project_start = models.DateField(default=date.today)
-    project_end = models.DateField(default=None)
+    project_end = models.DateField(default=None, blank=True)
     project_status = models.IntegerField(choices=Status, default=Status.ONGOING)
 
     def __str__(self):
@@ -62,8 +62,8 @@ class Task(models.Model):
     task_id = models.AutoField(primary_key=True)
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
     task_name = models.CharField(max_length=255)
-    task_notes = models.TextField()
-    task_deadline = models.DateField(default=date.today)
+    task_notes = models.TextField(blank=True)
+    task_deadline = models.DateField(default=date.today, blank=True)
     task_status = models.IntegerField(choices=Status, default=Status.INPROGRESS)
     task_priority = models.CharField(max_length=1, choices=Priority)
 
