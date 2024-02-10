@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'create_project' %}" method="POST">{% csrf_token %}
+        <label for="project_name">Project Name:</label>
+        <input type="text" name="project_name" id="project_name" required><br><br>
+
+        <label for="project_desc">Project Description:</label>
+        <textarea name="project_desc" id="project_desc" cols="30" rows="10" required></textarea><br><br>
+
+        <label for="project_start">Project Start:</label>
+        <input type="date" name="project_start" id="project_start" required><br><br>
+
+        <label for="project_end">Project End:</label>
+        <input type="date" name="project_end" id="project_end"><br><br>
+
+        <label for="project_status">Project Status:</label>
+        <select name="project_status" id="project_status">
+            <option value="0">Ongoing</option>
+            <option value="1">Finished</option>
+        </select><br><br>
+
+        <input type="submit">
+    </form>
+
+    <!-- Set default project start to today's date -->
+    <script>
+        document.getElementById("project_start").valueAsDate = new Date();
+    </script>
+{% endblock %}
