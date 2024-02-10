@@ -11,16 +11,21 @@ def index(request):
 
 def create_project(request):
 
+    # Create project when user clicks submit
     if (request.method == "POST"):
+
+        # Get submitted form values
         project_name = request.POST.get("project_name")
         project_desc = request.POST.get("project_desc")
         project_start = request.POST.get("project_start")
         project_end = request.POST.get("project_end")
         project_status = request.POST.get("project_status")
 
+        # Set project end date to None if none specified
         if project_end == "":
             project_end = None
 
+        # Create and save the new project
         new_project = Project.objects.create(
             project_name=project_name,
             project_desc=project_desc,
@@ -31,6 +36,7 @@ def create_project(request):
 
         return redirect("view_project", project_id=new_project.project_id)
 
+    # Otherwise, display the form
     else:
         return render(request,
                     "create_project.html")
@@ -49,17 +55,21 @@ def view_project(request, project_id):
 
 def update_project(request, project_id):
 
+    # Update project details when user clicks submit
     if (request.method == "POST"):
 
+        # Get submitted form values
         project_name = request.POST.get("project_name")
         project_desc = request.POST.get("project_desc")
         project_start = request.POST.get("project_start")
         project_end = request.POST.get("project_end")
         project_status = request.POST.get("project_status")
 
+        # Create and save the new project
         if project_end == "":
             project_end = None
 
+        # Retrieve and edit the values of the project
         project_obj = Project.objects.get(project_id=project_id)
 
         project_obj.project_name = project_name
@@ -72,8 +82,8 @@ def update_project(request, project_id):
 
         return redirect("view_project", project_id=project_obj.project_id)
 
+    # Otherwise, display the form
     else:
-
         try:
             project_obj = Project.objects.get(project_id=project_id)
         except:
