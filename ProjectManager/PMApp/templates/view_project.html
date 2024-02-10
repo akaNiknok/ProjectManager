@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+    Project ID: {{ project.project_id }}<br><br>
+    Name: {{ project.project_name }}<br><br>
+    Description: {{ project.project_desc }}<br><br>
+    Project Start: {{ project.project_start }}<br><br>
+    Project End: {{ project.project_end }}<br><br>
+    Project Status: {{ project.get_project_status_display }}<br><br>
+    <!-- For IntegerChoices / TextChoices, use {{ OBJNAME.get_FIELDNAME_display }} -->
+{% endblock %}

@@ -1,13 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render, Http404
 from django.http import HttpResponse
+
+from .models import Project, User, Member, Task, IndividualTaskAssignment, Expense
+
 
 def index(request):
     # TODO: Index
     return HttpResponse("Index")
 
-def view_project(request):
-    # TODO: View project
-    return HttpResponse("View Project")
+def view_project(request, project_id):
+    try:
+        project_obj = Project.objects.get(project_id=project_id)
+    except:
+        raise Http404("Project does not exist")
+
+    return render(request,
+                  "view_project.html",
+                  {"project": project_obj})
 
 def create_project(request):
     # TODO: Create project 
