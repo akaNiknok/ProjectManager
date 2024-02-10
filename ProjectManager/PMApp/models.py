@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from datetime import date
 
 
 class Project(models.Model):
@@ -11,8 +12,8 @@ class Project(models.Model):
     project_id = models.AutoField(primary_key=True)
     project_name = models.CharField(max_length=255)
     project_desc = models.TextField()
-    project_start = models.DateField()
-    project_end = models.DateField()
+    project_start = models.DateField(default=date.today)
+    project_end = models.DateField(default=None)
     project_status = models.IntegerField(choices=Status, default=Status.ONGOING)
 
     def __str__(self):
@@ -62,6 +63,7 @@ class Task(models.Model):
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
     task_name = models.CharField(max_length=255)
     task_notes = models.TextField()
+    task_deadline = models.DateField(default=date.today)
     task_status = models.IntegerField(choices=Status, default=Status.INPROGRESS)
     task_priority = models.CharField(max_length=1, choices=Priority)
 
@@ -87,7 +89,7 @@ class Expense(models.Model):
     expense_id = models.AutoField(primary_key=True)
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
     member_id = models.ForeignKey(Member, on_delete=models.CASCADE)
-    expense_date = models.DateField()
+    expense_date = models.DateField(default=date.today)
     expense_description = models.TextField()
     expense_amount = models.DecimalField(max_digits=11, decimal_places=2)  # TODO: Change in data dictionary
 
