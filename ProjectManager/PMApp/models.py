@@ -39,6 +39,7 @@ class User(models.Model):
 
 
 class Member(models.Model):
+
     member_id = models.SmallAutoField(primary_key=True)
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -77,6 +78,7 @@ class Task(models.Model):
 
 
 class TaskAssignment(models.Model):
+
     assignment_id = models.SmallAutoField(primary_key=True)
     task_id = models.ForeignKey(Task, on_delete=models.CASCADE)
     member_id = models.ForeignKey(Member, on_delete=models.CASCADE)
@@ -86,6 +88,7 @@ class TaskAssignment(models.Model):
 
 
 class Expense(models.Model):
+
     expense_id = models.SmallAutoField(primary_key=True)
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
     member_id = models.ForeignKey(Member, on_delete=models.CASCADE)
