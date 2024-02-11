@@ -90,7 +90,7 @@ class Expense(models.Model):
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
     member_id = models.ForeignKey(Member, on_delete=models.CASCADE)
     expense_date = models.DateField(default=date.today)
-    expense_description = models.TextField()
+    expense_desc = models.TextField()
     expense_amount = models.DecimalField(max_digits=11, decimal_places=2)  # TODO: Change in data dictionary
 
     def __str__(self):
