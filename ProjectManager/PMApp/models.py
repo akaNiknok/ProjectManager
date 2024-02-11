@@ -91,11 +91,11 @@ class Expense(models.Model):
     member_id = models.ForeignKey(Member, on_delete=models.CASCADE)
     expense_date = models.DateField(default=date.today)
     expense_desc = models.TextField()
-    expense_amount = models.DecimalField(max_digits=11, decimal_places=2)  # TODO: Change in data dictionary
+    expense_amt = models.DecimalField(max_digits=11, decimal_places=2)  # TODO: Change in data dictionary
 
     def __str__(self):
         return "{}: PHP {} to {}".format(
             self.expense_id,
-            self.expense_amount,
+            self.expense_amt,
             self.project_id.project_name
         )
