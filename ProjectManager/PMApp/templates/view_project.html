@@ -15,5 +15,10 @@
 
     <a href="/update_project/{{ project.project_id }}">
         <button type="button">Edit Details</button>
+    </a><br><br>
+
+    <a href="{% url 'index' %}?id={{ project.project_id }}">
+        <button type="button">Back to Dashboard</button>
     </a>
+ 
 {% endblock %}
