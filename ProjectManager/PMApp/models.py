@@ -76,8 +76,8 @@ class Task(models.Model):
         )
 
 
-class IndividualTaskAssignment(models.Model):
-    task_assignment_id = models.AutoField(primary_key=True)
+class TaskAssignment(models.Model):
+    assignment_id = models.AutoField(primary_key=True)
     task_id = models.ForeignKey(Task, on_delete=models.CASCADE)
     member_id = models.ForeignKey(Member, on_delete=models.CASCADE)
 

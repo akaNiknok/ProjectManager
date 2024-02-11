@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, Http404
 from django.http import HttpResponse
 
-from .models import Project, User, Member, Task, IndividualTaskAssignment, Expense
+from .models import Project, User, Member, Task, TaskAssignment, Expense
 
 
 # TODO: Rename to dashboard and create a new index
