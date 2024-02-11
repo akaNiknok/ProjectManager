@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+    <label for="projects">Projects: </label>
+    <select name="projects" id="projects">
+    {% for project in projects %}
+        <option value="{{ project.project_id }}" {% if project.project_id == selected_project.project_id %}selected{% endif %}>{{ project.project_name }}</option>
+    {% endfor %}
+    </select>
+
+    <a href="{% url 'create_project' %}">
+        <button>+</button>
+    </a>
+
+    <h1>{{ selected_project.project_name }}</h1>
+
+    <a href="{% url 'view_project' selected_project.project_id %}">
+        <button>View details</button>
+    </a>
+
+    <!-- TODO: Tasks -->
+    <h2>Tasks</h2>
+    <ul>
+        <li>Work in progress</li>
+    </ul>
+
+    <!-- TODO: Expenses -->
+    <h2>Expenses</h2>
+    <ul>
+        <li>Work in progress</li>
+    </ul>
+
+    <!-- Script to automatically redirect when selected new project -->
+    <script>
+        document.querySelectorAll("[name=projects]")[0].addEventListener('change',
+        function () {
+            window.location = "{% url 'index' %}?id=" + this.value;
+        });
+    </script>
+{% endblock %}

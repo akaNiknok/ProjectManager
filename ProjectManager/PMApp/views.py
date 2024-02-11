@@ -4,9 +4,26 @@ from django.http import HttpResponse
 from .models import Project, User, Member, Task, IndividualTaskAssignment, Expense
 
 
+# TODO: Rename to dashboard and create a new index
 def index(request):
-    # TODO: Index
-    return HttpResponse("Index")
+
+    # Retrieve all objects
+    # TODO: Retrieve only user related projects
+    project_objs = Project.objects.all()
+
+    # Retrieve selected projected
+    selected_id = request.GET.get("id")
+
+    # Default to the first project, when not specified
+    if selected_id is None:
+        selected_project = project_objs[0]
+    else:
+        selected_project = Project.objects.get(project_id=selected_id)
+
+    return render(request,
+                  "dashboard.html",
+                  {"projects": project_objs,
+                   "selected_project": selected_project})
 
 
 def create_project(request):
