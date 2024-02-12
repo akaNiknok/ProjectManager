@@ -102,3 +102,16 @@ class Expense(models.Model):
             self.expense_amt,
             self.project_id.project_name
         )
+
+
+class Notification(models.Model):
+
+    class Status(models.IntegerChoices):
+        UNREAD = 0, _("Unread")
+        READ = 1, _("Read")
+
+    notif_id = models.SmallAutoField(primary_key=True)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    notif_datetime = models.DateTimeField()
+    notif_text = models.CharField(max_length=255)
+    notif_status = models.IntegerField(choices=Status, default=Status.UNREAD)
