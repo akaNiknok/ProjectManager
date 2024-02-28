@@ -13,7 +13,7 @@
     Project Status: {{ project.get_project_status_display }}<br><br>
     <!-- For IntegerChoices / TextChoices, use {{ OBJNAME.get_FIELDNAME_display }} -->
 
-    <a href="/update_project/{{ project.project_id }}">
+    <a href="{% url 'update_project' project.project_id %}">
         <button type="button">Edit Details</button>
     </a><br><br>
 
