@@ -110,6 +110,19 @@ def update_project(request, project_id):
                     "update_project.html",
                     {"project": project_obj})
 
+def archive_project(request, project_id):
+
+    # Get project object
+    try:
+        project_obj = Project.objects.get(project_id=project_id)
+    except:
+        raise Http404("Project does not exist")
+
+    # Update project status to "Archived"
+    project_obj.project_status = 2
+    project_obj.save()
+
+    return redirect("view_project", project_id=project_id)
 
 def delete_project(request):
     # TODO: Delete project

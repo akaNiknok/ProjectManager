@@ -8,6 +8,7 @@ class Project(models.Model):
     class Status(models.IntegerChoices):
         ONGOING = 0, _("Ongoing")
         FINISHED = 1, _("Finished")
+        ARCHIVED = 2, _("Archived")
 
     project_id = models.SmallAutoField(primary_key=True)
     project_name = models.CharField(max_length=255)
