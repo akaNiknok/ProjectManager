@@ -38,7 +38,7 @@
     <script>
         document.querySelectorAll("[name=projects]")[0].addEventListener('change',
         function () {
-            window.location = "{% url 'index' %}?id=" + this.value;
+            window.location = "{% url 'dashboard' %}" + this.value;
         });
     </script>
 {% endblock %}

@@ -34,7 +34,7 @@
     </a><br><br>
     {% endif %}
 
-    <a href="{% url 'index' %}?id={{ project.project_id }}">
+    <a href="{% url 'dashboard' project.project_id %}">
         <button type="button">Back to Dashboard</button>
     </a>
  

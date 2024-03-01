@@ -3,22 +3,22 @@ from django.http import HttpResponse
 
 from .models import Project, User, Member, Task, TaskAssignment, Expense
 
-
-# TODO: Rename to dashboard and create a new index
 def index(request):
+    # TODO: Login
+    return redirect("dashboard")
+
+
+def dashboard(request, project_id=None):
 
     # Retrieve all objects
     # TODO: Retrieve only user related projects
     project_objs = Project.objects.all()
 
-    # Retrieve selected projected
-    selected_id = request.GET.get("id")
-
     # Default to the first project, when not specified
-    if selected_id is None:
+    if project_id is None:
         selected_project = project_objs[0]
     else:
-        selected_project = Project.objects.get(project_id=selected_id)
+        selected_project = Project.objects.get(project_id=project_id)
 
     return render(request,
                   "dashboard.html",
