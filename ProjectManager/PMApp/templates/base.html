@@ -7,8 +7,36 @@
 <body>
     <div class="navbar">
         {% block navbar %}
+            <ul>
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'view_members' %}">Members</a></li>
+                <li><a href="{% url 'view_project' %}">Overview</a></li>
+                <!-- TODO: Logout -->
+                <li><a href="">Logout</a></li>
+            </ul>
         {% endblock %}
+
+        <!-- Project selector -->
+        <label for="project_selector">Projects: </label>
+        <select name="project_selector" id="project_selector">
+        {% for project in projects %}
+            <option value="{{ project.project_id }}" {% if project.project_id == request.session.current_project_id %}selected{% endif %}>{{ project.project_name }}</option>
+        {% endfor %}
+        </select>
+
+        <a href="{% url 'create_project' %}">
+            <button>+</button>
+        </a>
+
+        <!-- Script to automatically redirect when selected new project -->
+        <script>
+            document.querySelectorAll("[name=project_selector]")[0].addEventListener('change',
+            function () {
+                window.location = "{% url 'switch_project' %}" + this.value;
+            });
+        </script>
     </div>
+    <hr>
     <div class="body">
         {% block content %}
         {% endblock %}

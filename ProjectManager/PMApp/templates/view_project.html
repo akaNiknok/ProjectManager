@@ -2,6 +2,13 @@
 {% load static %}
 
 {% block navbar %}
+    <ul>
+        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        <li><a href="{% url 'view_members' %}">Members</a></li>
+        <li><a href="{% url 'view_project' %}">Overview (current)</a></li>
+        <!-- TODO: Logout -->
+        <li><a href="">Logout</a></li>
+    </ul>
 {% endblock %}
 
 {% block content %}
@@ -15,27 +22,23 @@
 
     <!-- Show archive button only if project status is "Finished" -->
     {% if project.project_status == 1 %}
-    <a href="{% url 'archive_project' project.project_id %}">
+    <a href="{% url 'archive_project' %}">
         <button type="button">Archive Project</button>
     </a><br><br>
     {% endif %}
 
     <!-- Show delete button only if project status is "Archived" -->
     {% if project.project_status == 2 %}
-    <a href="{% url 'delete_project' project.project_id %}">
+    <a href="{% url 'delete_project' %}">
         <button type="button">Delete Project</button>
     </a><br><br>
     {% endif %}
 
     <!-- Do not show edit details if project is "Archived" -->
     {% if project.project_status != 2 %}
-    <a href="{% url 'update_project' project.project_id %}">
+    <a href="{% url 'update_project' %}">
         <button type="button">Edit Details</button>
     </a><br><br>
     {% endif %}
-
-    <a href="{% url 'dashboard' project.project_id %}">
-        <button type="button">Back to Dashboard</button>
-    </a>
  
 {% endblock %}

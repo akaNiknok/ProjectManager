@@ -8,22 +8,36 @@ def index(request):
     return redirect("dashboard")
 
 
-def dashboard(request, project_id=None):
+def dashboard(request):
 
     # Retrieve all objects
     # TODO: Retrieve only user related projects
     project_objs = Project.objects.all()
 
     # Default to the first project, when not specified
-    if project_id is None:
-        selected_project = project_objs[0]
-    else:
-        selected_project = Project.objects.get(project_id=project_id)
-
+    try:
+        project_id = request.session["current_project_id"]
+        project_obj = Project.objects.get(project_id=project_id)
+    except:
+        request.session["current_project_id"] = 0
+        project_obj = project_objs[0]
+    
     return render(request,
                   "dashboard.html",
-                  {"projects": project_objs,
-                   "selected_project": selected_project})
+                  {"project": project_obj})
+
+
+def switch_project(request, project_id):
+    request.session["current_project_id"] = int(project_id)
+
+    previous_url = request.META.get("HTTP_REFERER")
+    previous_view = previous_url.rstrip('/').split('/')[-1]
+
+    # If user was in update_project, redirect to view_project to prevent unwanted changes
+    if previous_view == "update_project":
+        previous_url = "view_project"
+
+    return redirect(previous_url)
 
 
 def create_project(request):
@@ -51,7 +65,7 @@ def create_project(request):
             project_status=project_status
         )
 
-        return redirect("view_project", project_id=new_project.project_id)
+        return redirect("view_project")
 
     # Otherwise, display the form
     else:
@@ -59,7 +73,10 @@ def create_project(request):
                     "create_project.html")
 
 
-def view_project(request, project_id):
+def view_project(request):
+
+    project_id = request.session["current_project_id"]
+
     try:
         project_obj = Project.objects.get(project_id=project_id)
     except:
@@ -70,7 +87,9 @@ def view_project(request, project_id):
                   {"project": project_obj})
 
 
-def update_project(request, project_id):
+def update_project(request):
+
+    project_id = request.session["current_project_id"]
 
     # Update project details when user clicks submit
     if (request.method == "POST"):
@@ -97,7 +116,7 @@ def update_project(request, project_id):
 
         project_obj.save()
 
-        return redirect("view_project", project_id=project_obj.project_id)
+        return redirect("view_project")
 
     # Otherwise, display the form
     else:
@@ -111,7 +130,9 @@ def update_project(request, project_id):
                     {"project": project_obj})
 
 
-def archive_project(request, project_id):
+def archive_project(request):
+
+    project_id = request.session["current_project_id"]
 
     # Get project object
     try:
@@ -123,10 +144,12 @@ def archive_project(request, project_id):
     project_obj.project_status = 2
     project_obj.save()
 
-    return redirect("view_project", project_id=project_id)
+    return redirect("view_project")
 
 
-def delete_project(request, project_id):
+def delete_project(request):
+
+    project_id = request.session["current_project_id"]
 
     # Get project object
     try:
@@ -137,7 +160,7 @@ def delete_project(request, project_id):
     # Delete object
     project_obj.delete()
 
-    return redirect("index")
+    return redirect("dashboard")
 
 
 def view_task(request):
@@ -158,3 +181,8 @@ def update_task(request):
 def delete_task(request):
     # TODO: Delete task
     return HttpResponse("Delete Task")
+
+
+def view_members(request):
+    # TODO: View members
+    return render(request, "view_members.html")
