@@ -126,9 +126,18 @@ def archive_project(request, project_id):
     return redirect("view_project", project_id=project_id)
 
 
-def delete_project(request):
-    # TODO: Delete project
-    return HttpResponse("Delete Project")
+def delete_project(request, project_id):
+
+    # Get project object
+    try:
+        project_obj = Project.objects.get(project_id=project_id)
+    except:
+        raise Http404("Project does not exist")
+
+    # Delete object
+    project_obj.delete()
+
+    return redirect("index")
 
 
 def view_task(request):

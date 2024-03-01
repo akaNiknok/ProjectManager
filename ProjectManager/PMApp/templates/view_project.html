@@ -20,6 +20,13 @@
     </a><br><br>
     {% endif %}
 
+    <!-- Show delete button if project status is "Archived" -->
+    {% if project.project_status == 2 %}
+    <a href="{% url 'delete_project' project.project_id %}">
+        <button type="button">Delete Project</button>
+    </a><br><br>
+    {% endif %}
+
     <!-- Disable futher updates if project is "Archived" -->
     {% if project.project_status != 2 %}
     <a href="{% url 'update_project' project.project_id %}">
