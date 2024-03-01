@@ -13,21 +13,21 @@
     Project Status: {{ project.get_project_status_display }}<br><br>
     <!-- For IntegerChoices / TextChoices, use {{ OBJNAME.get_FIELDNAME_display }} -->
 
-    <!-- Show archive button if project status is "Finished" -->
+    <!-- Show archive button only if project status is "Finished" -->
     {% if project.project_status == 1 %}
     <a href="{% url 'archive_project' project.project_id %}">
         <button type="button">Archive Project</button>
     </a><br><br>
     {% endif %}
 
-    <!-- Show delete button if project status is "Archived" -->
+    <!-- Show delete button only if project status is "Archived" -->
     {% if project.project_status == 2 %}
     <a href="{% url 'delete_project' project.project_id %}">
         <button type="button">Delete Project</button>
     </a><br><br>
     {% endif %}
 
-    <!-- Disable futher updates if project is "Archived" -->
+    <!-- Do not show edit details if project is "Archived" -->
     {% if project.project_status != 2 %}
     <a href="{% url 'update_project' project.project_id %}">
         <button type="button">Edit Details</button>
