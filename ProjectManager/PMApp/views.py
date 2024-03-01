@@ -110,6 +110,7 @@ def update_project(request, project_id):
                     "update_project.html",
                     {"project": project_obj})
 
+
 def archive_project(request, project_id):
 
     # Get project object
@@ -124,21 +125,26 @@ def archive_project(request, project_id):
 
     return redirect("view_project", project_id=project_id)
 
+
 def delete_project(request):
     # TODO: Delete project
     return HttpResponse("Delete Project")
+
 
 def view_task(request):
     # TODO: View task
     return HttpResponse("View Task")
 
+
 def create_task(request):
     # TODO: Create task 
     return HttpResponse("Create Task")
 
+
 def update_task(request):
     # TODO: Update task 
     return HttpResponse("Create Task")
+
 
 def delete_task(request):
     # TODO: Delete task
