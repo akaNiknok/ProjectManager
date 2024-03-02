@@ -5,6 +5,7 @@
     <title>Project Manager</title>
 
     <link rel="stylesheet" href="{% static 'custom.css' %}">
+    <script src="{% static 'scripts.js' %}"></script>
 </head>
 <body>
     <div class="navbar">
@@ -29,16 +30,10 @@
         <a href="{% url 'create_project' %}">
             <button>+</button>
         </a>
-
-        <!-- Script to automatically redirect when selected new project -->
-        <script>
-            document.querySelectorAll("[name=project_selector]")[0].addEventListener('change',
-            function () {
-                window.location = "{% url 'switch_project' %}" + this.value;
-            });
-        </script>
     </div>
+
     <hr>
+
     <div class="body">
         {% block content %}
         {% endblock %}

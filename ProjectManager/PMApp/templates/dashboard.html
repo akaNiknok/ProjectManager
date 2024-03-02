@@ -14,24 +14,35 @@
     <h1>{{ project.project_name }}</h1>
 
     <!-- TODO: Tasks -->
-    <h2>Tasks</h2>
-    <ul>
-        {% for task in tasks %}
-            <li><b>{{ task.task_name }}</b>
-                <ul>
-                    <li>Status: <b>{{ task.get_task_status_display }}</b></li>
-                    <li>Priority: <b>{{ task.get_task_priority_display }}</b></li>
-                    <li>Notes: {{ task.task_notes|linebreaks }}</li>
-                </ul>
-            </li>
-        {% endfor %}
-    </ul>
+    <div id="tasks">
+        <h2>
+            Tasks
+            <button onclick="showNewForm('tasks')">+</button>
+        </h2>
+
+        <ul>
+            {% for task in tasks %}
+                <li><b>{{ task.task_name }}</b>
+                    <ul>
+                        <li>Status: <b>{{ task.get_task_status_display }}</b></li>
+                        <li>Priority: <b>{{ task.get_task_priority_display }}</b></li>
+                        <li>Notes: {{ task.task_notes|linebreaks }}</li>
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
 
     <!-- TODO: Expenses -->
-    <h2>Expenses</h2>
-    <ul>
-        <li>Work in progress</li>
-    </ul>
+    <div id="expenses">
+    <h2>
+        Expenses
+        <button onclick="showNewForm('expenses')">+</button>
+    </h2>
+        <ul>
+            <li>Work in progress</li>
+        </ul>
+    </div>
 
 
 {% endblock %}

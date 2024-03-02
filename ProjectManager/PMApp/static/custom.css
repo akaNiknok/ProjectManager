@@ -1,0 +1,9 @@
+#tasks {
+    float: left;
+    width: 50%;
+}
+
+#expenses {
+    float: right;
+    width: 50%;
+}
