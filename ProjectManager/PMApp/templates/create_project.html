@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
     <form action="{% url 'create_project' %}" method="POST">{% csrf_token %}

@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block navbar %}
     <ul>
@@ -12,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ selected_project.project_name }}</h1>
+    <h1>{{ project.project_name }}</h1>
 
     <!-- TODO: Tasks -->
     <h2>Tasks</h2>
