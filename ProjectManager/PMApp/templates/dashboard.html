@@ -17,7 +17,15 @@
     <!-- TODO: Tasks -->
     <h2>Tasks</h2>
     <ul>
-        <li>Work in progress</li>
+        {% for task in tasks %}
+            <li><b>{{ task.task_name }}</b>
+                <ul>
+                    <li>Status: <b>{{ task.get_task_status_display }}</b></li>
+                    <li>Priority: <b>{{ task.get_task_priority_display }}</b></li>
+                    <li>Notes: {{ task.task_notes|linebreaks }}</li>
+                </ul>
+            </li>
+        {% endfor %}
     </ul>
 
     <!-- TODO: Expenses -->
