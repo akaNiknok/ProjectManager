@@ -22,12 +22,13 @@ def dashboard(request):
         request.session["current_project_id"] = 0
         project_obj = project_objs[0]
     
-    # Get tasks
+    # Get tasks and expenses
     task_objs = Task.objects.filter(project_id=project_id)
+    expense_objs = Expense.objects.filter(project_id=project_id)
         
     return render(request,
                   "dashboard.html",
-                  {"project": project_obj, "tasks": task_objs})
+                  {"project": project_obj, "tasks": task_objs, "expenses": expense_objs})
 
 
 def switch_project(request, project_id):
