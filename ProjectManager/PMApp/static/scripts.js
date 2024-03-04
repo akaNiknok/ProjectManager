@@ -11,17 +11,17 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
 // Hides the div of either tasks or expenses
 // and shows the appropriate form
-function showNewForm(type) {
+function showNewForm(showType) {
 
     // Get the inverse of type and store it to hideType
-    if (type === "tasks") {
+    if (showType === "tasks") {
         var hideType = "expenses"
     } else {
         var hideType = "tasks"
     }
 
     // Hide the div
-    var divToHide = document.getElementById(hideType);
+    var divToHide = document.getElementById(hideType + "List");
     if (divToHide.style.display === "none") {
         // TODO: Might need to change based on display set by Bootstrap
         divToHide.style.display = "block";  

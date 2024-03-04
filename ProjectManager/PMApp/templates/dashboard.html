@@ -13,8 +13,8 @@
 {% block content %}
     <h1>{{ project.project_name }}</h1>
 
-    <!-- TODO: Tasks -->
-    <div id="tasks">
+    <!-- Tasks list -->
+    <div id="tasksList">
         <h2>
             Tasks
             <button onclick="showNewForm('tasks')">+</button>
@@ -33,8 +33,10 @@
         </ul>
     </div>
 
-    <!-- TODO: Expenses -->
-    <div id="expenses">
+    <!-- TODO: Tasks forms -->
+
+    <!-- Expenses list -->
+    <div id="expensesList">
     <h2>
         Expenses
         <button onclick="showNewForm('expenses')">+</button>
@@ -49,6 +51,8 @@
                 </li>
             {% endfor %}
     </div>
+
+    <!-- TODO: Expenses forms -->
 
 
 {% endblock %}

@@ -1,9 +1,9 @@
-#tasks {
+#tasksList {
     float: left;
     width: 50%;
 }
 
-#expenses {
+#expensesList {
     float: right;
     width: 50%;
 }
