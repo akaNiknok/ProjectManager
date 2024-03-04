@@ -167,11 +167,6 @@ def delete_project(request):
     return redirect("dashboard")
 
 
-def view_task(request):
-    # TODO: View task
-    return HttpResponse("View Task")
-
-
 def create_task(request):
     # TODO: Create task 
     return HttpResponse("Create Task")
