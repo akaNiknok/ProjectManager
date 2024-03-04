@@ -7,3 +7,15 @@
     float: right;
     width: 50%;
 }
+
+#tasksForm {
+    float: right;
+    width: 50%;
+    display: none;
+}
+
+#expensesForm {
+    float: left;
+    width: 50%;
+    display: none;
+}

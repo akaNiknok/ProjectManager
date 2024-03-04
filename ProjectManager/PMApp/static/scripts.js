@@ -9,8 +9,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
 });
 
 
-// Hides the div of either tasks or expenses
-// and shows the appropriate form
+// Hides the div of either tasks or expenses lists
+// and hides the button to create
 function showNewForm(showType) {
 
     // Get the inverse of type and store it to hideType
@@ -20,14 +20,38 @@ function showNewForm(showType) {
         var hideType = "tasks"
     }
 
-    // Hide the div
+    // Get elements
     var divToHide = document.getElementById(hideType + "List");
-    if (divToHide.style.display === "none") {
-        // TODO: Might need to change based on display set by Bootstrap
-        divToHide.style.display = "block";  
-    } else {
-        divToHide.style.display = "none";
-    };
+    var divToShow = document.getElementById(showType + "Form");
+    var btnToHide = document.getElementById(showType + "CreateBtn")
 
-    // Show the form
-}
+    // Hide and show elements
+    // TODO: Edit based on the display set by bootstrap
+    divToHide.style.display = "none";  
+    divToShow.style.display = "block";
+    btnToHide.style.display = "none";  
+};
+
+
+// Hides the div of the form to create either tasks or expenses
+// and show the button to create
+function closeNewForm(hideType) {
+
+    // Get the inverse of type and store it to hideType
+    if (hideType === "tasks") {
+        var showType = "expenses"
+    } else {
+        var showType = "tasks"
+    }
+ 
+    // Get elements
+    var divToHide = document.getElementById(hideType + "Form");
+    var divToShow = document.getElementById(showType + "List");
+    var btnToShow = document.getElementById(hideType + "CreateBtn");
+
+    // Hide and show elements
+    // TODO: Edit based on the display set by bootstrap
+    divToHide.style.display = "none";  
+    divToShow.style.display = "block";
+    btnToShow.style.display = "inline-block";  
+};
