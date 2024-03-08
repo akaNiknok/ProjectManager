@@ -17,7 +17,7 @@
     <div id="tasksList">
         <h2>
             Tasks
-            <button id="tasksCreateBtn" onclick="showNewForm('tasks')">+</button>
+            <button id="tasksCreateBtn" onclick="toggleForm('tasks')">+</button>
         </h2>
 
         <ul>
@@ -36,20 +36,20 @@
     <!-- TODO: Tasks forms -->
     <div id="tasksForm">
         <h2>New Task</h2>
-        <button onclick="closeNewForm('tasks')">Cancel</button>
+        <button onclick="toggleForm('tasks')">Cancel</button>
     </div>
 
     <!-- TODO: Expenses forms -->
     <div id="expensesForm">
         <h2>New Expense</h2>
-        <button onclick="closeNewForm('expenses')">Cancel</button>
+        <button onclick="toggleForm('expenses')">Cancel</button>
     </div>
 
     <!-- Expenses list -->
     <div id="expensesList">
     <h2>
         Expenses
-        <button id="expensesCreateBtn" onclick="showNewForm('expenses')">+</button>
+        <button id="expensesCreateBtn" onclick="toggleForm('expenses')">+</button>
     </h2>
             {% for expense in expenses %}
                 <li><b>{{ expense.expense_desc }}</b>

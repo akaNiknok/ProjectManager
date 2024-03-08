@@ -9,49 +9,26 @@ window.addEventListener("DOMContentLoaded", (event) => {
 });
 
 
-// Hides the div of either tasks or expenses lists
-// and hides the button to create
-function showNewForm(showType) {
+// Toggle the div of the create form of the 'type',
+// the div for the list of the 'oppositeType',
+// and the button to create new 'type'
+function toggleForm(type) {
 
-    // Get the inverse of type and store it to hideType
-    if (showType === "tasks") {
-        var hideType = "expenses"
-    } else {
-        var hideType = "tasks"
-    }
+    // Get the opposite type
+    var oppositeType = (type === "tasks") ? "expenses" : "tasks";
 
-    // Get elements
-    var divToHide = document.getElementById(hideType + "List");
-    var divToShow = document.getElementById(showType + "Form");
-    var btnToHide = document.getElementById(showType + "CreateBtn")
+    // Get the elements to toggle
+    var divType = document.getElementById(type + "Form");
+    var divOpposite = document.getElementById(oppositeType + "List");
+    var btnType = document.getElementById(type + "CreateBtn");
 
-    // Hide and show elements
-    // TODO: Edit based on the display set by bootstrap
-    divToHide.style.display = "none";  
-    divToShow.style.display = "block";
-    btnToHide.style.display = "none";  
-};
-
-
-// Hides the div of the form to create either tasks or expenses
-// and show the button to create
-function closeNewForm(hideType) {
-
-    // Get the inverse of type and store it to hideType
-    if (hideType === "tasks") {
-        var showType = "expenses"
-    } else {
-        var showType = "tasks"
-    }
- 
-    // Get elements
-    var divToHide = document.getElementById(hideType + "Form");
-    var divToShow = document.getElementById(showType + "List");
-    var btnToShow = document.getElementById(hideType + "CreateBtn");
-
-    // Hide and show elements
-    // TODO: Edit based on the display set by bootstrap
-    divToHide.style.display = "none";  
-    divToShow.style.display = "block";
-    btnToShow.style.display = "inline-block";  
-};
+    // Get the current display value of each element
+    var divTypeCurrentStyle = window.getComputedStyle(divType).getPropertyValue("display");
+    var divOppositeCurrentStyle = window.getComputedStyle(divOpposite).getPropertyValue("display");
+    var btnTypeCurrentStyle = window.getComputedStyle(btnType).getPropertyValue("display");
+    
+    // Toggle the values
+    divType.style.display = divTypeCurrentStyle === "none" || "" ? "block" : "none";
+    divOpposite.style.display = divOppositeCurrentStyle === "none" ? "block" : "none";
+    btnType.style.display = btnTypeCurrentStyle === "none" ? "inline-block" : "none";
+}
