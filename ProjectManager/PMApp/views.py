@@ -186,7 +186,7 @@ def create_task(request):
 
         # Create and save the new project
         Task.objects.create(
-            project_id=current_project,
+            project=current_project,
             task_name=task_name,
             task_notes=task_notes,
             task_priority=task_priority,

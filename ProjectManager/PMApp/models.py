@@ -42,8 +42,8 @@ class User(models.Model):
 class Member(models.Model):
 
     member_id = models.SmallAutoField(primary_key=True)
-    project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return "{} is a member of {}".format(self.user_id.name, self.project_id.project_name)
@@ -62,7 +62,7 @@ class Task(models.Model):
         LOW = "L", _("Low")
 
     task_id = models.SmallAutoField(primary_key=True)
-    project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     task_name = models.CharField(max_length=255)
     task_notes = models.TextField(blank=True, null=True)
     task_deadline = models.DateField(default=date.today, blank=True, null=True)
@@ -81,8 +81,8 @@ class Task(models.Model):
 class TaskAssignment(models.Model):
 
     assignment_id = models.SmallAutoField(primary_key=True)
-    task_id = models.ForeignKey(Task, on_delete=models.CASCADE)
-    member_id = models.ForeignKey(Member, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
 
     def __str__(self):
         return "{} is tasked to {}".format(self.member_id.user_id.name, self.task_id.task_name)
@@ -91,8 +91,8 @@ class TaskAssignment(models.Model):
 class Expense(models.Model):
 
     expense_id = models.SmallAutoField(primary_key=True)
-    project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
-    member_id = models.ForeignKey(Member, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
     expense_date = models.DateField(default=date.today)
     expense_desc = models.TextField()
     expense_amt = models.DecimalField(max_digits=11, decimal_places=2)  # TODO: Change in data dictionary
@@ -112,7 +112,7 @@ class Notification(models.Model):
         READ = 1, _("Read")
 
     notif_id = models.SmallAutoField(primary_key=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     notif_datetime = models.DateTimeField()
     notif_text = models.CharField(max_length=255)
     notif_status = models.IntegerField(choices=Status, default=Status.UNREAD)
