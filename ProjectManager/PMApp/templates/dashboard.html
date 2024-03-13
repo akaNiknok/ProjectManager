@@ -33,9 +33,35 @@
         </ul>
     </div>
 
-    <!-- TODO: Tasks forms -->
+    <!-- New tasks form -->
     <div id="tasksForm">
         <h2>New Task</h2>
+
+        <form action="{% url 'create_task' %}" method="POST">{% csrf_token %}
+            <label for="task_name">Task Name:</label>
+            <input type="text" name="task_name" id="task_name" required><br><br>
+
+            <label for="task_notes">Task Notes:</label>
+            <textarea name="task_notes" id="task_notes" cols="30" rows="10"></textarea><br><br>
+
+            <label>Task Priority:</label>
+            <input type="radio" id="task_priority_l" name="task_priority" value="L" required>
+            <label for="task_priority_l">Low</label>
+            <input type="radio" id="task_priority_m" name="task_priority" value="M" required>
+            <label for="task_priority_m">Medium</label>
+            <input type="radio" id="task_priority_h" name="task_priority" value="H" required>
+            <label for="task_priority_h">High</label>
+            <br><br>
+
+            <label for="task_deadline">Deadline:</label>
+            <input type="date" name="task_deadline" id="task_deadline"><br><br>
+
+            <!-- TODO: Task Members-->
+            <label for="task_members">Task Members:</label>
+            <br><br>
+
+            <input type="submit">
+        </form>
         <button onclick="toggleForm('tasks')">Cancel</button>
     </div>
 
