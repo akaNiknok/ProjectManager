@@ -27,6 +27,7 @@
                         <li>Status: <b>{{ task.get_task_status_display }}</b></li>
                         <li>Priority: <b>{{ task.get_task_priority_display }}</b></li>
                         <li>Notes: {{ task.task_notes|linebreaks }}</li>
+                        <li>Deadline: <b>{{ task.task_deadline }}</b></li>
                     </ul>
                 </li>
             {% endfor %}
