@@ -168,8 +168,36 @@ def delete_project(request):
 
 
 def create_task(request):
-    # TODO: Create task 
-    return HttpResponse("Create Task")
+    # Create task when user clicks submit
+    if (request.method == "POST"):
+
+        # Get submitted form values
+        task_name = request.POST.get("task_name")
+        task_notes = request.POST.get("task_notes")
+        task_priority = request.POST.get("task_priority")
+        task_deadline = request.POST.get("task_deadline")
+
+        # Set deadline to None if not specified
+        if task_deadline == "":
+            task_deadline = None
+
+        # Get current selected projected using the session variable
+        current_project = Project.objects.get(project_id=request.session["current_project_id"])
+
+        # Create and save the new project
+        Task.objects.create(
+            project_id=current_project,
+            task_name=task_name,
+            task_notes=task_notes,
+            task_priority=task_priority,
+            task_deadline=task_deadline
+        )
+
+        return redirect("dashboard")
+
+    # Otherwise, redirect to dashboard 
+    else:
+        return redirect("dashboard")
 
 
 def update_task(request):
