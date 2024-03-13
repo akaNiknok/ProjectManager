@@ -34,7 +34,7 @@
         </ul>
     </div>
 
-    <!-- New tasks form -->
+    <!-- New task form -->
     <div id="tasksForm">
         <h2>New Task</h2>
 
@@ -63,12 +63,27 @@
 
             <input type="submit">
         </form>
+
         <button onclick="toggleForm('tasks')">Cancel</button>
     </div>
 
-    <!-- TODO: Expenses forms -->
+    <!-- New expense form -->
     <div id="expensesForm">
         <h2>New Expense</h2>
+
+        <form action="{% url 'create_expense' %}" method="POST">{% csrf_token %}
+            <label for="expense_date">Expense date:</label>
+            <input type="date" name="expense_date" id="expense_date" required><br><br>
+
+            <label for="expense_desc">Expense Description:</label>
+            <textarea name="expense_desc" id="expense_desc" cols="30" rows="10" required></textarea><br><br>
+
+            <label for="expense_amt">Expense Amount:</label>
+            <input type="number" name="expense_amt" id="expense_amt" required><br><br>
+
+            <input type="submit">
+        </form>
+
         <button onclick="toggleForm('expenses')">Cancel</button>
     </div>
 

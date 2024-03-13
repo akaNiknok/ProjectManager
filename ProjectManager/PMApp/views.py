@@ -213,3 +213,18 @@ def delete_task(request):
 def view_members(request):
     # TODO: View members
     return render(request, "view_members.html")
+
+
+def create_expense(request):
+    # TODO: Create expense 
+    return HttpResponse("Create expense")
+
+
+def update_expense(request):
+    # TODO: Update expense 
+    return HttpResponse("Update expense")
+
+
+def delete_expense(request):
+    # TODO: Delete expense
+    return HttpResponse("Delete expense")
