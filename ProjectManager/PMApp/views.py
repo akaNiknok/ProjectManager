@@ -21,6 +21,7 @@ def dashboard(request):
     except:
         request.session["current_project_id"] = 0
         project_obj = project_objs[0]
+        project_id = project_obj.project_id
     
     # Get tasks and expenses
     task_objs = Task.objects.filter(project_id=project_id)
