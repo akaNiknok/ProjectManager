@@ -185,7 +185,7 @@ def create_task(request):
         # Get current selected projected using the session variable
         current_project = Project.objects.get(project_id=request.session["current_project_id"])
 
-        # Create and save the new project
+        # Create the new task
         Task.objects.create(
             project=current_project,
             task_name=task_name,
