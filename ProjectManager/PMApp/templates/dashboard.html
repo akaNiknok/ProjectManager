@@ -1,37 +1,51 @@
 {% extends 'base.html' %}
 
 {% block navbar %}
-    <ul>
-        <li><a href="{% url 'dashboard' %}">Dashboard (current)</a></li>
-        <li><a href="{% url 'view_members' %}">Members</a></li>
-        <li><a href="{% url 'view_project' %}">Overview</a></li>
-        <!-- TODO: Logout -->
-        <li><a href="">Logout</a></li>
+    <ul class="navbar-nav mt-3">
+      <li class="navbar-item"><a class="navbar-brand me-2" style="color: FFFFFF">This is Branding</a></li>
+      <li class="navbar-item"><a class="me-2" style="color: F8F9FA" href="{% url 'dashboard' %}">Dashboard (current)</a></li>
+      <li class="navbar-item"><a class="me-2" style="color: ADB5BD" href="{% url 'view_members' %}">Members</a></li>
+      <li class="navbar-item"><a class="me-2" style="color: ADB5BD" href="{% url 'view_project' %}">Overview</a></li>
+      <!-- TODO: Logout -->
+      <li><a class="mr-2" style="color: ADB5BD" href="">Logout</a></li>
     </ul>
 {% endblock %}
 
 {% block content %}
-    <h1>{{ project.project_name }}</h1>
-
+    <h1 class="ms-3" style="color: WHITE;">{{ project.project_name }}</h1>
+    <div class="mb-3" style="height: 1px; background-color: #EAEFF5"></div>
     <!-- Tasks list -->
     <div id="tasksList">
-        <h2>
+        <h2 class="ms-3"style="color: WHITE">
             Tasks
             <button id="tasksCreateBtn" onclick="toggleForm('tasks')">+</button>
         </h2>
+             
+      {% for task in tasks %}
+        <table class="table table-success ms-4 rounded-3 overflow-hidden" style="width: 90%;">
+          <tr>
+            <td>{{ task.task_name }}</td>                 
+            <td class="table table-light" style="width:80%">
+              <table style="text-align: left;" class="table table-light">
+                <tr>
+                  <th>Status: <b>{{ task.get_task_status_display}}  </b></th>
+                </tr>
+                <tr>
+                  <th>Priority: <b>{{ task.get_task_priority_displays}} </b></th>
+                </tr>
+                <tr>
+                  <th>Notes: {{ task.task_notes|linebreaks }} </th>
+                </tr>
+                <tr>
+                  <th>Deadline: <b>{{ task.task_deadline }} </th>
+                  <!-- IDK how to get rid of the annoying thing here -->
+                </tr>
+              </table>
+            </td>
+          </tr>
 
-        <ul>
-            {% for task in tasks %}
-                <li><b>{{ task.task_name }}</b>
-                    <ul>
-                        <li>Status: <b>{{ task.get_task_status_display }}</b></li>
-                        <li>Priority: <b>{{ task.get_task_priority_display }}</b></li>
-                        <li>Notes: {{ task.task_notes|linebreaks }}</li>
-                        <li>Deadline: <b>{{ task.task_deadline }}</b></li>
-                    </ul>
-                </li>
-            {% endfor %}
-        </ul>
+        </table>
+      {% endfor %}
     </div>
 
     <!-- New task form -->
