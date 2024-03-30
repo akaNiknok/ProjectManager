@@ -14,13 +14,16 @@
 {% block content %}
     <h1 class="ms-3" style="color: WHITE;">{{ project.project_name }}</h1>
     <div class="mb-3" style="height: 1px; background-color: #EAEFF5"></div>
+    <!-- line break -->
+
     <!-- Tasks list -->
     <div id="tasksList">
         <h2 class="ms-3"style="color: WHITE">
             Tasks
             <button id="tasksCreateBtn" onclick="toggleForm('tasks')">+</button>
         </h2>
-             
+        <div class="mb-3 ms-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
+        <!-- line break --> 
       {% for task in tasks %}
         <table class="table table-success ms-4 rounded-3 overflow-hidden" style="width: 90%;">
           <tr>
@@ -28,16 +31,16 @@
             <td class="table table-light" style="width:80%">
               <table style="text-align: left;" class="table table-light">
                 <tr>
-                  <th>Status: <b>{{ task.get_task_status_display}}  </b></th>
+                  <th>Status: {{ task.get_task_status_display}} </th>
                 </tr>
                 <tr>
-                  <th>Priority: <b>{{ task.get_task_priority_displays}} </b></th>
+                  <th>Priority: {{ task.get_task_priority_displays}} </th>
                 </tr>
                 <tr>
                   <th>Notes: {{ task.task_notes|linebreaks }} </th>
                 </tr>
                 <tr>
-                  <th>Deadline: <b>{{ task.task_deadline }} </th>
+                  <th>Deadline: {{ task.task_deadline }} </th>
                   <!-- IDK how to get rid of the annoying thing here -->
                 </tr>
               </table>
@@ -51,7 +54,8 @@
     <!-- New task form -->
     <div id="tasksForm">
         <h2>New Task</h2>
-
+        <div class="mb-3 ms-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
+        <!-- line break --> 
         <form action="{% url 'create_task' %}" method="POST">{% csrf_token %}
             <label for="task_name">Task Name:</label>
             <input type="text" name="task_name" id="task_name" required><br><br>
@@ -84,7 +88,8 @@
     <!-- New expense form -->
     <div id="expensesForm">
         <h2>New Expense</h2>
-
+        <div class="mb-3 ms-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
+        <!-- line break --> 
         <form action="{% url 'create_expense' %}" method="POST">{% csrf_token %}
             <label for="expense_date">Expense date:</label>
             <input type="date" name="expense_date" id="expense_date" required><br><br>
@@ -103,9 +108,11 @@
 
     <!-- Expenses list -->
     <div id="expensesList">
-    <h2>
+    <h2 class="mt-2">
         Expenses
         <button id="expensesCreateBtn" onclick="toggleForm('expenses')">+</button>
+        <div class="mb-3 ms-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
+        <!-- line break --> 
     </h2>
             {% for expense in expenses %}
                 <li><b>{{ expense.expense_desc }}</b>

@@ -19,3 +19,8 @@
     width: 50%;
     display: none;
 }
+
+#vertbreak {
+  border: 3px WHITE;
+  height: 500px;
+}
