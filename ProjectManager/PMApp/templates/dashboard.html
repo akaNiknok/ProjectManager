@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+
 {% block navbar %}
     <ul class="navbar-nav mt-3">
       <li class="navbar-item"><a class="navbar-brand me-2" style="color: FFFFFF">This is Branding</a></li>
@@ -18,14 +19,14 @@
 
     <!-- Tasks list -->
     <div id="tasksList">
-        <h2 class="ms-3"style="color: WHITE">
-            Tasks
-            <button id="tasksCreateBtn" onclick="toggleForm('tasks')">+</button>
-        </h2>
-        <div class="mb-3 ms-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
+      <h2 class="ms-3"style="color: WHITE">
+        Tasks
+        <button id="tasksCreateBtn" class="rounded-5 overflow-hidden" style="width: 24px; height: 24px; text-align: center;" onclick="toggleForm('tasks')"></button>
+      </h2>
+      <div class="mb-3 ms-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
         <!-- line break --> 
       {% for task in tasks %}
-        <table class="table table-success ms-4 rounded-3 overflow-hidden" style="width: 90%;">
+        <table class="table table-success ms-3 rounded-3 overflow-hidden" style="width: 90%;">
           <tr>
             <td>{{ task.task_name }}</td>                 
             <td class="table table-light" style="width:80%">
@@ -46,82 +47,114 @@
               </table>
             </td>
           </tr>
-
         </table>
       {% endfor %}
     </div>
 
     <!-- New task form -->
     <div id="tasksForm">
-        <h2>New Task</h2>
-        <div class="mb-3 ms-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
-        <!-- line break --> 
-        <form action="{% url 'create_task' %}" method="POST">{% csrf_token %}
-            <label for="task_name">Task Name:</label>
-            <input type="text" name="task_name" id="task_name" required><br><br>
+      <h2 style="color: WHITE">Create Task</h2>
+      <div class="mb-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
+      <!-- line break --> 
+      <form action="{% url 'create_task' %}" method="POST">{% csrf_token %}
+        <div class="row">
+          <label style="color: WHITE; font-size: 26px;" for="task_name">Task Name:</label>
+        </div>
+        <div class="row">
+          <input class="form-control mt-2 ms-2 rounded-3 overflow-hidden" style="width: 90%" type="text" name="task_name" id="task_name" required><br><br>
+        </div>
 
-            <label for="task_notes">Task Notes:</label>
-            <textarea name="task_notes" id="task_notes" cols="30" rows="10"></textarea><br><br>
+        <div class="row">
+          <label style="color: WHITE; font-size: 26px;"for="task_notes">Task Notes:</label>
+        </div>
+        <div class="row">
+          <textarea class="form-label mt-2 ms-2 rounded-4 overflow-hidden" style="width: 90%; resize: none;" name="task_notes" id="task_notes" cols="30" rows="10"></textarea><br><br>
+        </div>
 
-            <label>Task Priority:</label>
-            <input type="radio" id="task_priority_l" name="task_priority" value="L" required>
-            <label for="task_priority_l">Low</label>
-            <input type="radio" id="task_priority_m" name="task_priority" value="M" required>
-            <label for="task_priority_m">Medium</label>
-            <input type="radio" id="task_priority_h" name="task_priority" value="H" required>
-            <label for="task_priority_h">High</label>
-            <br><br>
+        <label style="color: WHITE; font-size: 26px;">Task Priority:</label>
+        
+        <input class="mt-3" type="radio" id="task_priority_l" name="task_priority" value="L" required>
+        <label style="color: WHITE;" for="task_priority_l">Low</label>
+        <input class="mt-3" type="radio" id="task_priority_m" name="task_priority" value="M" required>
+        <label style="color: WHITE;" for="task_priority_m">Medium</label>
+        <input class="mt-3" type="radio" id="task_priority_h" name="task_priority" value="H" required>
+        <label style="color: WHITE;" for="task_priority_h">High</label>
+        <br><br>
 
-            <label for="task_deadline">Deadline:</label>
-            <input type="date" name="task_deadline" id="task_deadline"><br><br>
 
-            <!-- TODO: Task Members-->
-            <label for="task_members">Task Members:</label>
-            <br><br>
+        <label style="color:WHITE; font-size: 26px;" for="task_deadline">Deadline:</label>
+        <input class="rounded-3 overflow-hidden" style="width:93%;"type="date" name="task_deadline" id="task_deadline"><br><br>
 
-            <input type="submit">
-        </form>
-
-        <button onclick="toggleForm('tasks')">Cancel</button>
+        <!-- TODO: Task Members-->
+        <label style="color: WHITE; font-size: 26px;" for="task_members">Task Members:</label>
+        <br><br>
+        <div class="col">
+          <button class="btn btn-light me-3" onclick="toggleForm('tasks')">Cancel</button>
+          <input class="btn me-3" style="background-color: BLACK; color:WHITE;" type="submit">
+        </div>
+      </form>
     </div>
 
     <!-- New expense form -->
     <div id="expensesForm">
-        <h2>New Expense</h2>
-        <div class="mb-3 ms-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
+      <div class="ms-3">
+        <h2 style="color: WHITE;">New Expense</h2>
+        <div class="mb-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
         <!-- line break --> 
         <form action="{% url 'create_expense' %}" method="POST">{% csrf_token %}
-            <label for="expense_date">Expense date:</label>
-            <input type="date" name="expense_date" id="expense_date" required><br><br>
+          <div class="row">
+            <label style="color: WHITE; font-size: 26px;" for="expense_date">Expense date:</label>
+          </div>
+          <div class="row">
+            <input class="rounded-3 overflow-hidden mt-2 ms-2" style="width:90%;" type="date" name="expense_date" id="expense_date" required><br><br>
+          </div>
+          <div class="row">
+            <label style="color: WHITE; font-size: 26px;" for="expense_desc">Expense Description:</label>
+          </div>
+          <div class="row">
+            <textarea class="rounded-4 overflow-hidden mt-2 ms-2" style="width: 90%; resize: none;" name="expense_desc" id="expense_desc" cols="30" rows="10" required></textarea><br><br>
+          </div>
+          <div class="row">
+            <label style="color: WHITE; font-size: 26px;" for="expense_amt">Expense Amount:</label>
+          </div>
+          <div class="row">
+            <input class="rounded-3 overflow-hidden mt-2 ms-2" style="width: 90%;" type="number" name="expense_amt" id="expense_amt" required>
+          </div>
+          <br><br>
 
-            <label for="expense_desc">Expense Description:</label>
-            <textarea name="expense_desc" id="expense_desc" cols="30" rows="10" required></textarea><br><br>
-
-            <label for="expense_amt">Expense Amount:</label>
-            <input type="number" name="expense_amt" id="expense_amt" required><br><br>
-
-            <input type="submit">
+          <button class="btn btn-light me-3" onclick="toggleForm('expenses')">Cancel</button>
+          <input class="btn me-3" style="background-color: BLACK; color: WHITE;" type="submit">
         </form>
-
-        <button onclick="toggleForm('expenses')">Cancel</button>
+      </div>
     </div>
 
     <!-- Expenses list -->
     <div id="expensesList">
-    <h2 class="mt-2">
-        Expenses
-        <button id="expensesCreateBtn" onclick="toggleForm('expenses')">+</button>
-        <div class="mb-3 ms-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
+      <h2  style="color: WHITE;"> 
+        Expenses 
+        <button id="expensesCreateBtn" class="rounded-5 overflow-hidden" style="width: 24px; height: 24px;" onclick="toggleForm('expenses')"></button>
+      </h2>
+        <div class="mb-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
         <!-- line break --> 
-    </h2>
             {% for expense in expenses %}
-                <li><b>{{ expense.expense_desc }}</b>
-                    <ul>
-                        <li>Expense by: {{ expense.member_id.user_id.name }}</li>
-                        <li>Amount: Php {{ expense.expense_amt }}</li>
-                        <li>Date: {{ expense.expense_date }}</li>
-                    </ul>
-                </li>
+            <table class="table table-success ms-4 rounded-3 overflow-hidden" style="width:90%;">
+              <tr>
+                <th> {{ expese.expense_desc}} </th>
+                <td class="table table-light" style="width:80%">
+                  <table style="text-align: left" class="table table-light">
+                    <tr>
+                      <th> Expense by: {{ expense.member_id.user_id.name }}</th>
+                    </tr>
+                    <tr>
+                      <th> Amount: PHP {{ expese.expense_amt }}</th>
+                    </tr>
+                    <tr>
+                      <th> Date: {{ expense.expense_date }}</th>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
             {% endfor %}
     </div>
 
