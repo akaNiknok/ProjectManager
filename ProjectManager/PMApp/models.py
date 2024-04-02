@@ -85,7 +85,7 @@ class TaskAssignment(models.Model):
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "{} is tasked to {}".format(self.member_id.user_id.name, self.task_id.task_name)
+        return "{} is tasked to {}".format(self.member.user.name, self.task.task_name)
 
 
 class Expense(models.Model):
@@ -101,7 +101,7 @@ class Expense(models.Model):
         return "{}: PHP {} to {}".format(
             self.expense_id,
             self.expense_amt,
-            self.project_id.project_name
+            self.project.project_name
         )
 
 
