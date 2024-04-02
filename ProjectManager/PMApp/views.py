@@ -217,8 +217,32 @@ def view_members(request):
 
 
 def create_expense(request):
-    # TODO: Create expense 
-    return HttpResponse("Create expense")
+    # Create expense when user clicks submit
+    if (request.method == "POST"):
+
+        # Get submitted form values
+        expense_date = request.POST.get("expense_date")
+        expense_desc = request.POST.get("expense_desc")
+        expense_amt = request.POST.get("expense_amt")
+
+        # Get current selected projected using the session variable
+        current_project = Project.objects.get(project_id=request.session["current_project_id"])
+        current_member = Member.objects.get(member_id=1)  # TODO: Member
+
+        # Create the new expense
+        Expense.objects.create(
+            project=current_project,
+            member=current_member,  # TODO: Member
+            expense_date=expense_date,
+            expense_desc = expense_desc,
+            expense_amt=expense_amt
+        )
+
+        return redirect("dashboard")
+
+    # Otherwise, redirect to dashboard 
+    else:
+        return redirect("dashboard")
 
 
 def update_expense(request):
