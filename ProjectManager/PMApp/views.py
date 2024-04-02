@@ -227,7 +227,7 @@ def create_expense(request):
 
         # Get current selected projected using the session variable
         current_project = Project.objects.get(project_id=request.session["current_project_id"])
-        current_member = Member.objects.get(member_id=1)  # TODO: Member
+        current_member = Member.objects.latest("member_id")  # TODO: Member
 
         # Create the new expense
         Expense.objects.create(
