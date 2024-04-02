@@ -46,7 +46,7 @@ class Member(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "{} is a member of {}".format(self.user_id.name, self.project_id.project_name)
+        return "{} is a member of {}".format(self.user.name, self.project.project_name)
 
 
 class Task(models.Model):

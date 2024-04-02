@@ -33,3 +33,6 @@ function toggleForm(type) {
     btnType.style.display = btnTypeCurrentStyle === "none" ? "inline-block" : "none";
 }
 
+function colorTable() {
+  // To be made;
+}

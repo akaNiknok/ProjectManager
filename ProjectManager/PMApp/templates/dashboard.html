@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
 
-
 {% block navbar %}
     <ul class="navbar-nav mt-3">
-      <li class="navbar-item"><a class="navbar-brand me-2" style="color: FFFFFF">This is Branding</a></li>
-      <li class="navbar-item"><a class="me-2" style="color: F8F9FA" href="{% url 'dashboard' %}">Dashboard (current)</a></li>
-      <li class="navbar-item"><a class="me-2" style="color: ADB5BD" href="{% url 'view_members' %}">Members</a></li>
-      <li class="navbar-item"><a class="me-2" style="color: ADB5BD" href="{% url 'view_project' %}">Overview</a></li>
+      <li class="navbar-item"><a class="navbar-brand ms-2 me-2" style="color: FFFFFF">This is Branding</a></li>
+      <li class="navbar-item"><a class="me-2" style="color: F8F9FA; text-decoration: none;" href="{% url 'dashboard' %}">Dashboard (current)</a></li>
+      <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_members' %}">Members</a></li>
+      <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_project' %}">Overview</a></li>
       <!-- TODO: Logout -->
-      <li><a class="mr-2" style="color: ADB5BD" href="">Logout</a></li>
+      <li><a class="mr-2" style="color: ADB5BD; text-decoration: none;" href="">Logout</a></li>
     </ul>
 {% endblock %}
 
@@ -23,10 +22,30 @@
         Tasks
         <button id="tasksCreateBtn" class="rounded-5 overflow-hidden" style="width: 24px; height: 24px; text-align: center;" onclick="toggleForm('tasks')"></button>
       </h2>
-      <div class="mb-3 ms-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
+      <div class="mb-3 ms-3" style="height: 1px; width: 91%; background-color: #EAEFF5"></div>
         <!-- line break --> 
       {% for task in tasks %}
-        <table class="table table-success ms-3 rounded-3 overflow-hidden" style="width: 90%;">
+      <table id="taskTable{{forloop.counter}}" class="table ms-3 rounded-3 overflow-hidden" style="width: 90%;" onload="colorTable()">  
+
+        <script 
+          defer 
+          data-task-status = "{{ task.get_task_status_display}}">
+          var table = document.getElementById("taskTable{{forloop.counter}}");
+          var data = document.currentScript.dataset;
+          var task_status = data.taskStatus;
+          switch(task_status){
+            case "In Progress":
+              table.classList.add("table-success");
+              break;
+            case "For Review":
+              table.classList.add("table-warning");
+              break;
+            case "Completed":
+              table.classList.add("table-danger");
+              break;
+          }
+        </script>
+
           <tr>
             <td>{{ task.task_name }}</td>                 
             <td class="table table-light" style="width:80%">
@@ -136,7 +155,7 @@
       </h2>
         <div class="mb-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
         <!-- line break --> 
-            {% for expense in expenses %}
+          {% for expense in expenses %}
             <table class="table table-success ms-4 rounded-3 overflow-hidden" style="width:90%;">
               <tr>
                 <th> {{ expese.expense_desc}} </th>
@@ -155,7 +174,7 @@
                 </td>
               </tr>
             </table>
-            {% endfor %}
+          {% endfor %}
     </div>
 
 
