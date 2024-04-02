@@ -2,7 +2,7 @@
 
 {% block navbar %}
     <ul class="navbar-nav mt-3">
-      <li class="navbar-item"><a class="navbar-brand ms-2 me-2" style="color: FFFFFF">This is Branding</a></li>
+      <li class="navbar-item"><a class="navbar-brand ms-2 me-2" style="color: FFFFFF; text-decoration: none;">This is Branding</a></li>
       <li class="navbar-item"><a class="me-2" style="color: F8F9FA; text-decoration: none;" href="{% url 'dashboard' %}">Dashboard (current)</a></li>
       <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_members' %}">Members</a></li>
       <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_project' %}">Overview</a></li>
@@ -13,6 +13,8 @@
 
 {% block content %}
     <h1 class="ms-3" style="color: WHITE;">{{ project.project_name }}</h1>
+    <!-- Resolve the issue of scrolling too far and casuing it to stay, add a function which tracks how far away from the start tihs is and moves with it -->
+    <div style="position: absolute; left: 48%; border-right: solid 1px white; height:100%;"></div>
     <div class="mb-3" style="height: 1px; background-color: #EAEFF5"></div>
     <!-- line break -->
 
@@ -25,7 +27,7 @@
       <div class="mb-3 ms-3" style="height: 1px; width: 91%; background-color: #EAEFF5"></div>
         <!-- line break --> 
       {% for task in tasks %}
-      <table id="taskTable{{forloop.counter}}" class="table ms-3 rounded-3 overflow-hidden" style="width: 90%;" onload="colorTable()">  
+      <table id="taskTable{{forloop.counter}}" class="table ms-3 rounded-3 overflow-hidden" style="width: 90%;">  
 
         <script 
           defer 
@@ -66,7 +68,7 @@
               </table>
             </td>
           </tr>
-        </table>
+      </table>
       {% endfor %}
     </div>
 
@@ -147,6 +149,7 @@
       </div>
     </div>
 
+    <div class="vline"></div>
     <!-- Expenses list -->
     <div id="expensesList">
       <h2  style="color: WHITE;"> 

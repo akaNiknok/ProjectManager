@@ -4,9 +4,9 @@
  
     <ul class="navbar-nav mt-3">
       <li class="navbar-item"><a class="navbar-brand ms-2 me-2" style="color: FFFFFF">This is Branding</a></li>
-      <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'dashboard' %}">Dashboard (current)</a></li>
+      <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'dashboard' %}">Dashboard</a></li>
       <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_members' %}">Members</a></li>
-      <li class="navbar-item"><a class="me-2" style="color: F8F9FA; text-decoration: none;" href="{% url 'view_project' %}">Overview</a></li>
+      <li class="navbar-item"><a class="me-2" style="color: F8F9FA; text-decoration: none;" href="{% url 'view_project' %}">Overview (current)</a></li>
       <!-- TODO: Logout -->
       <li><a class="mr-2" style="color: ADB5BD; text-decoration: none;" href="">Logout</a></li>
     </ul>
@@ -15,33 +15,96 @@
 
 {% block content %}
 <div style="color: WHITE;">
-    Project ID: {{ project.project_id }}<br><br>
-    Project Name: {{ project.project_name }}<br><br>
-    Project Description: {{ project.project_desc }}<br><br>
-    Project Start: {{ project.project_start }}<br><br>
-    Project End: {{ project.project_end }}<br><br>
-    Project Status: {{ project.get_project_status_display }}<br><br>
-    <!-- For IntegerChoices / TextChoices, use {{ OBJNAME.get_FIELDNAME_display }} -->
+  <div class="row mt-2" style="margin-left: 10px;">
+    <div class="col">
+      <h1 style="font-size: 48px;">Project Name: {{ project.project_name }} </h1>
+    </div>
+      <div class="col mt-2" style="margin-left:25%">
+       
+  </div> 
+  <div class="mb-3" style="height: 1px; background-color: #EAEFF5"></div>
+  <!-- line break -->
+  <div class="row" style="margin-left: 5px;">
+    <div class="col">
+      <h2 style="font-size: 26px;"> Description </h2>
+    </div>
+
+    <div class="col mb-1" style="margin-left: 45%">
+      <!-- Do not show edit details if project is "Archived" -->
+        {% if project.project_status != 2 %}
+        <a href="{% url 'update_project' %}">
+            <button class="btn btn-success" type="button">Edit Details</button>
+        </a>
+        {% endif %}
+        
+        <!-- Show archive project button only if project status is "Finished" -->
+        {% if project.project_status == 1 %}
+        <a href="{% url 'archive_project' %}">
+            <button class="btn btn-warning" type="button">Archive Project</button>
+        </a>        
+        {% endif %}
+
+        <!-- Show delete button only if project status is "Archived" -->
+        {% if project.project_status == 2 %}
+        <a href="{% url 'delete_project' %}">
+            <button class="btn btn-danger" type="button">Delete Project</button>
+        </a>
+        {% endif %}
+      </div> 
+
+    </div>
+  </div>
+  <div class="row" style="margin-left: 5px;">
+    <p> {{ project.project_desc }} </p>
+  </div>
+  <div class="mb-3" style="height: 1px; background-color: #EAEFF5"></div>
+  <!-- line break -->
+
+  <div class="row" style="margin-left: 5px;">
+    <div class="col">
+      <h2>Project Start:</h2>
+    </div>
+    <div class="col" style="margin-left: 70%;">
+      <h2> {{ project.project_start }} </h2>
+    </div>
+  </div>
+
+  <div class="row" style="margin-left: 5px;">
+    <div class="col">
+      <h2>Project End:</h2>
+    </div>
+    
+    <div class="col" style="margin-left: 70%;">
+      <h2> {{ project.project_end }} </h2> 
+    </div>
+  </div>
+
+  <div class="mb-3" style="height: 1px; background-color: #EAEFF5"></div>
+  <!-- line break -->
+  
+  <div class="row" style="margin-left: 5px;">
+    <div class="col">
+      <h2>Project Status: </h2>
+    </div>
+    <div class="col" style="margin-left: 70%">
+      <h2> {{ project.get_project_status_display }} </h2> 
+    </div>
+      <!-- For IntegerChoices / TextChoices, use {{ OBJNAME.get_FIELDNAME_display }} -->
+  </div>
+
+  <div class="mb-3" style="height: 1px; background-color: #EAEFF5"></div>
+  <!-- line break -->
+  <h2 class="ms-3"> Overall Task Progress </h2>
+  <div class="progress mb-3" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 20px; width: 75%; margin-left: 12%">
+    <div class="progress-bar bg-info" style="width: 25%">25%</div>
+  </div>
+
+  <div class="mb-3" style="height: 1px; background-color: #EAEFF5"></div>
+  <!-- line break -->
+  <h2 class="ms-3"> Financial Sumamry </h2>
+  <div class="progress mb-3" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 20px; width: 75%; margin-left: 12%">
+    <div class="progress-bar bg-success" style="width: 25%">25%</div>
+  </div>
 </div>
-    <!-- Show archive button only if project status is "Finished" -->
-    {% if project.project_status == 1 %}
-    <a href="{% url 'archive_project' %}">
-        <button type="button">Archive Project</button>
-    </a><br><br>
-    {% endif %}
 
-    <!-- Show delete button only if project status is "Archived" -->
-    {% if project.project_status == 2 %}
-    <a href="{% url 'delete_project' %}">
-        <button type="button">Delete Project</button>
-    </a><br><br>
-    {% endif %}
-
-    <!-- Do not show edit details if project is "Archived" -->
-    {% if project.project_status != 2 %}
-    <a href="{% url 'update_project' %}">
-        <button type="button">Edit Details</button>
-    </a><br><br>
-    {% endif %}
- 
 {% endblock %}
