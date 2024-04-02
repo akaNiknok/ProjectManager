@@ -32,3 +32,7 @@ function toggleForm(type) {
     divOpposite.style.display = divOppositeCurrentStyle === "none" ? "block" : "none";
     btnType.style.display = btnTypeCurrentStyle === "none" ? "inline-block" : "none";
 }
+
+function colorTable() {
+  // To be made;
+}

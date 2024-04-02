@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
 
 {% block navbar %}
-    <ul>
-        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-        <li><a href="{% url 'view_members' %}">Members</a></li>
-        <li><a href="{% url 'view_project' %}">Overview (current)</a></li>
-        <!-- TODO: Logout -->
-        <li><a href="">Logout</a></li>
+ 
+    <ul class="navbar-nav mt-3">
+      <li class="navbar-item"><a class="navbar-brand ms-2 me-2" style="color: FFFFFF">This is Branding</a></li>
+      <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'dashboard' %}">Dashboard (current)</a></li>
+      <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_members' %}">Members</a></li>
+      <li class="navbar-item"><a class="me-2" style="color: F8F9FA; text-decoration: none;" href="{% url 'view_project' %}">Overview</a></li>
+      <!-- TODO: Logout -->
+      <li><a class="mr-2" style="color: ADB5BD; text-decoration: none;" href="">Logout</a></li>
     </ul>
+
 {% endblock %}
 
 {% block content %}
+<div style="color: WHITE;">
     Project ID: {{ project.project_id }}<br><br>
     Project Name: {{ project.project_name }}<br><br>
     Project Description: {{ project.project_desc }}<br><br>
@@ -18,7 +22,7 @@
     Project End: {{ project.project_end }}<br><br>
     Project Status: {{ project.get_project_status_display }}<br><br>
     <!-- For IntegerChoices / TextChoices, use {{ OBJNAME.get_FIELDNAME_display }} -->
-
+</div>
     <!-- Show archive button only if project status is "Finished" -->
     {% if project.project_status == 1 %}
     <a href="{% url 'archive_project' %}">
