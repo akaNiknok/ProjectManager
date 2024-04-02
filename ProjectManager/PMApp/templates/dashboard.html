@@ -165,10 +165,10 @@
                 <td class="table table-light" style="width:80%">
                   <table style="text-align: left" class="table table-light">
                     <tr>
-                      <th> Expense by: {{ expense.member_id.user_id.name }}</th>
+                      <th> Expense by: {{ expense.member.user.name }}</th>
                     </tr>
                     <tr>
-                      <th> Amount: PHP {{ expese.expense_amt }}</th>
+                      <th> Amount: PHP {{ expense.expense_amt }}</th>
                     </tr>
                     <tr>
                       <th> Date: {{ expense.expense_date }}</th>
