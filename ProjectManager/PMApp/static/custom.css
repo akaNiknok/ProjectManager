@@ -31,3 +31,8 @@ td>h5 {
 table>tbody>tr>td>table>tbody>tr>td {
     padding: 10 !important;
 }
+
+/* Temporary color for labels */
+label {
+    color: white;
+}
