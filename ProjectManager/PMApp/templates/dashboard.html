@@ -27,7 +27,7 @@
       <div class="mb-3 ms-3" style="height: 1px; width: 91%; background-color: #EAEFF5"></div>
         <!-- line break --> 
       {% for task in tasks %}
-      <table id="taskTable{{forloop.counter}}" class="table ms-3 rounded-3 overflow-hidden" style="width: 90%;">  
+      <table id="taskTable{{forloop.counter}}" class="table ms-3 rounded-3 overflow-hidden" style="width: 91%;" onload="colorTable()">  
 
         <script 
           defer 
@@ -49,21 +49,20 @@
         </script>
 
           <tr>
-            <td>{{ task.task_name }}</td>                 
-            <td class="table table-light" style="width:80%">
-              <table style="text-align: left;" class="table table-light">
+            <td><h5>{{ task.task_name }}</h5></td>                 
+            <td class="table table-light p-0" style="width:80%">
+              <table style="text-align: left;" class="table table-light mb-0">
                 <tr>
-                  <th>Status: {{ task.get_task_status_display}} </th>
+                  <td><i>Status:</i> <b>{{ task.get_task_status_display }}</b></td>
                 </tr>
                 <tr>
-                  <th>Priority: {{ task.get_task_priority_displays}} </th>
+                  <td><i>Priority:</i> <b>{{ task.get_task_priority_display }}</b></td>
                 </tr>
                 <tr>
-                  <th>Notes: {{ task.task_notes|linebreaks }} </th>
+                  <td><i>Notes:</i> {{ task.task_notes|linebreaks }}</td>
                 </tr>
-                <tr>
-                  <th>Deadline: {{ task.task_deadline }} </th>
-                  <!-- IDK how to get rid of the annoying thing here -->
+                <tr class="removeBottomBorder">
+                  <td class="removeBottomBorder"><i>Deadline:</i> <b>{{ task.task_deadline }}</b></td>
                 </tr>
               </table>
             </td>
@@ -159,19 +158,19 @@
         <div class="mb-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
         <!-- line break --> 
           {% for expense in expenses %}
-            <table class="table table-success ms-4 rounded-3 overflow-hidden" style="width:90%;">
+            <table class="table table-success rounded-3 overflow-hidden" style="width:93%;">
               <tr>
                 <th> {{ expese.expense_desc}} </th>
-                <td class="table table-light" style="width:80%">
-                  <table style="text-align: left" class="table table-light">
+                <td class="table table-light p-0" style="width:80%">
+                  <table style="text-align: left" class="table table-light mb-0">
                     <tr>
-                      <th> Expense by: {{ expense.member.user.name }}</th>
+                      <td><i>Expense by:</i> <b>{{ expense.member.user.name }}</b></td>
                     </tr>
                     <tr>
-                      <th> Amount: PHP {{ expense.expense_amt }}</th>
+                      <td><i>Amount:</i> <b>PHP {{ expense.expense_amt }}</b></td>
                     </tr>
-                    <tr>
-                      <th> Date: {{ expense.expense_date }}</th>
+                    <tr class="removeBottomBorder">
+                      <td class="removeBottomBorder"><i>Date:</i> <b>{{ expense.expense_date }}</b></td>
                     </tr>
                   </table>
                 </td>

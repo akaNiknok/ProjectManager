@@ -20,8 +20,14 @@
     display: none;
 }
 
-.table-completed{
-  
+td>h5 {
+    font-weight: normal;
 }
 
+.removeBottomBorder {
+    border-bottom: 0;
+}
 
+table>tbody>tr>td>table>tbody>tr>td {
+    padding: 10 !important;
+}
