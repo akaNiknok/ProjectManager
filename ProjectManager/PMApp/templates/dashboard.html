@@ -49,7 +49,12 @@
         </script>
 
           <tr>
-            <td><h5>{{ task.task_name }}</h5></td>                 
+            <td>
+              <h5>{{ task.task_name }}</h5>
+              <br><br>
+              <button type="button" class="btn btn-outline-dark">Edit</button>
+              <a href="{% url "delete_task" task.task_id %}" class="btn btn-outline-danger">Delete</a>
+            </td>                 
             <td class="table table-light p-0" style="width:80%">
               <table style="text-align: left;" class="table table-light mb-0">
                 <tr>
