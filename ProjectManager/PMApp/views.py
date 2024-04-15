@@ -207,8 +207,21 @@ def update_task(request):
 
 
 def delete_task(request):
-    # TODO: Delete task
-    return HttpResponse("Delete Task")
+    if (request.method == "POST"):
+        task_id = request.POST.get("task_id")
+
+        # Get project object
+        try:
+            task_obj = Task.objects.get(task_id=task_id)
+        except:
+            raise Http404("Project does not exist")
+
+        # Delete object
+        task_obj.delete()
+
+        return redirect("dashboard")
+    else:
+        return redirect("dashboard")
 
 
 def view_members(request):

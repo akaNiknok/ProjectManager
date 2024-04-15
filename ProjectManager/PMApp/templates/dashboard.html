@@ -53,7 +53,10 @@
               <h5>{{ task.task_name }}</h5>
               <br><br>
               <button type="button" class="btn btn-outline-dark">Edit</button>
-              <a href="{% url "delete_task" task.task_id %}" class="btn btn-outline-danger">Delete</a>
+              <form action="{% url "delete_task" %}" method="POST">{% csrf_token %}
+                <input type="hidden" name="task_id" value="{{ task.task_id }}">
+                <input type="submit" value="Delete" class="btn btn-outline-danger">
+              </form>
             </td>                 
             <td class="table table-light p-0" style="width:80%">
               <table style="text-align: left;" class="table table-light mb-0">
