@@ -51,11 +51,11 @@
           <tr>
             <td>
               <h5>{{ task.task_name }}</h5>
-              <br><br>
-              <button type="button" class="btn btn-outline-dark">Edit</button>
+              <br>
+              <button type="button" class="btn btn-outline-dark btn-sm">Edit</button>
               <form action="{% url "delete_task" %}" method="POST">{% csrf_token %}
                 <input type="hidden" name="task_id" value="{{ task.task_id }}">
-                <input type="submit" value="Delete" class="btn btn-outline-danger">
+                <input type="submit" value="Delete" class="btn btn-outline-danger btn-sm">
               </form>
             </td>                 
             <td class="table table-light p-0" style="width:80%">
@@ -168,7 +168,15 @@
           {% for expense in expenses %}
             <table class="table table-success rounded-3 overflow-hidden" style="width:93%;">
               <tr>
-                <th> {{ expense.expense_desc}} </th>
+                <th>
+                  {{ expense.expense_desc}}
+                  <br>
+                  <button type="button" class="btn btn-outline-dark btn-sm">Edit</button>
+                  <form action="{% url "delete_task" %}" method="POST">{% csrf_token %}
+                    <input type="hidden" name="task_id" value="{{ task.task_id }}">
+                    <input type="submit" value="Delete" class="btn btn-outline-danger btn-sm">
+                  </form>
+                </th>
                 <td class="table table-light p-0" style="width:80%">
                   <table style="text-align: left" class="table table-light mb-0">
                     <tr>
