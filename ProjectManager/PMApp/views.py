@@ -264,5 +264,18 @@ def update_expense(request):
 
 
 def delete_expense(request):
-    # TODO: Delete expense
-    return HttpResponse("Delete expense")
+    if (request.method == "POST"):
+        expense_id = request.POST.get("expense_id")
+
+        # Get expense object
+        try:
+            expense_obj = Expense.objects.get(expense_id=expense_id)
+        except:
+            raise Http404("Expense does not exist")
+
+        # Delete object
+        expense_obj.delete()
+
+        return redirect("dashboard")
+    else:
+        return redirect("dashboard")
