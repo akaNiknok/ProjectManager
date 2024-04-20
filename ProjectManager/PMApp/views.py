@@ -236,11 +236,11 @@ def delete_task(request):
     if (request.method == "POST"):
         task_id = request.POST.get("task_id")
 
-        # Get project object
+        # Get task object
         try:
             task_obj = Task.objects.get(task_id=task_id)
         except:
-            raise Http404("Project does not exist")
+            raise Http404("Task does not exist")
 
         # Delete object
         task_obj.delete()
