@@ -52,7 +52,10 @@
             <td>
               <h5>{{ task.task_name }}</h5>
               <br>
-              <button type="button" class="btn btn-outline-dark btn-sm">Edit</button>
+              <form action="" method="POST" id="task-form-{{ task.task_id }}">
+                <input type="submit" id="save-task-{{ task.task_id }}" value="Save" class="btn btn-outline-success btn-sm" style="display: none;">
+              </form>
+              <button type="button" class="btn btn-outline-dark btn-sm edit-btn" data-type="task" data-id="{{ task.task_id }}">Edit</button>
               <form action="{% url "delete_task" %}" method="POST">{% csrf_token %}
                 <input type="hidden" name="task_id" value="{{ task.task_id }}">
                 <input type="submit" value="Delete" class="btn btn-outline-danger btn-sm">
@@ -61,16 +64,37 @@
             <td class="table table-light p-0" style="width:80%">
               <table style="text-align: left;" class="table table-light mb-0">
                 <tr>
-                  <td><i>Status:</i> <b>{{ task.get_task_status_display }}</b></td>
+                  <td>
+                    <i>Status:</i> <span id="status-{{ task.task_id }}">{{ task.get_task_status_display }}</span>
+                    <select id="status-form-{{ task.task_id }}" form="task-form-{{ task.task_id }}" name="status" class="form-control w-25" style="display: none;">
+                      <option value="0" {% if task.task_status == 0 %}selected{% endif %}>In Progress</option>
+                      <option value="1" {% if task.task_status == 1 %}selected{% endif %}>For Review</option>
+                      <option value="3" {% if task.task_status == 3 %}selected{% endif %}>Completed</option>
+                    </select>
+                  </td>
                 </tr>
                 <tr>
-                  <td><i>Priority:</i> <b>{{ task.get_task_priority_display }}</b></td>
+                  <td>
+                    <i>Priority:</i> <b id="priority-{{ task.task_id }}">{{ task.get_task_priority_display }}</b>
+                    <select id="priority-form-{{ task.task_id }}" form="task-form-{{ task.task_id }}" name="priority" class="form-control w-25" style="display: none;">
+                      <option value="L" {% if task.task_priority == "L" %}selected{% endif %}>Low</option>
+                      <option value="M" {% if task.task_priority == "M" %}selected{% endif %}>Medium</option>
+                      <option value="H" {% if task.task_priority == "H" %}selected{% endif %}>High</option>
+                    </select>
+                  </td>
                 </tr>
                 <tr>
-                  <td><i>Notes:</i> {{ task.task_notes|linebreaks }}</td>
+                  <td>
+                    <i>Notes:</i> <span id="notes-{{ task.task_id }}">{{ task.task_notes|linebreaks }}</span>
+                    <textarea id="notes-form-{{ task.task_id }}" form="task-form-{{ task.task_id }}" class="form-label mt-2 ms-2 rounded-4 overflow-hidden" style="display: none; width: 95%; resize: none;" name="task_notes" cols="30" rows="10">{{ task.task_notes }}</textarea>
+                  </td>
                 </tr>
                 <tr class="removeBottomBorder">
-                  <td class="removeBottomBorder"><i>Deadline:</i> <b>{{ task.task_deadline }}</b></td>
+                  <td class="removeBottomBorder">
+                    <i>Deadline:</i>
+                    <b id="deadline-{{ task.task_id }}">{{ task.task_deadline }}</b>
+                    <input id="deadline-form-{{ task.task_id }}" class="rounded-3 overflow-hidden w-25" style="display: none;" type="date" name="task_deadline" value="{{ task.task_deadline|date:'Y-m-d' }}">
+                  </td>
                 </tr>
               </table>
             </td>
