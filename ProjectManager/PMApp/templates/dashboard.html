@@ -52,7 +52,7 @@
             <td>
               <h5>{{ task.task_name }}</h5>
               <br>
-              <form action="" method="POST" id="task-form-{{ task.task_id }}">
+              <form action="{% url "update_task" task_id=task.task_id%}" method="POST" id="task-form-{{ task.task_id }}">{% csrf_token %}
                 <input type="submit" id="save-task-{{ task.task_id }}" value="Save" class="btn btn-outline-success btn-sm" style="display: none;">
               </form>
               <button type="button" class="btn btn-outline-dark btn-sm edit-btn" data-type="task" data-id="{{ task.task_id }}">Edit</button>
@@ -86,14 +86,14 @@
                 <tr>
                   <td>
                     <i>Notes:</i> <span id="notes-{{ task.task_id }}">{{ task.task_notes|linebreaks }}</span>
-                    <textarea id="notes-form-{{ task.task_id }}" form="task-form-{{ task.task_id }}" class="form-label mt-2 ms-2 rounded-4 overflow-hidden" style="display: none; width: 95%; resize: none;" name="task_notes" cols="30" rows="10">{{ task.task_notes }}</textarea>
+                    <textarea id="notes-form-{{ task.task_id }}" form="task-form-{{ task.task_id }}" class="form-label mt-2 ms-2 rounded-4 overflow-hidden" style="display: none; width: 95%; resize: none;" name="notes" cols="30" rows="10">{{ task.task_notes }}</textarea>
                   </td>
                 </tr>
                 <tr class="removeBottomBorder">
                   <td class="removeBottomBorder">
                     <i>Deadline:</i>
                     <b id="deadline-{{ task.task_id }}">{{ task.task_deadline }}</b>
-                    <input id="deadline-form-{{ task.task_id }}" class="rounded-3 overflow-hidden w-25" style="display: none;" type="date" name="task_deadline" value="{{ task.task_deadline|date:'Y-m-d' }}">
+                    <input id="deadline-form-{{ task.task_id }}" form="task-form-{{ task.task_id }}" class="rounded-3 overflow-hidden w-25" style="display: none;" type="date" name="deadline" value="{{ task.task_deadline|date:'Y-m-d' }}">
                   </td>
                 </tr>
               </table>

@@ -201,9 +201,35 @@ def create_task(request):
         return redirect("dashboard")
 
 
-def update_task(request):
-    # TODO: Update task 
-    return HttpResponse("Create Task")
+def update_task(request, task_id):
+    if (request.method == "POST"):
+
+        # Get submitted form values
+        status = request.POST.get("status")
+        priority = request.POST.get("priority")
+        notes = request.POST.get("notes")
+        deadline = request.POST.get("deadline")
+
+        # Set deadline to None if not specified
+        if deadline == "":
+            deadline = None
+
+        # Get task object
+        try:
+            task_obj = Task.objects.get(task_id=task_id)
+        except:
+            raise Http404("Task does not exist")
+
+        # Update object attributes
+        task_obj.task_status = status
+        task_obj.task_priority = priority
+        task_obj.task_notes = notes
+        task_obj.task_deadline = deadline
+        task_obj.save()
+
+        return redirect("dashboard")
+    else:
+        return redirect("dashboard")
 
 
 def delete_task(request):
