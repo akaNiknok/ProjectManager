@@ -1,33 +1,54 @@
+
 {% extends 'base.html' %}
+{% load static %}
 
 {% block navbar %}
-    <ul class="navbar-nav mt-3">
-      <li class="navbar-item"><a class="navbar-brand ms-2 me-2" style="color: FFFFFF; text-decoration: none;">PM App</a></li>
       <li class="navbar-item"><a class="me-2" style="color: F8F9FA; text-decoration: none;" href="{% url 'dashboard' %}">Dashboard</a></li>
       <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_members' %}">Members</a></li>
       <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_project' %}">Overview</a></li>
       <!-- TODO: Logout -->
       <li><a class="mr-2" style="color: ADB5BD; text-decoration: none;" href="">Logout</a></li>
-    </ul>
 {% endblock %}
 
 {% block content %}
     <h1 class="ms-3" style="color: WHITE;">{{ project.project_name }}</h1>
     <!-- Resolve the issue of scrolling too far and casuing it to stay, add a function which tracks how far away from the start tihs is and moves with it -->
-    <div style="position: absolute; left: 48%; border-right: solid 1px white; height:100%;"></div>
-    <div class="mb-3" style="height: 1px; background-color: #EAEFF5"></div>
+    <div class="mb-3" style="height: 1px; background-color: #EAEFF5;"></div>
+    <div id="vertical_line" style="position: fixed; top: 130px; left: 48%; border-right: solid 1px white; height: 10000;"></div>
+
+    <script>
+      window.onscroll = function (){
+        let vert_line = document.getElementById("vertical_line");  
+
+        if(window.scrollY > 0){
+          let scrolled = 130 - window.scrollY;
+          vert_line.style.top = scrolled.toString() + 'px';
+        }
+        else{
+          vert_line.style.top = "130px"
+        }
+      }
+    </script>
     <!-- line break -->
 
     <!-- Tasks list -->
-    <div id="tasksList">
-      <h2 class="ms-3"style="color: WHITE">
-        Tasks
-        <button id="tasksCreateBtn" class="rounded-5 overflow-hidden" style="width: 24px; height: 24px; text-align: center;" onclick="toggleForm('tasks')"></button>
-      </h2>
+    <div id="tasksList" class="scrollable" style="width: 47%;">
+      
+      <div class="row">
+        <div class="col-2">
+          <h2 class="ms-3"style="color: WHITE">
+            Tasks
+          </h2>
+        </div>
+        <div class="col mt-1">
+          <button id="tasksCreateBtn" class="rounded-5" style="width: 32px; height: 32px;" onclick="toggleForm('tasks')"> + </button>
+        </div>
+      </div>
+
       <div class="mb-3 ms-3" style="height: 1px; width: 91%; background-color: #EAEFF5"></div>
         <!-- line break --> 
       {% for task in tasks %}
-      <table id="taskTable{{forloop.counter}}" class="table ms-3 rounded-3 overflow-hidden" style="width: 91%;" onload="colorTable()">  
+      <table id="taskTable{{forloop.counter}}" class="table ms-3 rounded-3 overflow-hidden" style="width: 91%;">  
 
         <script 
           defer 
@@ -102,7 +123,7 @@
       </table>
       {% endfor %}
     </div>
-
+    
     <!-- New task form -->
     <div id="tasksForm">
       <h2 style="color: WHITE">Create Task</h2>
@@ -180,13 +201,18 @@
       </div>
     </div>
 
-    <div class="vline"></div>
-    <!-- Expenses list -->
-    <div id="expensesList">
-      <h2  style="color: WHITE;"> 
-        Expenses 
-        <button id="expensesCreateBtn" class="rounded-5 overflow-hidden" style="width: 24px; height: 24px;" onclick="toggleForm('expenses')"></button>
-      </h2>
+    <!-- Expenses list -->      
+    <div id="expensesList" class = "scrollable">
+      <div class="row">
+        <div class="col-2" style="margin-right: 6%">
+          <h2  style="color: WHITE;"> 
+            Expenses 
+          </h2>
+        </div>
+        <div class="col mt-1">
+          <button id="expensesCreateBtn" class="rounded-5" style="width: 32px; height: 32px;" onclick="toggleForm('expenses')">+</button>
+        </div>
+      </div>
         <div class="mb-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
         <!-- line break --> 
           {% for expense in expenses %}
