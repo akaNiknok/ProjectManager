@@ -301,9 +301,33 @@ def create_expense(request):
         return redirect("dashboard")
 
 
-def update_expense(request):
-    # TODO: Update expense 
-    return HttpResponse("Update expense")
+def update_expense(request, expense_id):
+    if (request.method == "POST"):
+
+        # Get submitted form values
+        amount = request.POST.get("amount")
+        desc = request.POST.get("desc")
+        date = request.POST.get("date")
+
+        # Set deadline to None if not specified
+        if date == "":
+            date = None
+
+        # Get expense object
+        try:
+            expense_obj = Expense.objects.get(expense_id=expense_id)
+        except:
+            raise Http404("Expense does not exist")
+
+        # Update object attributes
+        expense_obj.expense_amt = amount
+        expense_obj.expense_desc = desc
+        expense_obj.expense_date = date
+        expense_obj.save()
+
+        return redirect("dashboard")
+    else:
+        return redirect("dashboard")
 
 
 def delete_expense(request):
