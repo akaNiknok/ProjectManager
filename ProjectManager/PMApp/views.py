@@ -4,12 +4,40 @@ from django.db.models import Case, Value, When
 
 from .models import Project, User, Member, Task, TaskAssignment, Expense
 
-def index(request):
-    # TODO: Login
-    return redirect("dashboard")
+def login(request):
+    if request.method == "POST":
+
+        # Get form fields
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        # Validate username
+        try:
+            user_obj = User.objects.get(username=username)
+        except:
+            return render(request, "login.html", {"error": True})
+        
+        # Validate password
+        # TODO: Hasing + Salting
+        if password != user_obj.password:
+            return render(request, "login.html", {"error": True})
+        
+        # Login successful
+        response = redirect("dashboard")
+        response.set_cookie("user_id", user_obj.user_id)
+        return response
+
+    else:
+        return render(request, "login.html")
 
 
 def dashboard(request):
+
+    # Retrieve current logged in user id
+    user_id = request.COOKIES.get("user_id")
+
+    if user_id is None:
+        return redirect("login")
 
     # Retrieve all objects
     # TODO: Retrieve only user related projects
@@ -37,6 +65,7 @@ def dashboard(request):
     return render(request,
                   "dashboard.html",
                   {"project": project_obj, "tasks": task_objs, "expenses": expense_objs})
+
 
 def switch_project(request, project_id):
     request.session["current_project_id"] = int(project_id)
