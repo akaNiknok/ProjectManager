@@ -78,22 +78,3 @@ function toggleForm(type) {
     btnType.style.display = btnTypeCurrentStyle === "none" ? "inline-block" : "none";
 }
 
-
-function colorTable() {
-  // To be fixed;
-  var table = document.getElementById("taskTable{{forloop.counter}}");
-  var data = JSON.parse(document.getElementById('taskdata').textContent);
-  var task_status = data.taskStatus;
-  console.log("hi");
-  switch(task_status){
-    case "In Progress":
-      table.classList.add("table-success");
-      break;
-    case "For Review":
-      table.classList.add("table-warning");
-      break;
-    case "Completed":
-      table.classList.add("table-danger");
-      break;
-  }
-}

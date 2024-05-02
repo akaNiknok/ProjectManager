@@ -31,7 +31,6 @@ def dashboard(request):
                   "dashboard.html",
                   {"project": project_obj, "tasks": task_objs, "expenses": expense_objs})
 
-
 def switch_project(request, project_id):
     request.session["current_project_id"] = int(project_id)
 
