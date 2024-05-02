@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, Http404
 from django.http import HttpResponse
+from django.db.models import Case, Value, When
 
 from .models import Project, User, Member, Task, TaskAssignment, Expense
 
@@ -23,14 +24,19 @@ def dashboard(request):
         project_id = project_obj.project_id
         request.session["current_project_id"] = project_id
     
+    priority_weights = Case(
+            When(task_priority = Task.Priority.HIGH, then=Value(1)),
+            When(task_priority = Task.Priority.MEDIUM, then=Value(2)),
+            When(task_priority = Task.Priority.LOW, then=Value(3)),
+            default = Value(3),)
+
     # Get tasks and expenses
-    task_objs = Task.objects.filter(project_id=project_id)
+    task_objs = Task.objects.filter(project_id=project_id).order_by("task_status", priority_weights)
     expense_objs = Expense.objects.filter(project_id=project_id)
         
     return render(request,
                   "dashboard.html",
                   {"project": project_obj, "tasks": task_objs, "expenses": expense_objs})
-
 
 def switch_project(request, project_id):
     request.session["current_project_id"] = int(project_id)
@@ -251,8 +257,19 @@ def delete_task(request):
 
 
 def view_members(request):
-    # TODO: View members
-    return render(request, "view_members.html")
+    # TODO: View member    project_id = request.session["current_project_id"]
+
+    project_id = request.session["current_project_id"]
+
+    # Get project object
+    try:
+        project_obj = Project.objects.get(project_id=project_id)
+    except:
+        raise Http404("Project does not exist")
+
+    member_objs = Member.objects.filter(project__project_name = project_obj.project_name)
+
+    return render(request, "view_members.html", {"members": member_objs})
 
 
 def create_expense(request):

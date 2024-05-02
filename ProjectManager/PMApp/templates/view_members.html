@@ -1,17 +1,40 @@
 {% extends 'base.html' %}
 
 {% block navbar %}
-    <ul>
-        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-        <li><a href="{% url 'view_members' %}">Members</a></li>
-        <li><a href="{% url 'view_project' %}">Overview</a></li>
-        <!-- TODO: Logout -->
-        <li><a href="">Logout</a></li>
-    </ul>
+      <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'dashboard' %}">Dashboard</a></li>
+      <li class="navbar-item"><a class="me-2" style="color: F8F9FA; text-decoration: none;" href="{% url 'view_members' %}">Members</a></li>
+      <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_project' %}">Overview</a></li>
+      <!-- TODO: Logout -->
+      <li><a class="mr-2" style="color: ADB5BD; text-decoration: none;" href="">Logout</a></li>
 {% endblock %}
 
 {% block content %}
 
     <!-- TODO: View members -->
+    <table class="table table-striped" style="width: 75%; margin:auto; margin-top: 3%">
+      <thead class="table table-secondary table-striped">
+        <tr>
+          <th scope="col">Picture?</th>
+          <th scope="col">Name</th>
+          <th scope="col">UserName</th>
+          <th scope="col">Project</th>
+          <th scope="col">Role</th>
+          <th scope="col">Tasks</th>
+        </tr>
+      </thead>
+      <tbody>
+    {% for member in members %}
+        <tr>
+          <th scope="col"></th>
+          <th scope="col"> {{ member.user.name }} </th>
+          <th scope="col"> {{ member.user.username }} </th>
+          <th scope="col"> {{ member.project.project_name }} </th>
+          <th scope="col"> {{ member.user.staff_type }}</th>
+          <th scope="col"> WIP </th>
+        </tr>
+    {% endfor %}
+      </tbody>
+    </table>
+
  
 {% endblock %}

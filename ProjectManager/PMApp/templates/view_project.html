@@ -2,14 +2,11 @@
 
 {% block navbar %}
  
-    <ul class="navbar-nav mt-3">
-      <li class="navbar-item"><a class="navbar-brand ms-2 me-2" style="color: FFFFFF">PM App</a></li>
       <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'dashboard' %}">Dashboard</a></li>
       <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_members' %}">Members</a></li>
       <li class="navbar-item"><a class="me-2" style="color: F8F9FA; text-decoration: none;" href="{% url 'view_project' %}">Overview</a></li>
       <!-- TODO: Logout -->
       <li><a class="mr-2" style="color: ADB5BD; text-decoration: none;" href="">Logout</a></li>
-    </ul>
 
 {% endblock %}
 
