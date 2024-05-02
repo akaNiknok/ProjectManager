@@ -41,17 +41,18 @@ label {
   display: none;
 }
 
-/* width */
-::-webkit-scrollbar {
+.scrollable {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 75%;
+}
+
+.scrollable::-webkit-scrollbar {
   width: 10px;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
+.scrollable::-webkit-scrollbar-thumb {
   background: #888;
+  border-radius: 10px;
+  border: 1px solid #666;
 }
