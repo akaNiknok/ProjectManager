@@ -31,12 +31,46 @@ def login(request):
         return render(request, "login.html")
 
 
+def register(request):
+    if request.method == "POST":
+
+        # Get form fields
+        name = request.POST.get("name")
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        retype_pass = request.POST.get("retype_pass")
+
+        # Validate username
+        if len(User.objects.filter(username=username)) != 0:
+            return render(request, "register.html", {"username_error": True})
+        
+        # Validate password
+        if password != retype_pass:
+            return render(request, "register.html", {"password_error": True})
+
+        user_obj = User.objects.create(
+            name=name,
+            username=username,
+            password=password,
+            staff_type="Em"
+        )
+        
+        # Login successful
+        response = redirect("dashboard")
+        response.set_cookie("user_id", user_obj.user_id)
+        return response
+
+    else:
+        return render(request, "register.html")
+
+
 def logout(request):
     response = redirect("login")
     response.delete_cookie("user_id")
     del request.session["current_project_id"]
     request.session.modified = True
     return response
+
 
 
 def dashboard(request):
