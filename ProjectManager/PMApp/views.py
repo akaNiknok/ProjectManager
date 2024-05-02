@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, Http404
 from django.http import HttpResponse
+from django.db.models import Case, Value, When
 
 from .models import Project, User, Member, Task, TaskAssignment, Expense
 
@@ -23,8 +24,14 @@ def dashboard(request):
         project_id = project_obj.project_id
         request.session["current_project_id"] = project_id
     
+    priority_weights = Case(
+            When(task_priority = Task.Priority.HIGH, then=Value(1)),
+            When(task_priority = Task.Priority.MEDIUM, then=Value(2)),
+            When(task_priority = Task.Priority.LOW, then=Value(3)),
+            default = Value(3),)
+
     # Get tasks and expenses
-    task_objs = Task.objects.filter(project_id=project_id)
+    task_objs = Task.objects.filter(project_id=project_id).order_by("task_status", priority_weights)
     expense_objs = Expense.objects.filter(project_id=project_id)
         
     return render(request,
