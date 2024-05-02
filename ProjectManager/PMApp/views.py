@@ -4,12 +4,82 @@ from django.db.models import Case, Value, When
 
 from .models import Project, User, Member, Task, TaskAssignment, Expense
 
-def index(request):
-    # TODO: Login
-    return redirect("dashboard")
+def login(request):
+    if request.method == "POST":
+
+        # Get form fields
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        # Validate username
+        try:
+            user_obj = User.objects.get(username=username)
+        except:
+            return render(request, "login.html", {"error": True})
+        
+        # Validate password
+        # TODO: Hasing + Salting
+        if password != user_obj.password:
+            return render(request, "login.html", {"error": True})
+        
+        # Login successful
+        response = redirect("dashboard")
+        response.set_cookie("user_id", user_obj.user_id)
+        return response
+
+    else:
+        return render(request, "login.html")
+
+
+def register(request):
+    if request.method == "POST":
+
+        # Get form fields
+        name = request.POST.get("name")
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        retype_pass = request.POST.get("retype_pass")
+
+        # Validate username
+        if len(User.objects.filter(username=username)) != 0:
+            return render(request, "register.html", {"username_error": True})
+        
+        # Validate password
+        if password != retype_pass:
+            return render(request, "register.html", {"password_error": True})
+
+        user_obj = User.objects.create(
+            name=name,
+            username=username,
+            password=password,
+            staff_type="Em"
+        )
+        
+        # Login successful
+        response = redirect("dashboard")
+        response.set_cookie("user_id", user_obj.user_id)
+        return response
+
+    else:
+        return render(request, "register.html")
+
+
+def logout(request):
+    response = redirect("login")
+    response.delete_cookie("user_id")
+    del request.session["current_project_id"]
+    request.session.modified = True
+    return response
+
 
 
 def dashboard(request):
+
+    # Retrieve current logged in user id
+    user_id = request.COOKIES.get("user_id")
+
+    if user_id is None:
+        return redirect("login")
 
     # Retrieve all objects
     # TODO: Retrieve only user related projects
@@ -37,6 +107,7 @@ def dashboard(request):
     return render(request,
                   "dashboard.html",
                   {"project": project_obj, "tasks": task_objs, "expenses": expense_objs})
+
 
 def switch_project(request, project_id):
     request.session["current_project_id"] = int(project_id)
@@ -301,9 +372,33 @@ def create_expense(request):
         return redirect("dashboard")
 
 
-def update_expense(request):
-    # TODO: Update expense 
-    return HttpResponse("Update expense")
+def update_expense(request, expense_id):
+    if (request.method == "POST"):
+
+        # Get submitted form values
+        amount = request.POST.get("amount")
+        desc = request.POST.get("desc")
+        date = request.POST.get("date")
+
+        # Set deadline to None if not specified
+        if date == "":
+            date = None
+
+        # Get expense object
+        try:
+            expense_obj = Expense.objects.get(expense_id=expense_id)
+        except:
+            raise Http404("Expense does not exist")
+
+        # Update object attributes
+        expense_obj.expense_amt = amount
+        expense_obj.expense_desc = desc
+        expense_obj.expense_date = date
+        expense_obj.save()
+
+        return redirect("dashboard")
+    else:
+        return redirect("dashboard")
 
 
 def delete_expense(request):

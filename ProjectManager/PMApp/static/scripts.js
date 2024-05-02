@@ -48,7 +48,37 @@ window.addEventListener("DOMContentLoaded", (event) => {
           notesForm.style.display = notesFormStyle === "none" || "" ? "inline-block" : "none";
           deadline.style.display = deadlineStyle === "none" || "" ? "inline-block" : "none";
           deadlineForm.style.display = deadlineFormStyle === "none" || "" ? "inline-block" : "none";
-        } 
+
+        } else {
+
+          // Get the elements to toggle
+          var save = document.getElementById("save-expense-" + id);
+          var desc = document.getElementById("desc-" + id);
+          var descForm = document.getElementById("desc-form-" + id);
+          var amount = document.getElementById("amount-" + id);
+          var amountForm = document.getElementById("amount-form-" + id);
+          var date = document.getElementById("date-" + id);
+          var dateForm = document.getElementById("date-form-" + id);
+
+          // Get the current display value of each element
+          var saveStyle = window.getComputedStyle(save).getPropertyValue("display");
+          var descStyle  = window.getComputedStyle(desc).getPropertyValue("display");
+          var descFormStyle  = window.getComputedStyle(descForm).getPropertyValue("display");
+          var amountStyle  = window.getComputedStyle(amount).getPropertyValue("display");
+          var amountFormStyle  = window.getComputedStyle(amountForm).getPropertyValue("display");
+          var dateStyle  = window.getComputedStyle(date).getPropertyValue("display");
+          var dateFormStyle  = window.getComputedStyle(dateForm).getPropertyValue("display");
+
+          // Toggle the values
+          button.innerHTML = button.innerHTML === "Edit" ? "Cancel" : "Edit";
+          save.style.display = saveStyle === "none" || "" ? "inline-block" : "none";
+          desc.style.display = descStyle === "none" || "" ? "inline-block" : "none";
+          descForm.style.display = descFormStyle === "none" || "" ? "inline-block" : "none";
+          amount.style.display = amountStyle === "none" || "" ? "inline-block" : "none";
+          amountForm.style.display = amountFormStyle === "none" || "" ? "inline-block" : "none";
+          date.style.display = dateStyle === "none" || "" ? "inline-block" : "none";
+          dateForm.style.display = dateFormStyle === "none" || "" ? "inline-block" : "none";
+        }
       });
     });
 });

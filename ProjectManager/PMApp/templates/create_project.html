@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 
+{% block navbar %}
+      <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'dashboard' %}">Dashboard</a></li>
+      <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_members' %}">Members</a></li>
+      <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_project' %}">Overview</a></li>
+      <li><a class="mr-2" style="color: ADB5BD; text-decoration: none;" href="{% url "logout" %}">Logout</a></li>
+{% endblock %}
+
 {% block content %}
     <form action="{% url 'create_project' %}" method="POST">{% csrf_token %}
         <label for="project_name">Project Name:</label>

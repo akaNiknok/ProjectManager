@@ -6,8 +6,7 @@
       <li class="navbar-item"><a class="me-2" style="color: F8F9FA; text-decoration: none;" href="{% url 'dashboard' %}">Dashboard</a></li>
       <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_members' %}">Members</a></li>
       <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_project' %}">Overview</a></li>
-      <!-- TODO: Logout -->
-      <li><a class="mr-2" style="color: ADB5BD; text-decoration: none;" href="">Logout</a></li>
+      <li><a class="mr-2" style="color: ADB5BD; text-decoration: none;" href="{% url "logout" %}">Logout</a></li>
 {% endblock %}
 
 {% block content %}
@@ -32,7 +31,7 @@
     <!-- line break -->
 
     <!-- Tasks list -->
-    <div id="tasksList" class="scrollable" style="width: 47%;">
+    <div id="tasksList" class="scrollable" style="width: 47%; height:80%">
       
       <div class="row">
         <div class="col-2">
@@ -73,10 +72,14 @@
             <td>
               <h5>{{ task.task_name }}</h5>
               <br>
-              <form action="{% url "update_task" task_id=task.task_id%}" method="POST" id="task-form-{{ task.task_id }}">{% csrf_token %}
+
+              <!-- Edit Form -->
+              <form action="{% url "update_task" task_id=task.task_id%}" method="POST" id="task-form-{{ task.task_id }}" class="mb-0 mt-2">{% csrf_token %}
                 <input type="submit" id="save-task-{{ task.task_id }}" value="Save" class="btn btn-outline-success btn-sm" style="display: none;">
               </form>
               <button type="button" class="btn btn-outline-dark btn-sm edit-btn" data-type="task" data-id="{{ task.task_id }}">Edit</button>
+
+              <!-- Delete Form -->
               <form action="{% url "delete_task" %}" method="POST">{% csrf_token %}
                 <input type="hidden" name="task_id" value="{{ task.task_id }}">
                 <input type="submit" value="Delete" class="btn btn-outline-danger btn-sm">
@@ -107,14 +110,14 @@
                 <tr>
                   <td>
                     <i>Notes:</i> <span id="notes-{{ task.task_id }}">{{ task.task_notes|linebreaks }}</span>
-                    <textarea id="notes-form-{{ task.task_id }}" form="task-form-{{ task.task_id }}" class="form-label mt-2 ms-2 rounded-4 overflow-hidden" style="display: none; width: 95%; resize: none;" name="notes" cols="30" rows="10">{{ task.task_notes }}</textarea>
+                    <textarea id="notes-form-{{ task.task_id }}" form="task-form-{{ task.task_id }}" class="form-control" style="display: none; width: 95%; resize: none;" name="notes" cols="30" rows="10">{{ task.task_notes }}</textarea>
                   </td>
                 </tr>
                 <tr class="removeBottomBorder">
                   <td class="removeBottomBorder">
                     <i>Deadline:</i>
                     <b id="deadline-{{ task.task_id }}">{{ task.task_deadline }}</b>
-                    <input id="deadline-form-{{ task.task_id }}" form="task-form-{{ task.task_id }}" class="rounded-3 overflow-hidden w-25" style="display: none;" type="date" name="deadline" value="{{ task.task_deadline|date:'Y-m-d' }}">
+                    <input id="deadline-form-{{ task.task_id }}" form="task-form-{{ task.task_id }}" class="form-control w-25" style="display: none;" type="date" name="deadline" value="{{ task.task_deadline|date:'Y-m-d' }}">
                   </td>
                 </tr>
               </table>
@@ -202,7 +205,7 @@
     </div>
 
     <!-- Expenses list -->      
-    <div id="expensesList" class = "scrollable">
+    <div id="expensesList" class="scrollable" style="height: 80%">
       <div class="row">
         <div class="col-2" style="margin-right: 6%">
           <h2  style="color: WHITE;"> 
@@ -219,9 +222,16 @@
             <table class="table table-success rounded-3 overflow-hidden" style="width:93%;">
               <tr>
                 <th>
-                  {{ expense.expense_desc}}
+                  <span id="desc-{{ expense.expense_id }}">{{ expense.expense_desc}}</span>
+                  <input type="text" name="desc" id="desc-form-{{ expense.expense_id}}" form="expense-form-{{ expense.expense_id }}" class="form-control" value="{{ expense.expense_desc }}" style="display: none;" required>
                   <br>
-                  <button type="button" class="btn btn-outline-dark btn-sm">Edit</button>
+                  <!-- Edit Form -->
+                  <form action="{% url "update_expense" expense_id=expense.expense_id %}" method="POST" id="expense-form-{{ expense.expense_id }}" class="mb-0 mt-2">{% csrf_token %}
+                    <input type="submit" id="save-expense-{{ expense.expense_id }}" value="Save" class="btn btn-outline-success btn-sm" style="display: none;">
+                  </form>
+                  <button type="button" class="btn btn-outline-dark btn-sm edit-btn" data-type="expense" data-id="{{ expense.expense_id }}">Edit</button>
+
+                  <!-- Delete Form -->
                   <form action="{% url "delete_expense" %}" method="POST">{% csrf_token %}
                     <input type="hidden" name="expense_id" value="{{ expense.expense_id }}">
                     <input type="submit" value="Delete" class="btn btn-outline-danger btn-sm">
@@ -233,10 +243,16 @@
                       <td><i>Expense by:</i> <b>{{ expense.member.user.name }}</b></td>
                     </tr>
                     <tr>
-                      <td><i>Amount:</i> <b>PHP {{ expense.expense_amt }}</b></td>
+                      <td>
+                        <i>Amount:</i> <b id="amount-{{ expense.expense_id}}">PHP {{ expense.expense_amt }}</b>
+                        <input type="number" name="amount" id="amount-form-{{ expense.expense_id}}" form="expense-form-{{ expense.expense_id }}" class="form-control w-25" value="{{ expense.expense_amt }}" style="display: none;" required>
+                      </td>
                     </tr>
                     <tr class="removeBottomBorder">
-                      <td class="removeBottomBorder"><i>Date:</i> <b>{{ expense.expense_date }}</b></td>
+                      <td class="removeBottomBorder">
+                        <i>Date:</i> <b id="date-{{ expense.expense_id }}">{{ expense.expense_date }}</b>
+                        <input type="date" name="date" id="date-form-{{ expense.expense_id }}" form="expense-form-{{ expense.expense_id }}" class="form-control w-25" value="{{ expense.expense_date|date:'Y-m-d' }}" style="display: none;" required><br><br>
+                      </td>
                     </tr>
                   </table>
                 </td>
