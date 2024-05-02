@@ -1,14 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block navbar %}
-    <ul class="navbar-nav mt-3">
-      <li class="navbar-item"><a class="navbar-brand ms-2 me-2" style="color: FFFFFF; text-decoration: none;">PM App</a></li>
       <li class="navbar-item"><a class="me-2" style="color: F8F9FA; text-decoration: none;" href="{% url 'dashboard' %}">Dashboard</a></li>
       <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_members' %}">Members</a></li>
       <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_project' %}">Overview</a></li>
       <!-- TODO: Logout -->
       <li><a class="mr-2" style="color: ADB5BD; text-decoration: none;" href="">Logout</a></li>
-    </ul>
 
 
 {% endblock %}
@@ -18,9 +16,10 @@
     <!-- Resolve the issue of scrolling too far and casuing it to stay, add a function which tracks how far away from the start tihs is and moves with it -->
     <div class="mb-3" style="height: 1px; background-color: #EAEFF5;"></div>
     <div id="vertical_line" style="position: fixed; top: 120px; left: 48%; border-right: solid 1px white; height: 10000;"></div>
+
     <script>
       window.onscroll = function (){
-        let vert_line = document.getElementById("vertical_line");
+        let vert_line = document.getElementById("vertical_line");  
 
         if(window.scrollY > 0){
           let scrolled = 120 - window.scrollY;
@@ -29,19 +28,21 @@
         else{
           vert_line.style.top = "120px"
         }
-
       }
     </script>
     <!-- line break -->
 
     <!-- Tasks list -->
     <div id="tasksList" style="overflow-y: auto; height: 80%; width: 47%;">
-      <div clas="row">
-        <div class="col-4">
+      
+      <div class="row">
+        <div class="col-2">
           <h2 class="ms-3"style="color: WHITE">
             Tasks
-            <button id="tasksCreateBtn" class="rounded-5 overflow-hidden" style="width: 24px; height: 24px; text-align: center;" onclick="toggleForm('tasks')"></button>
           </h2>
+        </div>
+        <div class="col mt-1">
+          <button id="tasksCreateBtn" class="rounded-5" style="width: 32px; height: 32px;" onclick="toggleForm('tasks')"> + </button>
         </div>
       </div>
 
@@ -201,13 +202,18 @@
       </div>
     </div>
 
-    <div class="vline"></div>
-    <!-- Expenses list -->
+    <!-- Expenses list -->      
     <div id="expensesList" style="overflow-y: auto; height: 80%; margin-right:1%">
-      <h2  style="color: WHITE;"> 
-        Expenses 
-        <button id="expensesCreateBtn" class="rounded-5 overflow-hidden" style="width: 24px; height: 24px;" onclick="toggleForm('expenses')"></button>
-      </h2>
+      <div class="row">
+        <div class="col-2" style="margin-right: 6%">
+          <h2  style="color: WHITE;"> 
+            Expenses 
+          </h2>
+        </div>
+        <div class="col mt-1">
+          <button id="expensesCreateBtn" class="rounded-5" style="width: 32px; height: 32px;" onclick="toggleForm('expenses')">+</button>
+        </div>
+      </div>
         <div class="mb-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
         <!-- line break --> 
           {% for expense in expenses %}
