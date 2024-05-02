@@ -56,3 +56,18 @@ label {
   border-radius: 10px;
   border: 1px solid #666;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+  border: 1px solid #666;
+}
+
+::-webkit-scrollbar:horizontal{
+  display: none;
+}
