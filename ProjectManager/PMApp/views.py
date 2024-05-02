@@ -31,6 +31,14 @@ def login(request):
         return render(request, "login.html")
 
 
+def logout(request):
+    response = redirect("login")
+    response.delete_cookie("user_id")
+    del request.session["current_project_id"]
+    request.session.modified = True
+    return response
+
+
 def dashboard(request):
 
     # Retrieve current logged in user id
