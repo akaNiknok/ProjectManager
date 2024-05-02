@@ -11,5 +11,26 @@
 {% block content %}
 
     <!-- TODO: View members -->
+    <table class="table" style="width: 75%;">
+      <thead>
+        <tr>
+          <th scope="col">Picture?</th>
+          <th scope="col">Name</th>
+          <th scope="col">UserName</th>
+          <th scope="col">Project</th>
+          <th scope="col">Role</th>
+          <th scope="col">Tasks</th>
+        </tr>
+    {% for member in members %}
+        <tr>
+          <th scope="col"></th>
+          <th scope="col"> {{ member.user.name }} </th>
+          <th scope="col"> {{ member.user.username }} </th>
+          <th scope="col"> {{ member.project.project_name }} </th>
+          <th scope="col"> {{ member.user.staff_type }}</th>
+          <th scope="col"> WIP </th>
+    {% endfor %}
+    </table>
+
  
 {% endblock %}

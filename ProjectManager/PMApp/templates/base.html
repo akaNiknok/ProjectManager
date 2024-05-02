@@ -23,13 +23,13 @@
         {% endblock %}
       </ul>
           <!-- Project selector -->
-          <select class="form-select form-select-sm me-2 rounded-3 overflow-hidden" style="position: absolute; left: 35%; width: 35%;" name="project_selector" id="project_selector">
+          <select class="form-select form-select-sm me-2 rounded-3 overflow-hidden" style="position: absolute; left: 60%; width: 35%;" name="project_selector" id="project_selector">
           {% for project in projects %}
               <option value="{{ project.project_id }}" {% if project.project_id == request.session.current_project_id %}selected{% endif %}>{{ project.project_name }}</option>
           {% endfor %}
           </select>
             <a href="{% url 'create_project' %}" style="text-decoration: none; margin-bottom: 30px;">
-             <button class="rounded-5" style="width: 32px; height: 32px; position: absolute; left: 72%; text-align: center;">
+             <button class="rounded-5" style="width: 32px; height: 32px; position: absolute; left: 96%; text-align: center;">
                +
              </button>
             </a>

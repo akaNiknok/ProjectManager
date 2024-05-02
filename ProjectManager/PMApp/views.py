@@ -250,8 +250,19 @@ def delete_task(request):
 
 
 def view_members(request):
-    # TODO: View members
-    return render(request, "view_members.html")
+    # TODO: View member    project_id = request.session["current_project_id"]
+
+    project_id = request.session["current_project_id"]
+
+    # Get project object
+    try:
+        project_obj = Project.objects.get(project_id=project_id)
+    except:
+        raise Http404("Project does not exist")
+
+    member_objs = Member.objects.filter(project__project_name = project_obj.project_name)
+
+    return render(request, "view_members.html", {"members": member_objs})
 
 
 def create_expense(request):
