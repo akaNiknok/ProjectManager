@@ -54,7 +54,7 @@ class Task(models.Model):
     class Status(models.IntegerChoices):
         INPROGRESS = 0, _("In Progress")
         FORREVIEW = 1, _("For Review")
-        COMPLETED = 3, _("Completed")
+        COMPLETED = 2, _("Completed")
     
     class Priority(models.TextChoices):
         HIGH = "H", _("High")
