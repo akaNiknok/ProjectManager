@@ -173,9 +173,16 @@ def view_project(request):
     except:
         raise Http404("Project does not exist")
 
+    task_objs = Task.objects.filter(project__project_id = project_obj.project_id)
+    completed_tasks = Task.objects.filter(project__project_id = project_obj.project_id, task_status = 3).count()/task_objs.count()
+    review_tasks = Task.objects.filter(project__project_id = project_obj.project_id, task_status = 1).count()/task_objs.count()  
+    progress_tasks = Task.objects.filter(project__project_id = project_obj.project_id, task_status = 0).count()/task_objs.count()
+
     return render(request,
                   "view_project.html",
-                  {"project": project_obj})
+                  {"project": project_obj, "tasks": task_objs, "completed": completed_tasks * 100,
+                   "review": review_tasks * 100, "progress": progress_tasks * 100,
+                   })
 
 
 def update_project(request):
@@ -347,7 +354,7 @@ def view_members(request):
     except:
         raise Http404("Project does not exist")
 
-    member_objs = Member.objects.filter(project__project_name = project_obj.project_name)
+    member_objs = Member.objects.filter(project__project_id = project_obj.project_id)
 
     return render(request, "view_members.html", {"members": member_objs})
 
