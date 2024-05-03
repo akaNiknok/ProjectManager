@@ -14,40 +14,39 @@
 {% block content %}
 <div style="color: WHITE;">
   <div class="row mt-2" style="margin-left: 10px;">
-    <div class="col">
+    <div class="col-8">
       <h1>Project Name: {{ project.project_name }} </h1>
     </div>
-       
+    <div class="col mb-1">
+    <!-- Do not show edit details if project is "Archived" -->
+      {% if project.project_status != 2 %}
+      <a href="{% url 'update_project' %}">
+          <button class="btn btn-outline-success" type="button" style="width: 150px;">Edit Details</button>
+      </a>
+      {% endif %}
+      
+      <!-- Show archive project button only if project status is "Finished" -->
+      {% if project.project_status == 1 %}
+      <a href="{% url 'archive_project' %}">
+          <button class="btn btn-outline-warning" type="button" style="width: 150px;">Archive Project</button>
+      </a>        
+      {% endif %}
+
+      <!-- Show delete button only if project status is "Archived" -->
+      {% if project.project_status == 2 %}
+      <a href="{% url 'delete_project' %}" style="position: relative; left: 32%;">
+          <button class="btn btn-outline-danger" type="button" style="width:150px;">Delete Project</button>
+      </a>
+      {% endif %}
+    </div> 
   </div> 
+
   <div class="mb-3" style="height: 1px; background-color: #EAEFF5"></div>
   <!-- line break -->
   <div class="row" style="margin-left: 5px;">
-    <div class="col-8">
+    <div class="col">
       <h2 style="font-size: 26px;"> Description </h2>
     </div>
-
-    <div class="col mb-1">
-      <!-- Do not show edit details if project is "Archived" -->
-        {% if project.project_status != 2 %}
-        <a href="{% url 'update_project' %}">
-            <button class="btn btn-outline-success" type="button" style="width: 150px;">Edit Details</button>
-        </a>
-        {% endif %}
-        
-        <!-- Show archive project button only if project status is "Finished" -->
-        {% if project.project_status == 1 %}
-        <a href="{% url 'archive_project' %}">
-            <button class="btn btn-outline-warning" type="button" style="width: 150px;">Archive Project</button>
-        </a>        
-        {% endif %}
-
-        <!-- Show delete button only if project status is "Archived" -->
-        {% if project.project_status == 2 %}
-        <a href="{% url 'delete_project' %}" style="position: relative; left: 32%;">
-            <button class="btn btn-outline-danger" type="button" style="width:150px;">Delete Project</button>
-        </a>
-        {% endif %}
-    </div> 
   </div>
 
   <div class="row" style="margin-left: 5px; width: 95%">
