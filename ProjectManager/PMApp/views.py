@@ -4,6 +4,9 @@ from django.db.models import Case, Value, When
 
 from .models import Project, User, Member, Task, TaskAssignment, Expense
 
+import hashlib
+import bcrypt
+
 def login(request):
     if request.method == "POST":
 
@@ -18,8 +21,9 @@ def login(request):
             return render(request, "login.html", {"error": True})
         
         # Validate password
-        # TODO: Hasing + Salting
-        if password != user_obj.password:
+        bytes = password.encode('utf-8')
+        password_matches = bcrypt.checkpw(bytes, user_obj.password) 
+        if not password_matches:
             return render(request, "login.html", {"error": True})
         
         # Login successful
@@ -47,11 +51,16 @@ def register(request):
         # Validate password
         if password != retype_pass:
             return render(request, "register.html", {"password_error": True})
+        
+        # Hash password
+        bytes = password.encode("utf-8")
+        salt = bcrypt.gensalt()
+        hash = bcrypt.hashpw(bytes, salt)
 
         user_obj = User.objects.create(
             name=name,
             username=username,
-            password=password,
+            password=hash,
             staff_type="Em"
         )
         

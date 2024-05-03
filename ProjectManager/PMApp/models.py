@@ -31,7 +31,7 @@ class User(models.Model):
     user_id = models.SmallAutoField(primary_key=True)
     name = models.CharField(max_length=255)
     username = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)  # TODO: password encryption
+    password = models.BinaryField()
     # TODO: profile pics
     staff_type = models.CharField(max_length=2, choices=sType, default=sType.EMPLOYEE)
 
