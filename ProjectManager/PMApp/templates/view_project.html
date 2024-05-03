@@ -81,12 +81,12 @@
 
     <div class="col-5">
       <h2 class="ms-3"> Time until End of Project </h2>
-      <div class="progress mb-3" role="progressbar" aria-valuemax="100" style="height: 20px; width: 70%;">
-        <div class="progress-bar bg-success" style="width: 20%"></div>
+      <div class="progress mb-3" role="progressbar" style="height: 20px; width: 70%;">
+        <div class="progress-bar bg-warning" style="width: {{start_to_now_percentage}}%; color: BLACK"> {{ start_to_now }} days elapsed </div>
+        <div class="progress-bar" style="width: {{end_to_now_percentage}}%; color: BLACK"> {{ end_to_now }} days left </div>
       </div>
     </div>
   </div>
-
   <div class="mb-3" style="height: 1px; background-color: #EAEFF5"></div>
   <!-- line break -->
   

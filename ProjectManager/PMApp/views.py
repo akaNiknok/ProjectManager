@@ -6,6 +6,7 @@ from .models import Project, User, Member, Task, TaskAssignment, Expense
 
 import hashlib
 import bcrypt
+import datetime 
 
 def login(request):
     if request.method == "POST":
@@ -181,18 +182,27 @@ def view_project(request):
     progress_tasks = Task.objects.filter(project__project_id = project_obj.project_id, task_status = 0).count()
 
     if(completed_tasks != 0 and task_objs.count != 0):
-        completed_tasks = completed_tasks/task_objs.count()
+        completed_tasks = (completed_tasks/task_objs.count()) * 100
     
     if(review_tasks != 0 and task_objs.count != 0):
-        review_tasks = review_tasks/task_objs.count()
+        review_tasks = (review_tasks/task_objs.count()) * 100
 
     if(progress_tasks != 0 and task_objs.count != 0):
-        progress_tasks = progress_tasks / task_objs.count()
+        progress_tasks = (progress_tasks / task_objs.count()) * 100
 
+    start_to_now = -(project_obj.project_start - datetime.datetime.now().date()).days
+    end_to_now = (project_obj.project_end - datetime.datetime.now().date()).days
+    start_to_end = (project_obj.project_end - project_obj.project_start).days
+
+    start_to_now_percentage = (start_to_now / start_to_end) * 100
+    end_to_now_percentage = (end_to_now / start_to_end) * 100
     return render(request,
                   "view_project.html",
-                  {"project": project_obj, "tasks": task_objs, "completed": completed_tasks * 100,
-                   "review": review_tasks * 100, "progress": progress_tasks * 100,
+                  {"project": project_obj, "tasks": task_objs, "completed": completed_tasks ,
+                   "review": review_tasks, "progress": progress_tasks, 
+                   "start_to_now": start_to_now, "end_to_now": end_to_now,
+                   "start_to_now_percentage": start_to_now_percentage,
+                   "end_to_now_percentage": end_to_now_percentage,
                    })
 
 
