@@ -87,10 +87,12 @@ def dashboard(request):
 
     if user_id is None:
         return redirect("login")
+    
+    # Retrieve user obj
+    user_obj = User.objects.get(user_id=user_id)
 
-    # Retrieve all objects
-    # TODO: Retrieve only user related projects
-    project_objs = Project.objects.all()
+    # Retrieve all projects that the user is part of
+    project_objs = Project.objects.filter(member__user=user_obj)
 
     # Default to the first project, when not specified
     try:
@@ -113,7 +115,10 @@ def dashboard(request):
         
     return render(request,
                   "dashboard.html",
-                  {"project": project_obj, "tasks": task_objs, "expenses": expense_objs})
+                  {"user": user_obj,
+                   "project": project_obj,
+                   "tasks": task_objs,
+                   "expenses": expense_objs})
 
 
 def switch_project(request, project_id):
