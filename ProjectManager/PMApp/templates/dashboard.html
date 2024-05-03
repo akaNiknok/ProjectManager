@@ -78,14 +78,14 @@
 
               <!-- Edit Form -->
               <form action="{% url "update_task" task_id=task.task_id%}" method="POST" id="task-form-{{ task.task_id }}" class="mb-0 mt-2">{% csrf_token %}
-                <input type="submit" id="save-task-{{ task.task_id }}" value="Save" class="btn btn-outline-success btn-sm" style="display: none;">
+                <input type="submit" id="save-task-{{ task.task_id }}" value="Save" class="btn btn-outline-success btn-sm" style="display: none; width: 60px;">
               </form>
-              <button type="button" class="btn btn-outline-dark btn-sm edit-btn" data-type="task" data-id="{{ task.task_id }}">Edit</button>
+              <button type="button" class="btn btn-outline-dark btn-sm edit-btn" data-type="task" data-id="{{ task.task_id }}" style="width: 60px;">Edit</button>
 
               <!-- Delete Form -->
               <form action="{% url "delete_task" %}" method="POST">{% csrf_token %}
                 <input type="hidden" name="task_id" value="{{ task.task_id }}">
-                <input type="submit" value="Delete" class="btn btn-outline-danger btn-sm">
+                <input type="submit" id="delete-task-{{ task.task_id }}" value="Delete" class="btn btn-outline-danger btn-sm" style="display: none; width: 60px;">
               </form>
             </td>                 
             <td class="table table-light p-0" style="width:80%">
@@ -232,14 +232,14 @@
                   <br>
                   <!-- Edit Form -->
                   <form action="{% url "update_expense" expense_id=expense.expense_id %}" method="POST" id="expense-form-{{ expense.expense_id }}" class="mb-0 mt-2">{% csrf_token %}
-                    <input type="submit" id="save-expense-{{ expense.expense_id }}" value="Save" class="btn btn-outline-success btn-sm" style="display: none;">
+                    <input type="submit" id="save-expense-{{ expense.expense_id }}" value="Save" class="btn btn-outline-success btn-sm" style="display: none; width: 60px;">
                   </form>
-                  <button type="button" class="btn btn-outline-dark btn-sm edit-btn" data-type="expense" data-id="{{ expense.expense_id }}">Edit</button>
+                  <button type="button" class="btn btn-outline-dark btn-sm edit-btn" data-type="expense" data-id="{{ expense.expense_id }}" style="width: 60px;">Edit</button>
 
                   <!-- Delete Form -->
                   <form action="{% url "delete_expense" %}" method="POST">{% csrf_token %}
                     <input type="hidden" name="expense_id" value="{{ expense.expense_id }}">
-                    <input type="submit" value="Delete" class="btn btn-outline-danger btn-sm">
+                    <input type="submit" id="delete-expense-{{ expense.expense_id }}" value="Delete" class="btn btn-outline-danger btn-sm" style="display: none; width: 60px;">
                   </form>
                 </th>
                 <td class="table table-light p-0" style="width:80%">

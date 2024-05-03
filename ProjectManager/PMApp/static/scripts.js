@@ -17,6 +17,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
           // Get the elements to toggle
           var save = document.getElementById("save-task-" + id);
+          var deletebtn = document.getElementById("delete-task-" + id);
           var status = document.getElementById("status-" + id);
           var statusForm = document.getElementById("status-form-" + id);
           var priority = document.getElementById("priority-" + id);
@@ -28,6 +29,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
           // Get the current display value of each element
           var saveStyle = window.getComputedStyle(save).getPropertyValue("display");
+          var deleteStyle = window.getComputedStyle(deletebtn).getPropertyValue("display");
           var statusStyle = window.getComputedStyle(status).getPropertyValue("display");
           var statusFormStyle = window.getComputedStyle(statusForm).getPropertyValue("display");
           var priorityStyle = window.getComputedStyle(priority).getPropertyValue("display");
@@ -40,6 +42,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
           // Toggle the values
           button.innerHTML = button.innerHTML === "Edit" ? "Cancel" : "Edit";
           save.style.display = saveStyle === "none" || "" ? "inline-block" : "none";
+          deletebtn.style.display = deleteStyle === "none" || "" ? "inline-block" : "none";
           status.style.display = statusStyle === "none" || "" ? "inline-block" : "none";
           statusForm.style.display = statusFormStyle === "none" || "" ? "inline-block" : "none";
           priority.style.display = priorityStyle === "none" || "" ? "inline-block" : "none";
@@ -53,6 +56,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
           // Get the elements to toggle
           var save = document.getElementById("save-expense-" + id);
+          var deletebtn = document.getElementById("delete-expense-" + id);
           var desc = document.getElementById("desc-" + id);
           var descForm = document.getElementById("desc-form-" + id);
           var amount = document.getElementById("amount-" + id);
@@ -62,6 +66,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
           // Get the current display value of each element
           var saveStyle = window.getComputedStyle(save).getPropertyValue("display");
+          var deleteStyle = window.getComputedStyle(deletebtn).getPropertyValue("display");
           var descStyle  = window.getComputedStyle(desc).getPropertyValue("display");
           var descFormStyle  = window.getComputedStyle(descForm).getPropertyValue("display");
           var amountStyle  = window.getComputedStyle(amount).getPropertyValue("display");
@@ -72,6 +77,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
           // Toggle the values
           button.innerHTML = button.innerHTML === "Edit" ? "Cancel" : "Edit";
           save.style.display = saveStyle === "none" || "" ? "inline-block" : "none";
+          deletebtn.style.display = deleteStyle === "none" || "" ? "inline-block" : "none";
           desc.style.display = descStyle === "none" || "" ? "inline-block" : "none";
           descForm.style.display = descFormStyle === "none" || "" ? "inline-block" : "none";
           amount.style.display = amountStyle === "none" || "" ? "inline-block" : "none";
