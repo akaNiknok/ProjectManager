@@ -81,7 +81,8 @@ def logout(request):
 
 
 def dashboard(request):
-    # Retrieve current logged in user id
+
+    # Validate and retrieve current logged in user id
     user_id = request.COOKIES.get("user_id")
 
     if user_id is None:
@@ -117,6 +118,12 @@ def dashboard(request):
 
 def switch_project(request, project_id):
 
+    # Validate and retrieve current logged in user id
+    user_id = request.COOKIES.get("user_id")
+
+    if user_id is None:
+        return redirect("login")
+
     request.session["current_project_id"] = int(project_id)
 
     previous_url = request.META.get("HTTP_REFERER")
@@ -130,6 +137,12 @@ def switch_project(request, project_id):
 
 
 def create_project(request):
+
+    # Validate and retrieve current logged in user id
+    user_id = request.COOKIES.get("user_id")
+
+    if user_id is None:
+        return redirect("login")
 
     # Create project when user clicks submit
     if (request.method == "POST"):
@@ -174,6 +187,12 @@ def create_project(request):
 
 
 def view_project(request):
+
+    # Retrieve current logged in user id
+    user_id = request.COOKIES.get("user_id")
+
+    if user_id is None:
+        return redirect("login")
 
     project_id = request.session["current_project_id"]
 
@@ -233,6 +252,13 @@ def view_project(request):
 
 
 def update_project(request):
+
+    # Retrieve current logged in user id
+    user_id = request.COOKIES.get("user_id")
+
+    if user_id is None:
+        return redirect("login")
+
     project_id = request.session["current_project_id"]
 
     # Update project details when user clicks submit
@@ -275,6 +301,12 @@ def update_project(request):
 
 def archive_project(request):
 
+    # Retrieve current logged in user id
+    user_id = request.COOKIES.get("user_id")
+
+    if user_id is None:
+        return redirect("login")
+
     project_id = request.session["current_project_id"]
 
     # Get project object
@@ -292,6 +324,12 @@ def archive_project(request):
 
 def delete_project(request):
 
+    # Retrieve current logged in user id
+    user_id = request.COOKIES.get("user_id")
+
+    if user_id is None:
+        return redirect("login")
+
     project_id = request.session["current_project_id"]
 
     # Get project object
@@ -307,6 +345,12 @@ def delete_project(request):
 
 
 def create_task(request):
+    # Retrieve current logged in user id
+    user_id = request.COOKIES.get("user_id")
+
+    if user_id is None:
+        return redirect("login")
+
     # Create task when user clicks submit
     if (request.method == "POST"):
 
@@ -340,6 +384,12 @@ def create_task(request):
 
 
 def update_task(request, task_id):
+    # Retrieve current logged in user id
+    user_id = request.COOKIES.get("user_id")
+
+    if user_id is None:
+        return redirect("login")
+
     if (request.method == "POST"):
 
         # Get submitted form values
@@ -371,6 +421,12 @@ def update_task(request, task_id):
 
 
 def delete_task(request):
+    # Retrieve current logged in user id
+    user_id = request.COOKIES.get("user_id")
+
+    if user_id is None:
+        return redirect("login")
+
     if (request.method == "POST"):
         task_id = request.POST.get("task_id")
 
@@ -389,6 +445,12 @@ def delete_task(request):
 
 
 def view_members(request):
+    # Retrieve current logged in user id
+    user_id = request.COOKIES.get("user_id")
+
+    if user_id is None:
+        return redirect("login")
+
     # TODO: View member    project_id = request.session["current_project_id"]
 
     project_id = request.session["current_project_id"]
@@ -404,6 +466,12 @@ def view_members(request):
     return render(request, "view_members.html", {"members": member_objs})
 
 def add_member(request):
+    # Retrieve current logged in user id
+    user_id = request.COOKIES.get("user_id")
+
+    if user_id is None:
+        return redirect("login")
+
     project_id = request.session["current_project_id"]
     if (request.method=="POST"):
 
@@ -432,6 +500,12 @@ def add_member(request):
     
 
 def remove_member(request, member_id):
+    # Retrieve current logged in user id
+    user_id = request.COOKIES.get("user_id")
+
+    if user_id is None:
+        return redirect("login")
+
     project_id = request.session["current_project_id"]
 
     #Get project object
@@ -445,6 +519,12 @@ def remove_member(request, member_id):
     return redirect("view_members")
 
 def create_expense(request):
+    # Retrieve current logged in user id
+    user_id = request.COOKIES.get("user_id")
+
+    if user_id is None:
+        return redirect("login")
+
     # Create expense when user clicks submit
     if (request.method == "POST"):
 
@@ -474,6 +554,13 @@ def create_expense(request):
 
 
 def update_expense(request, expense_id):
+
+    # Retrieve current logged in user id
+    user_id = request.COOKIES.get("user_id")
+
+    if user_id is None:
+        return redirect("login")
+
     if (request.method == "POST"):
 
         # Get submitted form values
@@ -503,6 +590,13 @@ def update_expense(request, expense_id):
 
 
 def delete_expense(request):
+    
+    # Retrieve current logged in user id
+    user_id = request.COOKIES.get("user_id")
+
+    if user_id is None:
+        return redirect("login")
+
     if (request.method == "POST"):
         expense_id = request.POST.get("expense_id")
 
