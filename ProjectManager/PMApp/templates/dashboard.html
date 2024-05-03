@@ -9,11 +9,14 @@
       <li><a class="mr-2" style="color: ADB5BD; text-decoration: none;" href="{% url "logout" %}">Logout</a></li>
 {% endblock %}
 
+<script>
+</script>
 {% block content %}
+    
     <h1 class="ms-3" style="color: WHITE;">{{ project.project_name }}</h1>
     <!-- Resolve the issue of scrolling too far and casuing it to stay, add a function which tracks how far away from the start tihs is and moves with it -->
     <div class="mb-3" style="height: 1px; background-color: #EAEFF5;"></div>
-    <div id="vertical_line" style="position: fixed; top: 120px; left: 48%; border-right: solid 1px white; height: 10000;"></div>
+    <div id="vertical_line" style="position: fixed; top: 118px; left: 48%; border-right: solid 1px white; height: 10000;"></div>
 
     <script>
       window.onscroll = function (){
@@ -24,7 +27,7 @@
           vert_line.style.top = scrolled.toString() + 'px';
         }
         else{
-          vert_line.style.top = "130px"
+          vert_line.style.top = "118px"
         }
       }
     </script>
@@ -165,10 +168,12 @@
         <label style="color: WHITE; font-size: 26px;" for="task_members">Task Members:</label>
         <br><br>
         <div class="col">
-          <button class="btn btn-light me-3" onclick="toggleForm('tasks')">Cancel</button>
-          <input class="btn me-3" style="background-color: BLACK; color:WHITE;" type="submit">
+          <button class="btn btn-light me-3" onclick="toggleForm('tasks')" type="button">Cancel</button>
+          <input class="btn btn-dark me-3" style="color:WHITE;" type="submit">
         </div>
       </form>
+
+
     </div>
 
     <!-- New expense form -->
@@ -198,7 +203,7 @@
           </div>
           <br><br>
 
-          <button class="btn btn-light me-3" onclick="toggleForm('expenses')">Cancel</button>
+          <button class="btn btn-light me-3" onclick="toggleForm('expenses')" type="button">Cancel</button>
           <input class="btn me-3" style="background-color: BLACK; color: WHITE;" type="submit">
         </form>
       </div>

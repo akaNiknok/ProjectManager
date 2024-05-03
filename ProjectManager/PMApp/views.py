@@ -81,8 +81,8 @@ def logout(request):
     return response
 
 
-
 def dashboard(request):
+
 
     # Retrieve current logged in user id
     user_id = request.COOKIES.get("user_id")
@@ -119,6 +119,7 @@ def dashboard(request):
 
 
 def switch_project(request, project_id):
+
     request.session["current_project_id"] = int(project_id)
 
     previous_url = request.META.get("HTTP_REFERER")
@@ -174,9 +175,19 @@ def view_project(request):
         raise Http404("Project does not exist")
 
     task_objs = Task.objects.filter(project__project_id = project_obj.project_id)
-    completed_tasks = Task.objects.filter(project__project_id = project_obj.project_id, task_status = 3).count()/task_objs.count()
-    review_tasks = Task.objects.filter(project__project_id = project_obj.project_id, task_status = 1).count()/task_objs.count()  
-    progress_tasks = Task.objects.filter(project__project_id = project_obj.project_id, task_status = 0).count()/task_objs.count()
+
+    completed_tasks = Task.objects.filter(project__project_id = project_obj.project_id, task_status = 3).count()
+    review_tasks = Task.objects.filter(project__project_id = project_obj.project_id, task_status = 1).count()  
+    progress_tasks = Task.objects.filter(project__project_id = project_obj.project_id, task_status = 0).count()
+
+    if(completed_tasks != 0 and task_objs.count != 0):
+        completed_tasks = completed_tasks/task_objs.count()
+    
+    if(review_tasks != 0 and task_objs.count != 0):
+        review_tasks = review_tasks/task_objs.count()
+
+    if(progress_tasks != 0 and task_objs.count != 0):
+        progress_tasks = progress_tasks / task_objs.count()
 
     return render(request,
                   "view_project.html",
@@ -186,9 +197,6 @@ def view_project(request):
 
 
 def update_project(request):
-
-    project_id = request.session["current_project_id"]
-
     # Update project details when user clicks submit
     if (request.method == "POST"):
 

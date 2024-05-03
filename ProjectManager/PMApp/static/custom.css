@@ -24,6 +24,7 @@ td>h5 {
     font-weight: normal;
 }
 
+
 .removeBottomBorder {
     border-bottom: 0;
 }
@@ -71,3 +72,4 @@ label {
 ::-webkit-scrollbar:horizontal{
   display: none;
 }
+
