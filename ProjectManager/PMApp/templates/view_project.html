@@ -80,10 +80,10 @@
     </div>
 
     <div class="col-5">
-      <h2 class="ms-3"> Time until End of Project </h2>
+      <h2 class="ms-3"> Days until End of Project </h2>
       <div class="progress mb-3" role="progressbar" style="height: 20px; width: 70%;">
-        <div class="progress-bar bg-warning" style="width: {{start_to_now_percentage}}%; color: BLACK"> {{ start_to_now }} days elapsed </div>
-        <div class="progress-bar" style="width: {{end_to_now_percentage}}%; color: BLACK"> {{ end_to_now }} days left </div>
+        <div class="progress-bar bg-success" style="width: {{start_to_now_percentage}}%; color: BLACK"> {{ start_to_now }} done </div>
+        <div class="progress-bar bg-light" style="width: {{end_to_now_percentage}}%; color: BLACK"> {{ end_to_now }} left </div>
       </div>
     </div>
   </div>
@@ -113,9 +113,9 @@
   <div class="mb-3" style="height: 1px; background-color: #EAEFF5"></div>
   <!-- line break -->
   <h2 class="ms-3"> Financial Summary </h2>
-  <div class="progress mb-3" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 20px; width: 75%; margin-left: 12%">
-    <div class="progress-bar bg-success" style="width: 25%">25%</div>
-  </div>
+
+
+
 </div>
 
 {% endblock %}

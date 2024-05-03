@@ -196,6 +196,13 @@ def view_project(request):
 
     start_to_now_percentage = (start_to_now / start_to_end) * 100
     end_to_now_percentage = (end_to_now / start_to_end) * 100
+        
+    
+    total_expenses = 0
+    expense_objs = Expense.objects.filter(project_id=project_id)
+    for expense in expense_objs:
+        total_expenses = total_expenses + expense.expense_amt
+
     return render(request,
                   "view_project.html",
                   {"project": project_obj, "tasks": task_objs, "completed": completed_tasks ,
@@ -203,6 +210,7 @@ def view_project(request):
                    "start_to_now": start_to_now, "end_to_now": end_to_now,
                    "start_to_now_percentage": start_to_now_percentage,
                    "end_to_now_percentage": end_to_now_percentage,
+                   "total_expenses": total_expenses, "expenses": expense_objs, 
                    })
 
 
