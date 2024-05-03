@@ -386,6 +386,18 @@ def view_members(request):
 
     return render(request, "view_members.html", {"members": member_objs})
 
+def remove_member(request, member_id):
+    project_id = request.session["current_project_id"]
+
+    #Get project object
+    try: 
+        project_obj = Project.objects.get(project_id = project_id)
+    except:
+        raise Http404("Project does not exist")
+
+    member_obj = Member.objects.get(project__project_id = project_obj.project_id, member_id = member_id)
+    member_obj.delete()
+    return redirect("view_members")
 
 def create_expense(request):
     # Create expense when user clicks submit
