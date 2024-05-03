@@ -6,10 +6,10 @@ from .models import Project, User, Member, Task, TaskAssignment, Expense
 
 import hashlib
 import bcrypt
+import datetime 
 
 def login(request):
     if request.method == "POST":
-
         # Get form fields
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -37,7 +37,6 @@ def login(request):
 
 def register(request):
     if request.method == "POST":
-
         # Get form fields
         name = request.POST.get("name")
         username = request.POST.get("username")
@@ -81,9 +80,7 @@ def logout(request):
     return response
 
 
-
 def dashboard(request):
-
     # Retrieve current logged in user id
     user_id = request.COOKIES.get("user_id")
 
@@ -119,6 +116,7 @@ def dashboard(request):
 
 
 def switch_project(request, project_id):
+
     request.session["current_project_id"] = int(project_id)
 
     previous_url = request.META.get("HTTP_REFERER")
@@ -135,6 +133,8 @@ def create_project(request):
 
     # Create project when user clicks submit
     if (request.method == "POST"):
+        members = request.POST.getlist('member')
+            
 
         # Get submitted form values
         project_name = request.POST.get("project_name")
@@ -156,12 +156,21 @@ def create_project(request):
             project_status=project_status
         )
 
+        for member in members:
+            new_user = User.objects.get(user_id = member)
+            print(new_user.user_id)
+            new_member = Member.objects.create(
+                project = new_project,
+                user = new_user
+            )
         return redirect("view_project")
 
     # Otherwise, display the form
     else:
+
+        users = User.objects.all()
         return render(request,
-                    "create_project.html")
+                      "create_project.html", {"users": users})
 
 
 def view_project(request):
@@ -173,18 +182,50 @@ def view_project(request):
     except:
         raise Http404("Project does not exist")
 
+    task_objs = Task.objects.filter(project__project_id = project_obj.project_id)
+
+    completed_tasks = Task.objects.filter(project__project_id = project_obj.project_id, task_status = 3).count()
+    review_tasks = Task.objects.filter(project__project_id = project_obj.project_id, task_status = 1).count()  
+    progress_tasks = Task.objects.filter(project__project_id = project_obj.project_id, task_status = 0).count()
+
+    if(completed_tasks != 0 and task_objs.count != 0):
+        completed_tasks = (completed_tasks/task_objs.count()) * 100
+    
+    if(review_tasks != 0 and task_objs.count != 0):
+        review_tasks = (review_tasks/task_objs.count()) * 100
+
+    if(progress_tasks != 0 and task_objs.count != 0):
+        progress_tasks = (progress_tasks / task_objs.count()) * 100
+
+    start_to_now = -(project_obj.project_start - datetime.datetime.now().date()).days
+    end_to_now = (project_obj.project_end - datetime.datetime.now().date()).days
+    start_to_end = (project_obj.project_end - project_obj.project_start).days
+
+    start_to_now_percentage = (start_to_now / start_to_end) * 100
+    end_to_now_percentage = (end_to_now / start_to_end) * 100
+        
+    
+    total_expenses = 0
+    expense_objs = Expense.objects.filter(project_id=project_id)
+    for expense in expense_objs:
+        total_expenses = total_expenses + expense.expense_amt
+
     return render(request,
                   "view_project.html",
-                  {"project": project_obj})
+                  {"project": project_obj, "tasks": task_objs, "completed": completed_tasks ,
+                   "review": review_tasks, "progress": progress_tasks, 
+                   "start_to_now": start_to_now, "end_to_now": end_to_now,
+                   "start_to_now_percentage": start_to_now_percentage,
+                   "end_to_now_percentage": end_to_now_percentage,
+                   "total_expenses": total_expenses, "expenses": expense_objs, 
+                   })
 
 
 def update_project(request):
-
     project_id = request.session["current_project_id"]
 
     # Update project details when user clicks submit
     if (request.method == "POST"):
-
         # Get submitted form values
         project_name = request.POST.get("project_name")
         project_desc = request.POST.get("project_desc")
@@ -347,10 +388,50 @@ def view_members(request):
     except:
         raise Http404("Project does not exist")
 
-    member_objs = Member.objects.filter(project__project_name = project_obj.project_name)
+    member_objs = Member.objects.filter(project__project_id = project_obj.project_id)
 
     return render(request, "view_members.html", {"members": member_objs})
 
+def add_member(request):
+    project_id = request.session["current_project_id"]
+    if (request.method=="POST"):
+
+        members = request.POST.getlist('member')
+
+        #Get project object
+        try:
+            project_obj = Project.objects.get(project_id = project_id)
+        except:
+            raise Http404("Project does not exist")
+
+        for member in members:
+            new_user = User.objects.get(user_id = member)
+            new_member = Member.objects.create(
+                user = new_user,
+                project = project_obj
+            )
+    
+        return redirect("view_members")
+    else:
+        members = Member.objects.filter(project__project_id = project_id)  
+        users = User.objects.exclude(user_id__in = members.values_list('user__user_id'))
+        return render(request, "add_member.html", {
+            "users": users, "members": members 
+        })
+    
+
+def remove_member(request, member_id):
+    project_id = request.session["current_project_id"]
+
+    #Get project object
+    try: 
+        project_obj = Project.objects.get(project_id = project_id)
+    except:
+        raise Http404("Project does not exist")
+
+    member_obj = Member.objects.get(project__project_id = project_obj.project_id, member_id = member_id)
+    member_obj.delete()
+    return redirect("view_members")
 
 def create_expense(request):
     # Create expense when user clicks submit

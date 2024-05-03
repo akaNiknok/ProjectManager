@@ -9,27 +9,39 @@
 
 {% block content %}
 
+    <!-- TODO DELETE MEMBERS -->
+    <div class ="row">
+      <div class="mt-4" style="position: relative; left: 76%">
+        <a href="{% url "add_member"%}">
+            <button class="btn btn-outline-success" type="button" style="width: 150px;">Add Members</button>
+        </a>
+      </div>
+    </div>
+
     <!-- TODO: View members -->
-    <table class="table table-striped" style="width: 75%; margin:auto; margin-top: 3%">
+    <table class="table table-striped rounded-3 overflow-hidden" style="width: 75%; margin:auto; margin-top: 3%">
       <thead class="table table-secondary table-striped">
         <tr>
-          <th scope="col">Picture?</th>
-          <th scope="col">Name</th>
-          <th scope="col">UserName</th>
-          <th scope="col">Project</th>
-          <th scope="col">Role</th>
-          <th scope="col">Tasks</th>
+          <th scope="col" style="width: 25%">Name</th>
+          <th scope="col" style="width: 25%">Username</th>
+          <th scope="col" style="width: 20%">Project</th>
+          <th scope="col" style="width: 20%">Role</th>
+          <th scope="col" style="width: 10%"></th>
         </tr>
       </thead>
       <tbody>
     {% for member in members %}
         <tr>
-          <th scope="col"></th>
           <th scope="col"> {{ member.user.name }} </th>
           <th scope="col"> {{ member.user.username }} </th>
           <th scope="col"> {{ member.project.project_name }} </th>
           <th scope="col"> {{ member.user.staff_type }}</th>
-          <th scope="col"> WIP </th>
+          <th scope="col"> 
+            <a href="{% url "remove_member" member_id=member.member_id %}" method="POST">
+              <button class="btn btn-outline-danger" type="button" style="width: 100px">Remove</button>
+            </a>
+          </th>
+
         </tr>
     {% endfor %}
       </tbody>
