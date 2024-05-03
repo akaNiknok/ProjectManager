@@ -12,9 +12,11 @@
     <!-- TODO DELETE MEMBERS -->
     <div class ="row">
       <div class="mt-4" style="position: relative; left: 76%">
-        <a href="{% url "add_member"%}">
-            <button class="btn btn-outline-success" type="button" style="width: 150px;">Add Members</button>
-        </a>
+        {% if user.staff_type == "M" or user.staff_type == "X" %}
+          <a href="{% url "add_member"%}">
+              <button class="btn btn-outline-success" type="button" style="width: 150px;">Add Members</button>
+          </a>
+        {% endif %}
       </div>
     </div>
 
@@ -26,21 +28,26 @@
           <th scope="col" style="width: 25%">Username</th>
           <th scope="col" style="width: 20%">Project</th>
           <th scope="col" style="width: 20%">Role</th>
+          {% if user.staff_type == "M" or user.staff_type == "X" %}
           <th scope="col" style="width: 10%"></th>
+          {% endif %}
         </tr>
       </thead>
       <tbody>
     {% for member in members %}
         <tr>
-          <th scope="col"> {{ member.user.name }} </th>
-          <th scope="col"> {{ member.user.username }} </th>
-          <th scope="col"> {{ member.project.project_name }} </th>
-          <th scope="col"> {{ member.user.staff_type }}</th>
-          <th scope="col"> 
+          <td scope="col"> {{ member.user.name }} </td>
+          <td scope="col"> {{ member.user.username }} </td>
+          <td scope="col"> {{ member.project.project_name }} </td>
+          <td scope="col"> {{ member.user.get_staff_type_display }}</td>
+
+          {% if user.staff_type == "M" or user.staff_type == "X" %}
+          <td scope="col"> 
             <a href="{% url "remove_member" member_id=member.member_id %}" method="POST">
               <button class="btn btn-outline-danger" type="button" style="width: 100px">Remove</button>
             </a>
-          </th>
+          </td>
+          {% endif %}
 
         </tr>
     {% endfor %}
