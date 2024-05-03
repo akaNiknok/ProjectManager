@@ -43,7 +43,9 @@
           </h2>
         </div>
         <div class="col mt-1">
-          <button id="tasksCreateBtn" class="rounded-5" style="width: 32px; height: 32px;" onclick="toggleForm('tasks')"> + </button>
+          {% if user.staff_type == "M" %}
+            <button id="tasksCreateBtn" class="rounded-5" style="width: 32px; height: 32px;" onclick="toggleForm('tasks')"> + </button>
+          {% endif %}
         </div>
       </div>
 

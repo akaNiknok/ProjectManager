@@ -114,6 +114,8 @@
 
   <div class="mb-3" style="height: 1px; background-color: #EAEFF5"></div>
   <!-- line break -->
+
+  {% if user.staff_type == "M" or user.staff_type == "X" %}
   <h2 class="ms-3"> Financial Summary </h2>
   
   <!-- TABLE OF EXPENSES PLUS THE TOTAL EXPENSES -->
@@ -123,6 +125,7 @@
       <h2> Total Expenses: {{ total_expenses|floatformat:2|intcomma }} PHP</h2>
     </div>
   </div>
+  {% endif %}
 
 </div>
 
