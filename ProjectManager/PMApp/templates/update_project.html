@@ -29,11 +29,11 @@
               <option value="1" {% if project.project_status == 1 %}selected{% endif %}>Finished</option>
           </select><br><br>
 
-          <input type="submit" value="Update">
+          <input class="btn btn-outline-secondary rounded-3" style="color: WHITE;" type="submit" value="Update">
     </form>
 
     <a href="{% url 'view_project' %}">
-        <button type="button">Cancel</button>
+        <button class="btn btn-outline-light rounded-3" style="color:WHITE;" type="button">Cancel</button>
     </a>
 
 {% endblock %}
