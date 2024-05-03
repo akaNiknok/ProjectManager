@@ -197,9 +197,11 @@ def view_project(request):
 
 
 def update_project(request):
+
+    project_id = request.session["current_project_id"]
+
     # Update project details when user clicks submit
     if (request.method == "POST"):
-
         # Get submitted form values
         project_name = request.POST.get("project_name")
         project_desc = request.POST.get("project_desc")
