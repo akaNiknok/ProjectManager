@@ -10,48 +10,46 @@
 {% block content %}
 
     <form action="{% url 'create_project' %}" method="POST">{% csrf_token %}
-    <div class="row mt-4 ms-3">
-      <div class="col-5">
-        <label for="project_name">Project Name:</label>
-        <input class="form-control" type="text" name="project_name" id="project_name" required><br><br>
+      <div class="row mt-4 ms-3">
+        <div class="col-5">
+          <label for="project_name">Project Name:</label>
+          <input class="form-control" type="text" name="project_name" id="project_name" required><br><br>
 
-        <label for="project_desc">Project Description:</label>
-        <textarea class="form-control" name="project_desc" id="project_desc" cols="70" rows="10" required></textarea><br><br>
+          <label for="project_desc">Project Description:</label>
+          <textarea class="form-control" name="project_desc" id="project_desc" cols="70" rows="10" required></textarea><br><br>
 
-        <label for="project_start">Project Start:</label>
-        <input type="date" name="project_start" id="project_start" required><br><br>
+          <label for="project_start">Project Start:</label>
+          <input class="rounded-2" type="date" name="project_start" id="project_start" required><br><br>
 
-        <label for="project_end">Project End:</label>
-        <input type="date" name="project_end" id="project_end"><br><br>
+          <label for="project_end">Project End:</label>
+          <input class="rounded-2" type="date" name="project_end" id="project_end"><br><br>
 
-        <label for="project_status">Project Status:</label>
-        <select class="rounded-3" name="project_status" id="project_status">
-            <option value="0">Ongoing</option>
-            <option value="1">Finished</option>
-        </select>
+          <label for="project_status">Project Status:</label>
+          <select class="rounded-3" name="project_status" id="project_status">
+              <option value="0">Ongoing</option>
+              <option value="1">Finished</option>
+          </select>
 
-        <br><br>
-        
-        <input type="submit">
-        <a href="{% url 'dashboard' %}">
-          <button type="button">Cancel</button>
-        </a>
-      </div>
+          <br><br>
+          
+          <input type="submit">
+          <a href="{% url 'dashboard' %}">
+            <button type="button">Cancel</button>
+          </a>
+        </div>
 
-      <div class="col mt-3 ms-5">
+        <div class="col mt-3 ms-5">
 
-        {% for user in users %}
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="{{ user.user_id }}" name="member">
-            <label class="form-check-label">
-              {{user.name}} 
-            </label>
-          </div>
-        {% endfor %}
+          {% for user in users %}
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="{{ user.user_id }}" name="member">
+              <label class="form-check-label">
+                {{user.name}} 
+              </label>
+            </div>
+          {% endfor %}
 
-      </div>
-</div>
-
+        </div>
 
     </form>
     <!-- Set default project start to today's date -->

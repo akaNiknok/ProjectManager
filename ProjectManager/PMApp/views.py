@@ -133,7 +133,7 @@ def create_project(request):
 
     # Create project when user clicks submit
     if (request.method == "POST"):
-        member = request.POST.getlist('member')
+        members = request.POST.getlist('member')
             
 
         # Get submitted form values
@@ -156,8 +156,8 @@ def create_project(request):
             project_status=project_status
         )
 
-        for mem in member:
-            new_user = User.objects.get(user_id = mem)
+        for member in members:
+            new_user = User.objects.get(user_id = member)
             print(new_user.user_id)
             new_member = Member.objects.create(
                 project = new_project,
@@ -222,7 +222,6 @@ def view_project(request):
 
 
 def update_project(request):
-
     project_id = request.session["current_project_id"]
 
     # Update project details when user clicks submit
@@ -392,6 +391,34 @@ def view_members(request):
     member_objs = Member.objects.filter(project__project_id = project_obj.project_id)
 
     return render(request, "view_members.html", {"members": member_objs})
+
+def add_member(request):
+    project_id = request.session["current_project_id"]
+    if (request.method=="POST"):
+
+        members = request.POST.getlist('member')
+
+        #Get project object
+        try:
+            project_obj = Project.objects.get(project_id = project_id)
+        except:
+            raise Http404("Project does not exist")
+
+        for member in members:
+            new_user = User.objects.get(user_id = member)
+            new_member = Member.objects.create(
+                user = new_user,
+                project = project_obj
+            )
+    
+        return redirect("view_members")
+    else:
+        members = Member.objects.filter(project__project_id = project_id)  
+        users = User.objects.exclude(user_id__in = members.values_list('user__user_id'))
+        return render(request, "add_member.html", {
+            "users": users, "members": members 
+        })
+    
 
 def remove_member(request, member_id):
     project_id = request.session["current_project_id"]
