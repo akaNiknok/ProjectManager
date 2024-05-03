@@ -14,4 +14,4 @@ def projects_processor(request):
     # Retrieve all projects that the user is part of
     project_objs = Project.objects.filter(member__user=user_obj)
 
-    return {"projects": project_objs}
+    return {"projects": project_objs, "user": user_obj}

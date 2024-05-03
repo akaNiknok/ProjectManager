@@ -19,7 +19,7 @@
     </div>
     <div class="col mb-1">
     <!-- Do not show edit details if project is "Archived" -->
-      {% if project.project_status != 2 %}
+      {% if project.project_status != 2 and user.staff_type == "M" %}
       <a href="{% url 'update_project' %}">
           <button class="btn btn-outline-success" type="button" style="width: 150px;">Edit Details</button>
       </a>
