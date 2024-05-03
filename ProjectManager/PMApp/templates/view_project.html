@@ -13,7 +13,7 @@
 
 {% block content %}
 <div style="color: WHITE;">
-  <div class="row mt-2" style="margin-left: 10px;">
+  <div class="row mt-3" style="margin-left: 10px;">
     <div class="col-8">
       <h1>Project Name: {{ project.project_name }} </h1>
     </div>
@@ -102,18 +102,27 @@
   <!-- Scripting Stuff ig --> 
   <div class="mb-3" style="height: 1px; background-color: #EAEFF5"></div>
   <!-- line break -->
-  <h2 class="ms-3"> Overall Task Progress </h2>
+  <div class="col">
+    <h2 class="ms-3"> Overall Task Progress </h2>
+  </div>
+
   <div class="progress mb-3" role="progressbar"  style="height: 20px; width: 75%; margin-left: 12%">
-    <div class="progress-bar bg-success" style="width: {{progress}}%"></div>
-    <div class="progress-bar bg-warning" style="width: {{review}}%"></div>
-    <div class="progress-bar bg-danger" style="width: {{completed}}%"></div>
+    <div class="progress-bar bg-success" style="width: {{progress}}%"> In Progress</div>
+    <div class="progress-bar bg-warning" style="width: {{review}}%"> For Review</div>
+    <div class="progress-bar bg-danger" style="width: {{completed}}%"> Completed </div>
   </div>
 
   <div class="mb-3" style="height: 1px; background-color: #EAEFF5"></div>
   <!-- line break -->
   <h2 class="ms-3"> Financial Summary </h2>
-
-
+  
+  <!-- TABLE OF EXPENSES PLUS THE TOTAL EXPENSES -->
+  <div class="ms-3">
+    <div class="col">
+      {% load humanize %}
+      <h2> Total Expenses: {{ total_expenses|floatformat:2|intcomma }} PHP</h2>
+    </div>
+  </div>
 
 </div>
 

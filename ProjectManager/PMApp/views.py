@@ -10,7 +10,6 @@ import datetime
 
 def login(request):
     if request.method == "POST":
-
         # Get form fields
         username = request.POST.get("username")
         password = request.POST.get("password")
@@ -38,7 +37,6 @@ def login(request):
 
 def register(request):
     if request.method == "POST":
-
         # Get form fields
         name = request.POST.get("name")
         username = request.POST.get("username")
@@ -83,8 +81,6 @@ def logout(request):
 
 
 def dashboard(request):
-
-
     # Retrieve current logged in user id
     user_id = request.COOKIES.get("user_id")
 
@@ -137,6 +133,8 @@ def create_project(request):
 
     # Create project when user clicks submit
     if (request.method == "POST"):
+        member = request.POST.getlist('member')
+            
 
         # Get submitted form values
         project_name = request.POST.get("project_name")
@@ -158,12 +156,21 @@ def create_project(request):
             project_status=project_status
         )
 
+        for mem in member:
+            new_user = User.objects.get(user_id = mem)
+            print(new_user.user_id)
+            new_member = Member.objects.create(
+                project = new_project,
+                user = new_user
+            )
         return redirect("view_project")
 
     # Otherwise, display the form
     else:
+
+        users = User.objects.all()
         return render(request,
-                    "create_project.html")
+                      "create_project.html", {"users": users})
 
 
 def view_project(request):
