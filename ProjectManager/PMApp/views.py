@@ -92,8 +92,8 @@ def dashboard(request):
 
     # Retrieve all objects
     # TODO: Retrieve only user related projects
-    project_objs = Project.objects.all()
-
+    member_objs = Member.objects.filter(user_id = user_id)
+    project_objs = Project.objects.filter(project_id__in = member_objs.values_list('project__project_id', flat = True)).distinct()
     # Default to the first project, when not specified
     try:
         project_id = request.session["current_project_id"]
@@ -347,7 +347,9 @@ def view_members(request):
     except:
         raise Http404("Project does not exist")
 
-    member_objs = Member.objects.filter(project__project_name = project_obj.project_name)
+
+    member_objs = Member.objects.filter(project__project_name = project_obj.project_name).order_by("user__staff_type")
+
 
     return render(request, "view_members.html", {"members": member_objs})
 
