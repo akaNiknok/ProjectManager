@@ -93,7 +93,7 @@ def dashboard(request):
 
     # If manager/employee, get all projects the user is part of
     # If executive, get all projects
-    if user_obj != "X":
+    if user_obj.staff_type != "X":
         project_objs = Project.objects.filter(member__user=user_obj)
     else:
         project_objs = Project.objects.all()
