@@ -274,7 +274,7 @@
                     <tr class="removeBottomBorder">
                       <td class="removeBottomBorder">
                         <i>Date:</i> <b id="date-{{ expense.expense_id }}">{{ expense.expense_date }}</b>
-                        <input type="date" name="date" id="date-form-{{ expense.expense_id }}" form="expense-form-{{ expense.expense_id }}" class="form-control w-25" value="{{ expense.expense_date|date:'Y-m-d' }}" style="display: none;" required><br><br>
+                        <input type="date" name="date" id="date-form-{{ expense.expense_id }}" form="expense-form-{{ expense.expense_id }}" class="form-control w-25" value="{{ expense.expense_date|date:'Y-m-d' }}" style="display: none;" required>
                       </td>
                     </tr>
                   </table>
