@@ -21,13 +21,11 @@
     </div>
 
     <!-- TODO: View members -->
-    <table class="table table-striped rounded-3 overflow-hidden" style="width: 75%; margin:auto; margin-top: 3%">
+    <table class="table table-striped rounded-3 overflow-hidden" style="width: 50%; margin:auto; margin-top: 3%">
       <thead class="table table-secondary table-striped">
         <tr>
-          <th scope="col" style="width: 25%">Name</th>
-          <th scope="col" style="width: 25%">Username</th>
-          <th scope="col" style="width: 20%">Project</th>
-          <th scope="col" style="width: 20%">Role</th>
+          <th scope="col" style="width: 50%">Name</th>
+          <th scope="col" style="width: 50%">Role</th>
           {% if user.staff_type == "M" or user.staff_type == "X" %}
           <th scope="col" style="width: 10%"></th>
           {% endif %}
@@ -37,8 +35,6 @@
     {% for member in members %}
         <tr>
           <td scope="col"> {{ member.user.name }} </td>
-          <td scope="col"> {{ member.user.username }} </td>
-          <td scope="col"> {{ member.project.project_name }} </td>
           <td scope="col"> {{ member.user.get_staff_type_display }}</td>
 
           {% if user.staff_type == "M" or user.staff_type == "X" %}
