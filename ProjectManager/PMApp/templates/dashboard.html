@@ -190,11 +190,11 @@
           </div>
 
           <div class="col-6">
-            <label style="color: WHITE; font-size: 26px;">Task Members:</label>
-            {% for member in members %}
+            <label style="color: WHITE; font-size: 26px;">Assign to:</label>
+            {% for member in proj_members %}
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="{{ member.member_id }}" name="member">
-              <label class="form-check-label">{{ member.user.name }}</label>
+              <input class="form-check-input" type="checkbox" value="{{ member.member_id }}" name="members" id="memberCheck{{ forloop.counter }}">
+              <label class="form-check-label" for="memberCheck{{ forloop.counter }}">{{ member.user.name }}</label>
             </div>
             {% endfor %}
 

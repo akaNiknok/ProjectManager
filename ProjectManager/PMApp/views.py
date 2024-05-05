@@ -114,7 +114,7 @@ def dashboard(request):
     expense_objs = Expense.objects.filter(project_id=project_id)
 
     # Get members of the project for creating tasks
-    members_objs = Member.objects.filter(project=project_obj)
+    proj_members_objs = Member.objects.filter(project=project_obj)
 
     # Get members of each task for displaying
     tasks_and_members = {}
@@ -128,7 +128,7 @@ def dashboard(request):
                    "project": project_obj,
                    "tasks_and_members": tasks_and_members,
                    "expenses": expense_objs,
-                   "members": members_objs})
+                   "proj_members": proj_members_objs})
 
 
 def switch_project(request, project_id):
@@ -374,7 +374,7 @@ def create_task(request):
         task_notes = request.POST.get("task_notes")
         task_priority = request.POST.get("task_priority")
         task_deadline = request.POST.get("task_deadline")
-        members = request.POST.getlist('member')
+        members = request.POST.getlist('members')
 
         # Set deadline to None if not specified
         if task_deadline == "":
