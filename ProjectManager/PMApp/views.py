@@ -560,7 +560,7 @@ def add_member(request):
 
         for member in members:
             new_user = User.objects.get(user_id = member)
-            new_member = Member.objects.create(
+            Member.objects.create(
                 user = new_user,
                 project = project_obj
             )
@@ -568,7 +568,7 @@ def add_member(request):
         return redirect("view_members")
     else:
         members = Member.objects.filter(project__project_id = project_id)  
-        users = User.objects.exclude(user_id__in = members.values_list('user__user_id'))
+        users = User.objects.exclude(staff_type="X").exclude(user_id__in = members.values_list('user__user_id'))
         return render(request, "add_member.html", {
             "users": users, "members": members 
         })
