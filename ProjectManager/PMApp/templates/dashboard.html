@@ -135,43 +135,57 @@
     <!-- New task form -->
     <div id="tasksForm">
       <h2 style="color: WHITE">Create Task</h2>
-      <div class="mb-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
+
       <!-- line break --> 
+      <div class="mb-3" style="height: 1px; width: 93%; background-color: #EAEFF5"></div>
+
       <form action="{% url 'create_task' %}" method="POST">{% csrf_token %}
         <div class="row">
-          <label style="color: WHITE; font-size: 26px;" for="task_name">Task Name:</label>
-        </div>
-        <div class="row">
-          <input class="form-control mt-2 ms-2 rounded-3 overflow-hidden" style="width: 90%" type="text" name="task_name" id="task_name" required><br><br>
-        </div>
+          <div class="col-6">
+            <div class="row">
+              <label style="color: WHITE; font-size: 26px;" for="task_name">Task Name:</label>
+            </div>
+            <div class="row">
+              <input class="form-control mt-2 ms-2 rounded-3 overflow-hidden" style="width: 90%" type="text" name="task_name" id="task_name" required><br><br>
+            </div>
 
-        <div class="row">
-          <label style="color: WHITE; font-size: 26px;"for="task_notes">Task Notes:</label>
-        </div>
-        <div class="row">
-          <textarea class="form-label mt-2 ms-2 rounded-4 overflow-hidden" style="width: 90%; resize: none;" name="task_notes" id="task_notes" cols="30" rows="10"></textarea><br><br>
-        </div>
+            <div class="row">
+              <label style="color: WHITE; font-size: 26px;"for="task_notes">Task Notes:</label>
+            </div>
+            <div class="row">
+              <textarea class="form-label mt-2 ms-2 rounded-4 overflow-hidden" style="width: 90%; resize: none;" name="task_notes" id="task_notes" cols="30" rows="10"></textarea><br><br>
+            </div>
 
-        <label style="color: WHITE; font-size: 26px;">Task Priority:</label>
-        
-        <input class="mt-3" type="radio" id="task_priority_l" name="task_priority" value="L" required>
-        <label style="color: WHITE;" for="task_priority_l">Low</label>
-        <input class="mt-3" type="radio" id="task_priority_m" name="task_priority" value="M" required>
-        <label style="color: WHITE;" for="task_priority_m">Medium</label>
-        <input class="mt-3" type="radio" id="task_priority_h" name="task_priority" value="H" required>
-        <label style="color: WHITE;" for="task_priority_h">High</label>
-        <br><br>
+            <label style="color: WHITE; font-size: 26px;">Task Priority:</label>
+            
+            <input class="mt-3" type="radio" id="task_priority_l" name="task_priority" value="L" required>
+            <label style="color: WHITE;" for="task_priority_l">Low</label>
+            <input class="mt-3" type="radio" id="task_priority_m" name="task_priority" value="M" required>
+            <label style="color: WHITE;" for="task_priority_m">Medium</label>
+            <input class="mt-3" type="radio" id="task_priority_h" name="task_priority" value="H" required>
+            <label style="color: WHITE;" for="task_priority_h">High</label>
+            <br><br>
 
 
-        <label style="color:WHITE; font-size: 26px;" for="task_deadline">Deadline:</label>
-        <input class="rounded-3 overflow-hidden" style="width:93%;"type="date" name="task_deadline" id="task_deadline"><br><br>
+            <label style="color:WHITE; font-size: 26px;" for="task_deadline">Deadline:</label>
+            <input class="rounded-3 overflow-hidden" style="width:93%;"type="date" name="task_deadline" id="task_deadline"><br><br>
 
-        <!-- TODO: Task Members-->
-        <label style="color: WHITE; font-size: 26px;" for="task_members">Task Members:</label>
-        <br><br>
-        <div class="col">
-          <button class="btn btn-outline-light me-3" onclick="toggleForm('tasks')" type="button">Cancel</button>
-          <input class="btn btn-outline-secondary me-3" style="color:WHITE;" type="submit">
+            <div class="col">
+              <input class="btn btn-outline-secondary me-3" style="color:WHITE;" type="submit">
+              <button class="btn btn-outline-light me-3" onclick="toggleForm('tasks')" type="button">Cancel</button>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <label style="color: WHITE; font-size: 26px;" for="task_members">Task Members:</label>
+            {% for member in members %}
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="{{ member.member_id }}" name="member">
+              <label class="form-check-label">{{ member.user.name }}</label>
+            </div>
+            {% endfor %}
+
+          </div>
         </div>
       </form>
 

@@ -108,17 +108,21 @@ def dashboard(request):
             When(task_priority = Task.Priority.MEDIUM, then=Value(2)),
             When(task_priority = Task.Priority.LOW, then=Value(3)),
             default = Value(3),)
-
+    
     # Get tasks and expenses
     task_objs = Task.objects.filter(project_id=project_id).order_by("task_status", priority_weights)
     expense_objs = Expense.objects.filter(project_id=project_id)
+
+    # Get members
+    members_objs = Member.objects.filter(project=project_obj)
         
     return render(request,
                   "dashboard.html",
                   {"user": user_obj,
                    "project": project_obj,
                    "tasks": task_objs,
-                   "expenses": expense_objs})
+                   "expenses": expense_objs,
+                   "members": members_objs})
 
 
 def switch_project(request, project_id):
