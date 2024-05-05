@@ -26,6 +26,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
           var notesForm = document.getElementById("notes-form-" + id);
           var deadline = document.getElementById("deadline-" + id);
           var deadlineForm = document.getElementById("deadline-form-" + id);
+          var members = document.getElementById("members-" + id);
+          var membersForm = document.getElementById("members-form-" + id);
 
           // Get the current display value of each element
           var saveStyle = window.getComputedStyle(save).getPropertyValue("display");
@@ -38,6 +40,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
           var notesFormStyle = window.getComputedStyle(notesForm).getPropertyValue("display");
           var deadlineStyle = window.getComputedStyle(deadline).getPropertyValue("display");
           var deadlineFormStyle = window.getComputedStyle(deadlineForm).getPropertyValue("display");
+          var membersStyle = window.getComputedStyle(members).getPropertyValue("display");
+          var membersFormStyle = window.getComputedStyle(membersForm).getPropertyValue("display");
 
           // Toggle the values
           button.innerHTML = button.innerHTML === "Edit" ? "Cancel" : "Edit";
@@ -51,6 +55,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
           notesForm.style.display = notesFormStyle === "none" || "" ? "inline-block" : "none";
           deadline.style.display = deadlineStyle === "none" || "" ? "inline-block" : "none";
           deadlineForm.style.display = deadlineFormStyle === "none" || "" ? "inline-block" : "none";
+          members.style.display = membersStyle === "none" || "" ? "inline-block" : "none";
+          membersForm.style.display = membersFormStyle === "none" || "" ? "block" : "none";
 
         } else {
 

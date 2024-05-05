@@ -128,6 +128,7 @@
                 <tr class="removeBottomBorder">
                   <td class="removeBottomBorder">
                     <i>Assigned to:</i>
+                    <span id="members-{{ task.task_id}}">
                     {% if members %}
                       <ul class="mb-0">
                         {% for member in members %}
@@ -137,6 +138,15 @@
                     {% else%}
                       <b>None</b>
                     {% endif %}
+                    </span>
+                    <span id="members-form-{{ task.task_id }}" style="display: none;">
+                    {% for member in proj_members %}
+                      <div class="form-check">
+                        <input type="checkbox" form="task-form-{{ task.task_id }}" value="{{ member.member_id }}" name="members" id="memberCheck{{ task.task_id }}{{ forloop.counter }}" class="form-check-input" {% if member in members %}checked{% endif %}>
+                        <label class="form-check-label" for="memberCheck{{ task.task_id }}{{ forloop.counter }}" style="color: black;">{{ member.user.name }}</label>
+                      </div>
+                    {% endfor %}
+                    </span>
                   </td>
               </table>
             </td>
