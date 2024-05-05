@@ -4,7 +4,6 @@ from django.db.models import Case, Value, When
 
 from .models import Project, User, Member, Task, TaskAssignment, Expense
 
-import hashlib
 import bcrypt
 import datetime 
 
