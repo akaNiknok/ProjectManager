@@ -173,15 +173,14 @@ def create_project(request):
 
     # Create project when user clicks submit
     if (request.method == "POST"):
-        members = request.POST.getlist('member')
             
-
         # Get submitted form values
         project_name = request.POST.get("project_name")
         project_desc = request.POST.get("project_desc")
         project_start = request.POST.get("project_start")
         project_end = request.POST.get("project_end")
         project_status = request.POST.get("project_status")
+        members = [int(id) for id in request.POST.getlist('members')]
 
         # Set project end date to None if none specified
         if project_end == "":
@@ -196,19 +195,28 @@ def create_project(request):
             project_status=project_status
         )
 
+        # Automatically add the project manager as a member
+        user_obj = User.objects.get(user_id=user_id)
+        Member.objects.create(
+            project = new_project,
+            user = user_obj
+        )
+
+        # Add selected members as a member to the new project
         for member in members:
             new_user = User.objects.get(user_id = member)
-            print(new_user.user_id)
-            new_member = Member.objects.create(
+            Member.objects.create(
                 project = new_project,
                 user = new_user
             )
+
+        request.session["current_project_id"] = new_project.project_id
         return redirect("view_project")
 
     # Otherwise, display the form
     else:
 
-        users = User.objects.all()
+        users = User.objects.exclude(staff_type="X").exclude(user_id=user_id)
         return render(request,
                       "create_project.html", {"users": users})
 
