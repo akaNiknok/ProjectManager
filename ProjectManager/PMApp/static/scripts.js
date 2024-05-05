@@ -10,8 +10,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
     const editButtons = document.querySelectorAll('.edit-btn');
     editButtons.forEach(function(button) {
       button.addEventListener('click', function() {
-        const type = button.dataset.type; // 'task' or 'expense'
-        const id = button.dataset.id; // ID of the task/expense
+        const type = button.dataset.type;   // 'task' or 'expense'
+        const id = button.dataset.id;       // ID of the task/expense
+        const staff = button.dataset.staff; // Staff type
 
         if (type === "task") {
 
@@ -31,32 +32,36 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
           // Get the current display value of each element
           var saveStyle = window.getComputedStyle(save).getPropertyValue("display");
-          var deleteStyle = window.getComputedStyle(deletebtn).getPropertyValue("display");
           var statusStyle = window.getComputedStyle(status).getPropertyValue("display");
           var statusFormStyle = window.getComputedStyle(statusForm).getPropertyValue("display");
-          var priorityStyle = window.getComputedStyle(priority).getPropertyValue("display");
-          var priorityFormStyle = window.getComputedStyle(priorityForm).getPropertyValue("display");
-          var notesStyle = window.getComputedStyle(notes).getPropertyValue("display");
-          var notesFormStyle = window.getComputedStyle(notesForm).getPropertyValue("display");
-          var deadlineStyle = window.getComputedStyle(deadline).getPropertyValue("display");
-          var deadlineFormStyle = window.getComputedStyle(deadlineForm).getPropertyValue("display");
-          var membersStyle = window.getComputedStyle(members).getPropertyValue("display");
-          var membersFormStyle = window.getComputedStyle(membersForm).getPropertyValue("display");
-
+          if (staff == "M") {
+            var deleteStyle = window.getComputedStyle(deletebtn).getPropertyValue("display");
+            var priorityStyle = window.getComputedStyle(priority).getPropertyValue("display");
+            var priorityFormStyle = window.getComputedStyle(priorityForm).getPropertyValue("display");
+            var notesStyle = window.getComputedStyle(notes).getPropertyValue("display");
+            var notesFormStyle = window.getComputedStyle(notesForm).getPropertyValue("display");
+            var deadlineStyle = window.getComputedStyle(deadline).getPropertyValue("display");
+            var deadlineFormStyle = window.getComputedStyle(deadlineForm).getPropertyValue("display");
+            var membersStyle = window.getComputedStyle(members).getPropertyValue("display");
+            var membersFormStyle = window.getComputedStyle(membersForm).getPropertyValue("display");
+          }
           // Toggle the values
           button.innerHTML = button.innerHTML === "Edit" ? "Cancel" : "Edit";
           save.style.display = saveStyle === "none" || "" ? "inline-block" : "none";
-          deletebtn.style.display = deleteStyle === "none" || "" ? "inline-block" : "none";
           status.style.display = statusStyle === "none" || "" ? "inline-block" : "none";
           statusForm.style.display = statusFormStyle === "none" || "" ? "inline-block" : "none";
-          priority.style.display = priorityStyle === "none" || "" ? "inline-block" : "none";
-          priorityForm.style.display = priorityFormStyle === "none" || "" ? "inline-block" : "none";
-          notes.style.display = notesStyle === "none" || "" ? "inline-block" : "none";
-          notesForm.style.display = notesFormStyle === "none" || "" ? "inline-block" : "none";
-          deadline.style.display = deadlineStyle === "none" || "" ? "inline-block" : "none";
-          deadlineForm.style.display = deadlineFormStyle === "none" || "" ? "inline-block" : "none";
-          members.style.display = membersStyle === "none" || "" ? "block" : "none";
-          membersForm.style.display = membersFormStyle === "none" || "" ? "block" : "none";
+          if (staff == "M") {
+            deletebtn.style.display = deleteStyle === "none" || "" ? "inline-block" : "none";
+            priority.style.display = priorityStyle === "none" || "" ? "inline-block" : "none";
+            priorityForm.style.display = priorityFormStyle === "none" || "" ? "inline-block" : "none";
+            notes.style.display = notesStyle === "none" || "" ? "inline-block" : "none";
+            notesForm.style.display = notesFormStyle === "none" || "" ? "inline-block" : "none";
+            deadline.style.display = deadlineStyle === "none" || "" ? "inline-block" : "none";
+            deadlineForm.style.display = deadlineFormStyle === "none" || "" ? "inline-block" : "none";
+            members.style.display = membersStyle === "none" || "" ? "block" : "none";
+            membersForm.style.display = membersFormStyle === "none" || "" ? "block" : "none";
+          }
+
 
         } else {
 

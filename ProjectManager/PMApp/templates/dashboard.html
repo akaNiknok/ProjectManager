@@ -78,17 +78,21 @@
               <h5>{{ task.task_name }}</h5>
               <br>
 
-              <!-- Edit Form -->
-              <form action="{% url "update_task" task_id=task.task_id%}" method="POST" id="task-form-{{ task.task_id }}" class="mb-0 mt-2">{% csrf_token %}
-                <input type="submit" id="save-task-{{ task.task_id }}" value="Save" class="btn btn-outline-success btn-sm" style="display: none; width: 60px;">
-              </form>
-              <button type="button" class="btn btn-outline-dark btn-sm edit-btn" data-type="task" data-id="{{ task.task_id }}" style="width: 60px;">Edit</button>
+              {% if user.staff_type != "X" %}
+                <!-- Edit Form -->
+                <form action="{% url "update_task" task_id=task.task_id%}" method="POST" id="task-form-{{ task.task_id }}" class="mb-0 mt-2">{% csrf_token %}
+                  <input type="submit" id="save-task-{{ task.task_id }}" value="Save" class="btn btn-outline-success btn-sm" style="display: none; width: 60px;">
+                </form>
+                <button type="button" class="btn btn-outline-dark btn-sm edit-btn" data-type="task" data-id="{{ task.task_id }}" data-staff="{{ user.staff_type }}" style="width: 60px;">Edit</button>
 
-              <!-- Delete Form -->
-              <form action="{% url "delete_task" %}" method="POST">{% csrf_token %}
-                <input type="hidden" name="task_id" value="{{ task.task_id }}">
-                <input type="submit" id="delete-task-{{ task.task_id }}" value="Delete" class="btn btn-outline-danger btn-sm" style="display: none; width: 60px;">
-              </form>
+                {% if user.staff_type != "Em" %}
+                  <!-- Delete Form -->
+                  <form action="{% url "delete_task" %}" method="POST">{% csrf_token %}
+                    <input type="hidden" name="task_id" value="{{ task.task_id }}">
+                    <input type="submit" id="delete-task-{{ task.task_id }}" value="Delete" class="btn btn-outline-danger btn-sm" style="display: none; width: 60px;">
+                  </form>
+                {% endif %}
+              {% endif %}
             </td>                 
             <td class="table table-light p-0" style="width:80%">
               <table style="text-align: left;" class="table table-light mb-0">
