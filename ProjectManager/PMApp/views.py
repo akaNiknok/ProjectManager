@@ -108,9 +108,22 @@ def dashboard(request):
             When(task_priority = Task.Priority.LOW, then=Value(3)),
             default = Value(3),)
     
-    # Get tasks and expenses
-    task_objs = Task.objects.filter(project_id=project_id).order_by("task_status", priority_weights)
-    expense_objs = Expense.objects.filter(project_id=project_id)
+
+    # Get tasks
+    # If member is an employee, only show tasks for him/her
+    if user_obj.staff_type == "Em":
+        member_obj = Member.objects.get(project=project_obj, user=user_obj)
+        task_objs = Task.objects.filter(project=project_obj, taskassignment__member=member_obj)
+        task_objs = task_objs.order_by("task_status", priority_weights)
+    else:
+        task_objs = Task.objects.filter(project_id=project_id).order_by("task_status", priority_weights)
+
+    # Get expenses
+    # If member is an employee, only show tasks for him/her
+    if user_obj.staff_type == "Em":
+        expense_objs = Expense.objects.filter(project_id=project_id, member=member_obj)
+    else:
+        expense_objs = Expense.objects.filter(project_id=project_id)
 
     # Get members of the project for creating tasks
     proj_members_objs = Member.objects.filter(project=project_obj)
