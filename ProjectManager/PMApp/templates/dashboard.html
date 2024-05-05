@@ -45,7 +45,7 @@
           </h2>
         </div>
         <div class="col mt-1">
-          {% if project is not None %}
+          {% if project is not None and project.project_status != 2 %}
             {% if user.staff_type == "M" %}
               <button id="tasksCreateBtn" class="rounded-5" style="width: 32px; height: 32px;" onclick="toggleForm('tasks')"> + </button>
             {% endif %}
@@ -82,7 +82,7 @@
               <h5>{{ task.task_name }}</h5>
               <br>
 
-              {% if user.staff_type != "X" %}
+              {% if user.staff_type != "X" and project.project_status != 2 %}
                 <!-- Edit Form -->
                 <form action="{% url "update_task" task_id=task.task_id%}" method="POST" id="task-form-{{ task.task_id }}" class="mb-0 mt-2">{% csrf_token %}
                   <input type="submit" id="save-task-{{ task.task_id }}" value="Save" class="btn btn-outline-success btn-sm" style="display: none; width: 60px;">
@@ -266,7 +266,7 @@
         </div>
         <div class="col mt-1">
 
-          {% if project is not None %}
+          {% if project is not None and project.project_status != 2 %}
             {% if user.staff_type == "M" or user.staff_type == "Em" %}
               <button id="expensesCreateBtn" class="rounded-5" style="width: 32px; height: 32px;" onclick="toggleForm('expenses')">+</button>
             {% endif %}
@@ -282,7 +282,7 @@
                   <span id="desc-{{ expense.expense_id }}">{{ expense.expense_desc}}</span>
                   <input type="text" name="desc" id="desc-form-{{ expense.expense_id}}" form="expense-form-{{ expense.expense_id }}" class="form-control" value="{{ expense.expense_desc }}" style="display: none;" required>
                   <br>
-                  {% if user.staff_type != "X"%}
+                  {% if user.staff_type != "X" and project.project_status != 2%}
                     <!-- Edit Form -->
                     <form action="{% url "update_expense" expense_id=expense.expense_id %}" method="POST" id="expense-form-{{ expense.expense_id }}" class="mb-0 mt-2">{% csrf_token %}
                       <input type="submit" id="save-expense-{{ expense.expense_id }}" value="Save" class="btn btn-outline-success btn-sm" style="display: none; width: 60px;">
