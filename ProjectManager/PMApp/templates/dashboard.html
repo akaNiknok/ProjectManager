@@ -51,7 +51,7 @@
 
       <div class="mb-3 ms-3" style="height: 1px; width: 91%; background-color: #EAEFF5"></div>
         <!-- line break --> 
-      {% for task in tasks %}
+      {% for task, members in tasks_and_members.items %}
       <table id="taskTable{{forloop.counter}}" class="table ms-3 rounded-3 overflow-hidden" style="width: 91%;">  
 
         <script 
@@ -118,13 +118,26 @@
                     <textarea id="notes-form-{{ task.task_id }}" form="task-form-{{ task.task_id }}" class="form-control" style="display: none; width: 95%; resize: none;" name="notes" cols="30" rows="10">{{ task.task_notes }}</textarea>
                   </td>
                 </tr>
-                <tr class="removeBottomBorder">
-                  <td class="removeBottomBorder">
+                <tr>
+                  <td>
                     <i>Deadline:</i>
                     <b id="deadline-{{ task.task_id }}">{{ task.task_deadline }}</b>
                     <input id="deadline-form-{{ task.task_id }}" form="task-form-{{ task.task_id }}" class="form-control w-25" style="display: none;" type="date" name="deadline" value="{{ task.task_deadline|date:'Y-m-d' }}">
                   </td>
                 </tr>
+                <tr class="removeBottomBorder">
+                  <td class="removeBottomBorder">
+                    <i>Assigned to:</i>
+                    {% if members %}
+                      <ul class="mb-0">
+                        {% for member in members %}
+                        <li><b>{{ member.user.name }}</b></li>
+                        {% endfor %}
+                      </ul>
+                    {% else%}
+                      <b>None</b>
+                    {% endif %}
+                  </td>
               </table>
             </td>
           </tr>
@@ -177,7 +190,7 @@
           </div>
 
           <div class="col-6">
-            <label style="color: WHITE; font-size: 26px;" for="task_members">Task Members:</label>
+            <label style="color: WHITE; font-size: 26px;">Task Members:</label>
             {% for member in members %}
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="{{ member.member_id }}" name="member">

@@ -113,14 +113,20 @@ def dashboard(request):
     task_objs = Task.objects.filter(project_id=project_id).order_by("task_status", priority_weights)
     expense_objs = Expense.objects.filter(project_id=project_id)
 
-    # Get members
+    # Get members of the project for creating tasks
     members_objs = Member.objects.filter(project=project_obj)
-        
+
+    # Get members of each task for displaying
+    tasks_and_members = {}
+    for task_obj in task_objs:
+        member_obj = Member.objects.filter(taskassignment__task=task_obj)
+        tasks_and_members[task_obj] = member_obj
+    
     return render(request,
                   "dashboard.html",
                   {"user": user_obj,
                    "project": project_obj,
-                   "tasks": task_objs,
+                   "tasks_and_members": tasks_and_members,
                    "expenses": expense_objs,
                    "members": members_objs})
 
