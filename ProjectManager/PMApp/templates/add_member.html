@@ -68,7 +68,7 @@
           <div class="form-check">
             <input class="form-check-input" type="checkbox" value="{{ user.user_id }}" name="member">
             <label class="form-check-label">
-              {{user.name}} 
+              <b>{{ user.name }}</b> ({{ user.get_staff_type_display}})
             </label>
           </div>
         {% endfor %}      

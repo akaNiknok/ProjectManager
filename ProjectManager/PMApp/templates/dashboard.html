@@ -140,7 +140,13 @@
                     {% if members %}
                       <ul class="mb-0">
                         {% for member in members %}
-                        <li><b>{{ member.user.name }}</b></li>
+                          <li>
+                            {% if member.user.user_id == user.user_id %}
+                              Me
+                            {% else %}
+                              {{ member.user.name }} ({{ member.user.get_staff_type_display }})
+                            {% endif %}
+                          </li>
                         {% endfor %}
                       </ul>
                     {% else%}
@@ -151,7 +157,13 @@
                     {% for member in proj_members %}
                       <div class="form-check">
                         <input type="checkbox" form="task-form-{{ task.task_id }}" value="{{ member.member_id }}" name="members" id="memberCheck{{ task.task_id }}{{ forloop.counter }}" class="form-check-input" {% if member in members %}checked{% endif %}>
-                        <label class="form-check-label" for="memberCheck{{ task.task_id }}{{ forloop.counter }}" style="color: black;">{{ member.user.name }}</label>
+                        <label class="form-check-label" for="memberCheck{{ task.task_id }}{{ forloop.counter }}" style="color: black;">
+                            {% if member.user.user_id == user.user_id %}
+                              Me
+                            {% else %}
+                              {{ member.user.name }} ({{ member.user.get_staff_type_display }})
+                            {% endif %}
+                        </label>
                       </div>
                     {% endfor %}
                     </span>
@@ -212,7 +224,13 @@
             {% for member in proj_members %}
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="{{ member.member_id }}" name="members" id="memberCheck{{ forloop.counter }}">
-              <label class="form-check-label" for="memberCheck{{ forloop.counter }}">{{ member.user.name }}</label>
+              <label class="form-check-label" for="memberCheck{{ forloop.counter }}">
+                {% if member.user.user_id == user.user_id %}
+                  Me
+                {% else %}
+                  {{ member.user.name }} ({{ member.user.get_staff_type_display }})
+                {% endif %}
+              </label>
             </div>
             {% endfor %}
 
