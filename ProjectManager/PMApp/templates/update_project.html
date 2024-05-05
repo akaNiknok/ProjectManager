@@ -36,4 +36,22 @@
         <button class="btn btn-outline-light rounded-3" style="color:WHITE;" type="button">Cancel</button>
     </a>
 
+    <script>
+        // Prevent startdate > enddate
+        document.querySelector('form').addEventListener('submit', function(event) {
+          event.preventDefault(); // Prevent form submission
+
+          var startDate = new Date(document.getElementById('project_start').value);
+          var endDate = new Date(document.getElementById('project_end').value);
+
+          if (endDate && endDate < startDate) {
+            alert('End date cannot be less than start date!');
+            return;
+          }
+
+          // Proceed with form submission
+          this.submit();
+        });
+    </script>
+
 {% endblock %}

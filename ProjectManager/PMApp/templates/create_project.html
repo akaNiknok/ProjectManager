@@ -53,8 +53,24 @@
         </div>
 
     </form>
-    <!-- Set default project start to today's date -->
     <script>
+        // Set default project start to today's date
         document.getElementById("project_start").valueAsDate = new Date();
+
+        // Prevent startdate > enddate
+        document.querySelector('form').addEventListener('submit', function(event) {
+          event.preventDefault(); // Prevent form submission
+
+          var startDate = new Date(document.getElementById('project_start').value);
+          var endDate = new Date(document.getElementById('project_end').value);
+
+          if (endDate && endDate < startDate) {
+            alert('End date cannot be less than start date!');
+            return;
+          }
+
+          // Proceed with form submission
+          this.submit();
+        });
     </script>
 {% endblock %}
