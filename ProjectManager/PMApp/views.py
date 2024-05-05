@@ -368,8 +368,11 @@ def archive_project(request):
     except:
         raise Http404("Project does not exist")
 
-    # Update project status to "Archived"
-    project_obj.project_status = 2
+    # Toggle project status to "Archived" or "Finished"
+    if project_obj.project_status != 2:
+        project_obj.project_status = 2
+    else:
+        project_obj.project_status = 1
     project_obj.save()
 
     return redirect("view_project")

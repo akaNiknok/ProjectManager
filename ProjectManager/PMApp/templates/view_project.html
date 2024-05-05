@@ -34,9 +34,12 @@
         </a>      
         {% endif %}
 
-        <!-- Show delete button only if project status is "Archived" -->
+        <!-- Show unarchive and delete button only if project status is "Archived" -->
         {% if project.project_status == 2 %}
-        <a href="{% url 'delete_project' %}" style="position: relative; left: 32%;">
+        <a href="{% url 'archive_project' %}">
+            <button class="btn btn-outline-warning" type="button" style="width: 150px;">Unarchive Project</button>
+        </a>   
+        <a href="{% url 'delete_project' %}" >
             <button class="btn btn-outline-danger" type="button" style="width:150px;">Delete Project</button>
         </a>
         {% endif %}
