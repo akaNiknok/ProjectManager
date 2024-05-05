@@ -64,13 +64,13 @@
           var task_status = data.taskStatus;
           switch(task_status){
             case "In Progress":
-              table.classList.add("table-success");
+              table.classList.add("table-danger");
               break;
             case "For Review":
               table.classList.add("table-warning");
               break;
             case "Completed":
-              table.classList.add("table-danger");
+              table.classList.add("table-success");
               break;
           }
         </script>
@@ -100,7 +100,7 @@
               <table style="text-align: left;" class="table table-light mb-0">
                 <tr>
                   <td>
-                    <i>Status:</i> <span id="status-{{ task.task_id }}">{{ task.get_task_status_display }}</span>
+                    <i>Status:</i> <b id="status-{{ task.task_id }}">{{ task.get_task_status_display }}</b>
                     <select id="status-form-{{ task.task_id }}" form="task-form-{{ task.task_id }}" name="status" class="form-control w-25" style="display: none;">
                       <option value="0" {% if task.task_status == 0 %}selected{% endif %}>In Progress</option>
                       <option value="1" {% if task.task_status == 1 %}selected{% endif %}>For Review</option>
@@ -134,7 +134,7 @@
                 <tr class="removeBottomBorder">
                   <td class="removeBottomBorder">
                     <i>Assigned to:</i>
-                    <span id="members-{{ task.task_id}}">
+                    <span id="members-{{ task.task_id}}" style="display: block;">
                     {% if members %}
                       <ul class="mb-0">
                         {% for member in members %}
