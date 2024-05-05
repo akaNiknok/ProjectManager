@@ -41,7 +41,7 @@
           <!-- Project selector -->
           <select class="form-select form-select-sm me-2 rounded-3 overflow-hidden" style="position: absolute; left: 60%; width: 35%;" name="project_selector" id="project_selector">
           {% for project in projects %}
-              <option value="{{ project.project_id }}" {% if project.project_id == request.session.current_project_id %}selected{% endif %}>{{ project.project_name }}</option>
+              <option value="{{ project.project_id }}" {% if project.project_id == request.session.current_project_id %}selected{% endif %}>{{ project.project_name }}{% if project.project_status == 2 %} (Archived){% endif %}</option>
           {% endfor %}
           </select>
           {% if user.staff_type == "M" %}
