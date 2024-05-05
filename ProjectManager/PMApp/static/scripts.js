@@ -55,7 +55,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
           notesForm.style.display = notesFormStyle === "none" || "" ? "inline-block" : "none";
           deadline.style.display = deadlineStyle === "none" || "" ? "inline-block" : "none";
           deadlineForm.style.display = deadlineFormStyle === "none" || "" ? "inline-block" : "none";
-          members.style.display = membersStyle === "none" || "" ? "inline-block" : "none";
+          members.style.display = membersStyle === "none" || "" ? "block" : "none";
           membersForm.style.display = membersFormStyle === "none" || "" ? "block" : "none";
 
         } else {

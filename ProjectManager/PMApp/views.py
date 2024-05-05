@@ -118,8 +118,8 @@ def dashboard(request):
     # Get members of each task for displaying
     tasks_and_members = {}
     for task_obj in task_objs:
-        member_obj = Member.objects.filter(taskassignment__task=task_obj)
-        tasks_and_members[task_obj] = member_obj
+        member_objs = Member.objects.filter(taskassignment__task=task_obj)
+        tasks_and_members[task_obj] = member_objs
     
     return render(request,
                   "dashboard.html",
@@ -417,6 +417,7 @@ def update_task(request, task_id):
         priority = request.POST.get("priority")
         notes = request.POST.get("notes")
         deadline = request.POST.get("deadline")
+        new_members = [int(id) for id in request.POST.getlist('members')]
 
         # Set deadline to None if not specified
         if deadline == "":
@@ -434,6 +435,21 @@ def update_task(request, task_id):
         task_obj.task_notes = notes
         task_obj.task_deadline = deadline
         task_obj.save()
+
+        # Update members
+        prev_members = Member.objects.filter(taskassignment__task=task_obj)
+
+        # Remove members that has not been selected
+        for member in prev_members:
+            if member.member_id not in new_members:
+                TaskAssignment.objects.get(task=task_obj, member=member).delete()
+            else:
+                new_members.remove(member.member_id)
+        
+        # Add new members
+        for member in new_members:
+            member_obj = Member.objects.get(member_id=member)
+            TaskAssignment.objects.create(task=task_obj, member=member_obj)
 
         return redirect("dashboard")
     else:
