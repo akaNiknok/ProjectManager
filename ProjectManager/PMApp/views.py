@@ -368,6 +368,7 @@ def create_task(request):
         task_notes = request.POST.get("task_notes")
         task_priority = request.POST.get("task_priority")
         task_deadline = request.POST.get("task_deadline")
+        members = request.POST.getlist('member')
 
         # Set deadline to None if not specified
         if task_deadline == "":
@@ -377,13 +378,18 @@ def create_task(request):
         current_project = Project.objects.get(project_id=request.session["current_project_id"])
 
         # Create the new task
-        Task.objects.create(
+        new_task = Task.objects.create(
             project=current_project,
             task_name=task_name,
             task_notes=task_notes,
             task_priority=task_priority,
             task_deadline=task_deadline
         )
+
+        # Add assign members to task
+        for member in members:
+            member_obj = Member.objects.get(member_id=int(member))
+            TaskAssignment.objects.create(task=new_task, member=member_obj)
 
         return redirect("dashboard")
 
