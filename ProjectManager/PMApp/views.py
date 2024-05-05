@@ -300,7 +300,7 @@ def view_project(request):
                    "start_to_now": start_to_now, "end_to_now": end_to_now,
                    "start_to_now_percentage": start_to_now_percentage,
                    "end_to_now_percentage": end_to_now_percentage,
-                   "total_expenses": total_expenses, "expenses": expense_objs, 
+                   "total_expenses": total_expenses
                    })
 
 
