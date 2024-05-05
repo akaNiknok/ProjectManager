@@ -582,14 +582,16 @@ def create_expense(request):
         expense_desc = request.POST.get("expense_desc")
         expense_amt = request.POST.get("expense_amt")
 
-        # Get current selected projected using the session variable
-        current_project = Project.objects.get(project_id=request.session["current_project_id"])
-        current_member = Member.objects.latest("member_id")  # TODO: Member
+        # Get current user and selected projected using the session variable
+        user_obj = User.objects.get(user_id=user_id)
+        project_obj = Project.objects.get(project_id=request.session["current_project_id"])
+
+        member_obj = Member.objects.get(project=project_obj, user=user_obj)
 
         # Create the new expense
         Expense.objects.create(
-            project=current_project,
-            member=current_member,  # TODO: Member
+            project=project_obj,
+            member=member_obj,
             expense_date=expense_date,
             expense_desc = expense_desc,
             expense_amt=expense_amt
