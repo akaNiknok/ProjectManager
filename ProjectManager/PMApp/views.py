@@ -74,7 +74,8 @@ def register(request):
 def logout(request):
     response = redirect("login")
     response.delete_cookie("user_id")
-    del request.session["current_project_id"]
+    if request.session["current_project_id"]:
+        del request.session["current_project_id"]
     request.session.modified = True
     return response
 
@@ -87,20 +88,38 @@ def dashboard(request):
     if user_id is None:
         return redirect("login")
     
-    # Retrieve user obj
+    # Retrieve user obj 
     user_obj = User.objects.get(user_id=user_id)
 
-    # Retrieve all projects that the user is part of
-    project_objs = Project.objects.filter(member__user=user_obj)
+    # If manager/employee, get all projects the user is part of
+    # If executive, get all projects
+    if user_obj != "X":
+        project_objs = Project.objects.filter(member__user=user_obj)
+    else:
+        project_objs = Project.objects.all()
 
-    # Default to the first project, when not specified
+    # Get selected project obj
     try:
         project_id = request.session["current_project_id"]
         project_obj = Project.objects.get(project_id=project_id)
     except:
-        project_obj = project_objs[0]
-        project_id = project_obj.project_id
-        request.session["current_project_id"] = project_id
+        # Default to the first project, when not specified
+        if len(project_objs) > 0:
+            project_obj = project_objs[0]
+            project_id = project_obj.project_id
+            request.session["current_project_id"] = project_id
+
+        # If no project assigned, render empty dashboard
+        else:
+            request.session["current_project_id"] = None
+            return render(
+                request,
+                "dashboard.html",
+                {"user": user_obj,
+                 "project": None,
+                 "tasks_and_members": None,
+                 "expenses": None,
+                 "proj_members": None})
     
     priority_weights = Case(
             When(task_priority = Task.Priority.HIGH, then=Value(1)),
@@ -108,7 +127,6 @@ def dashboard(request):
             When(task_priority = Task.Priority.LOW, then=Value(3)),
             default = Value(3),)
     
-
     # Get tasks
     # If member is an employee, only show tasks for him/her
     if user_obj.staff_type == "Em":

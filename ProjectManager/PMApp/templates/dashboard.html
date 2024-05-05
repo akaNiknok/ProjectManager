@@ -4,8 +4,10 @@
 
 {% block navbar %}
       <li class="navbar-item"><a class="me-2" style="color: F8F9FA; text-decoration: none;" href="{% url 'dashboard' %}">Dashboard</a></li>
+      {% if project is not None %}
       <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_members' %}">Members</a></li>
       <li class="navbar-item"><a class="me-2" style="color: ADB5BD; text-decoration: none;" href="{% url 'view_project' %}">Overview</a></li>
+      {% endif %}
       <li><a class="mr-2" style="color: ADB5BD; text-decoration: none;" href="{% url "logout" %}">Logout</a></li>
 {% endblock %}
 
@@ -261,8 +263,11 @@
           </h2>
         </div>
         <div class="col mt-1">
-          {% if user.staff_type == "M" or user.staff_type == "Em" %}
-            <button id="expensesCreateBtn" class="rounded-5" style="width: 32px; height: 32px;" onclick="toggleForm('expenses')">+</button>
+
+          {% if project is not None %}
+            {% if user.staff_type == "M" or user.staff_type == "Em" %}
+              <button id="expensesCreateBtn" class="rounded-5" style="width: 32px; height: 32px;" onclick="toggleForm('expenses')">+</button>
+            {% endif %}
           {% endif %}
         </div>
       </div>
