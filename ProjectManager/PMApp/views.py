@@ -256,7 +256,7 @@ def view_project(request):
 
     task_objs = Task.objects.filter(project__project_id = project_obj.project_id)
 
-    completed_tasks = Task.objects.filter(project__project_id = project_obj.project_id, task_status = 3).count()
+    completed_tasks = Task.objects.filter(project__project_id = project_obj.project_id, task_status = 2).count()
     review_tasks = Task.objects.filter(project__project_id = project_obj.project_id, task_status = 1).count()  
     progress_tasks = Task.objects.filter(project__project_id = project_obj.project_id, task_status = 0).count()
 
