@@ -12,7 +12,7 @@
     <!-- TODO DELETE MEMBERS -->
     <div class ="row">
       <div class="mt-4" style="position: relative; left: 76%">
-        {% if user.staff_type == "M" or user.staff_type == "X" %}
+        {% if user.staff_type != "Em" and project.project_status != 2 %}
           <a href="{% url "add_member"%}">
               <button class="btn btn-outline-success" type="button" style="width: 150px;">Add Members</button>
           </a>
@@ -26,7 +26,7 @@
         <tr>
           <th scope="col" style="width: 50%">Name</th>
           <th scope="col" style="width: 50%">Role</th>
-          {% if user.staff_type == "M" or user.staff_type == "X" %}
+          {% if user.staff_type != "Em" and project.project_status != 2 %}
           <th scope="col" style="width: 10%"></th>
           {% endif %}
         </tr>
@@ -37,7 +37,7 @@
           <td scope="col"> {{ member.user.name }} </td>
           <td scope="col"> {{ member.user.get_staff_type_display }}</td>
 
-          {% if user.staff_type == "M" or user.staff_type == "X" %}
+          {% if user.staff_type != "Em" and project.project_status != 2  %}
           <td scope="col"> 
             <a href="{% url "remove_member" member_id=member.member_id %}" method="POST">
               <button class="btn btn-outline-danger" type="button" style="width: 100px">Remove</button>

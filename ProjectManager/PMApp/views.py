@@ -547,7 +547,7 @@ def view_members(request):
 
     member_objs = Member.objects.filter(project__project_id = project_obj.project_id)
 
-    return render(request, "view_members.html", {"members": member_objs})
+    return render(request, "view_members.html", {"project": project_obj, "members": member_objs})
 
 def add_member(request):
     # Retrieve current logged in user id
