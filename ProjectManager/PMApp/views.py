@@ -269,7 +269,7 @@ def view_project(request):
     if(progress_tasks != 0 and task_objs.count != 0):
         progress_tasks = (progress_tasks / task_objs.count()) * 100
 
-    start_to_now = -(project_obj.project_start - datetime.datetime.now().date()).days
+    start_to_now = (datetime.datetime.now().date() - project_obj.project_start).days
 
     if project_obj.project_end:
         end_to_now = (project_obj.project_end - datetime.datetime.now().date()).days
@@ -277,16 +277,22 @@ def view_project(request):
     else:
         end_to_now = 0
         start_to_end = 0
-
-    try:
-        start_to_now_percentage = (start_to_now / start_to_end) * 100
-    except:
-        start_to_now_percentage = 0
-
-    try:
-        end_to_now_percentage = (end_to_now / start_to_end) * 100
-    except:
+    
+    if end_to_now < 0:
+        start_to_now_percentage = 100
         end_to_now_percentage = 0
+        start_to_now = start_to_end
+    else:
+        try:
+            start_to_now_percentage = (start_to_now / start_to_end) * 100
+        except:
+            start_to_now_percentage = 0
+
+        try:
+            end_to_now_percentage = (end_to_now / start_to_end) * 100
+        except:
+            end_to_now_percentage = 0
+        
     
     total_expenses = 0
     expense_objs = Expense.objects.filter(project_id=project_id)
