@@ -66,8 +66,8 @@
 
         {% for user in users %}
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="{{ user.user_id }}" name="member">
-            <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" value="{{ user.user_id }}" name="member" id="user{{user.user_id}}">
+            <label class="form-check-label" for="user{{user.user_id}}">
               <b>{{ user.name }}</b> ({{ user.get_staff_type_display}})
             </label>
           </div>
